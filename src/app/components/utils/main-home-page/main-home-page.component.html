@@ -1,0 +1,542 @@
+<!-- Main card => 100vh scrollable start -->
+<div class="view-wrapper">
+  <!-- =============================Filter Params============================= -->
+  <div class="mainDiv mb-1 p-0">
+    <!-- First Group -->
+    <div class="row">
+      <div class="col-3">
+        <dx-select-box
+          [dataSource]="SearchOnDatasource"
+          displayExpr="Name"
+          valueExpr="ID"
+          [(value)]="searchOnvalue"
+          required
+          label="Search On"
+          labelMode="floating"
+        ></dx-select-box>
+      </div>
+
+      <div class="col-3">
+        <dx-date-box
+          applyValueMode="useButtons"
+          [(value)]="DateFrom"
+          displayFormat="dd/MM/yyyy"
+          label="From Date"
+          labelMode="floating"
+        ></dx-date-box>
+      </div>
+
+      <div class="col-3">
+        <dx-date-box
+          applyValueMode="useButtons"
+          [(value)]="DateTo"
+          displayFormat="dd/MM/yyyy"
+          label="To Date"
+          labelMode="floating"
+        ></dx-date-box>
+      </div>
+
+      <div class="col-3">
+        <dx-select-box
+          [dataSource]="RejectionIndexDatasource"
+          displayExpr="Name"
+          valueExpr="ID"
+          [(value)]="rejectionIndexvalue"
+          required
+          label="Rejection Index"
+          labelMode="floating"
+        ></dx-select-box>
+      </div>
+    </div>
+
+    <!-- Wrapper for Second and Third Rows -->
+    <div *ngIf="showGroups" @toggleRows>
+      <!-- Second Group -->
+      <div class="row mt-3">
+        <div class="col-3">
+          <dx-select-box
+            [dataSource]="DenailCategoryDatasource"
+            displayExpr="Name"
+            valueExpr="ID"
+            [(value)]="denialcategoryvalue"
+            label="Denial Category"
+            labelMode="floating"
+          ></dx-select-box>
+        </div>
+
+        <div class="col-3">
+          <dx-select-box
+            [(value)]="encountertypevalue"
+            displayExpr="Name"
+            valueExpr="ID"
+            [dataSource]="EncountrTypeDatasource"
+            label="Encounter Type"
+            labelMode="floating"
+          ></dx-select-box>
+        </div>
+
+        <div class="col-3">
+          <dx-select-box
+            [dataSource]="blockDataSource"
+            displayExpr="Name"
+            valueExpr="ID"
+            [(value)]="blockValue"
+            required
+            label="Block"
+            labelMode="floating"
+          ></dx-select-box>
+        </div>
+
+        <div class="col-3">
+          <dx-select-box
+            [dataSource]="regionDataSource"
+            displayExpr="Name"
+            valueExpr="ID"
+            [(value)]="RegionValue"
+            label="Region"
+            labelMode="floating"
+          ></dx-select-box>
+        </div>
+      </div>
+
+      <!-- Third Group -->
+      <div class="row mt-3">
+        <div class="col-3">
+          <dx-select-box
+            [dataSource]="ProviderTypeDatasource"
+            displayExpr="Name"
+            valueExpr="ID"
+            [(value)]="ProviderTypevalue"
+            label="Provider Type"
+            labelMode="floating"
+          ></dx-select-box>
+        </div>
+
+        <div class="col-3">
+          <dx-select-box
+            label="Facility"
+            labelMode="floating"
+            [(value)]="facilityvalue"
+            valueExpr="ID"
+            displayExpr="Name"
+            [dataSource]="FacilityDataSource"
+          >
+          </dx-select-box>
+        </div>
+
+        <div class="col-2">
+          <dx-select-box
+            [dataSource]="insuranceDataSource"
+            displayExpr="Name"
+            valueExpr="ID"
+            [(value)]="insuranceValue"
+            required
+            label="Insurance"
+            labelMode="floating"
+          ></dx-select-box>
+        </div>
+
+        <div class="col-2">
+          <dx-select-box
+            [dataSource]="departmentDataSource"
+            displayExpr="Name"
+            valueExpr="ID"
+            [(value)]="departmentValue"
+            label="Department"
+            labelMode="floating"
+          ></dx-select-box>
+        </div>
+
+        <div class="col-2">
+          <dx-button
+            class="add-card ms-3 mt-1"
+            icon="todo"
+            text="Apply"
+            type="default"
+            stylingMode="contained"
+            (click)="applyButtonClicked()"
+          ></dx-button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toggle Button -->
+    <div class="row mt-3 justify-content-center p-0 m-0">
+      <div class="col-12 text-center">
+        <dx-button
+          class="toggle-button"
+          [icon]="showGroups ? 'chevronup' : 'chevrondown'"
+          stylingMode="outlined"
+          type="default"
+          (click)="toggleGroups()"
+        ></dx-button>
+      </div>
+    </div>
+    <!-- Toggle Button end -->
+  </div>
+
+  <!-- =============================Card data Div============================= -->
+  <div class="graph-scroll-container">
+    <div class="container mb-1 ps-3">
+      <div class="row gap-2 d-flex justify-content-start">
+        <div class="col-12 col-md-2 col-lg-2 col-sm-6">
+          <ticker-card
+            titleText="Claimed"
+            [total]="ClaimAmount"
+            [percentage]="claimPrcnt"
+            class="claimed p-0 m-0"
+            icon="datatrending"
+          ></ticker-card>
+        </div>
+        <div class="col-12 col-md-2 col-lg-2 col-sm-6">
+          <ticker-card
+            titleText="Remitted"
+            class="remitted p-0 m-0"
+            total="{{ remittedAmt }}"
+            [percentage]="remittedPercnt"
+            icon="dataarea"
+          ></ticker-card>
+        </div>
+        <div class="col-12 col-md-2 col-lg-2 col-sm-6">
+          <ticker-card
+            class="auto-width"
+            titleText="Paid"
+            class="paid p-0 m-0"
+            total="{{ paidAmt }}"
+            [percentage]="paidPrcnt"
+            icon="bookmark"
+          ></ticker-card>
+        </div>
+        <div class="col-12 col-md-2 col-lg-2 col-sm-6">
+          <ticker-card
+            titleText="Rejected"
+            total="{{ deniedAmt }}"
+            class="denied p-0 m-0"
+            [percentage]="deniedPrcnt"
+            icon="datapie"
+          ></ticker-card>
+        </div>
+        <div class="col-12 col-md-2 col-lg-2 col-sm-6">
+          <ticker-card
+            titleText="Un-Remitted"
+            class="balance p-0 m-0"
+            total="{{ balanceAmt }}"
+            [percentage]="balancePrcnt"
+            icon="money"
+          ></ticker-card>
+        </div>
+        <div class="col-12 col-md-2 col-lg-2 col-sm-6">
+          <ticker-card
+            titleText="Remittance %"
+            class="remittancepercent p-0 m-0"
+            total="{{ remittancePrcnt }}"
+            icon="money"
+          ></ticker-card>
+        </div>
+        <div class="col-12 col-md-2 col-lg-2 col-sm-6">
+          <ticker-card
+            titleText="Rejection %"
+            class="rejectionpercent p-0 m-0"
+            total="{{ rejectionPrcnt }}"
+            icon="money"
+          ></ticker-card>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====================================Graph Loading==================== -->
+
+    <div class="graphContainer">
+      <div class="d-flex gap-1">
+        <div class="ChartContent">
+          <dx-chart
+            palette="violet"
+            [dataSource]="RemittanceRejectionPercentDatasource"
+            title="Remitance % and Rejection %"
+          >
+            <dxi-series valueField="cnstl" name="Remitance %"></dxi-series>
+            <dxi-series valueField="cluster" name="Rejection %"></dxi-series>
+            <dxo-common-series-settings
+              #seriesSettings
+              argumentField="year"
+              type="spline"
+            >
+            </dxo-common-series-settings>
+            <dxo-margin [bottom]="20"></dxo-margin>
+            <dxo-common-axis-settings>
+              <dxo-grid [visible]="true"></dxo-grid>
+            </dxo-common-axis-settings>
+            <dxo-legend verticalAlignment="bottom" horizontalAlignment="center">
+            </dxo-legend>
+            <dxo-argument-axis
+              [allowDecimals]="false"
+              [axisDivisionFactor]="60"
+            >
+              <dxo-label>
+                <dxo-format type="decimal"></dxo-format>
+              </dxo-label>
+            </dxo-argument-axis>
+            <!-- <dxo-export [enabled]="true"></dxo-export> -->
+            <dxo-tooltip [enabled]="true"></dxo-tooltip>
+          </dx-chart>
+        </div>
+
+        <div class="ChartContent-2">
+          <div class="d-flex gap-1 p-0 m-0">
+            <div class="ChartContent">
+              <dx-pie-chart
+                id="pie"
+                title="Case Type Rejection %"
+                palette="bright"
+                [dataSource]="CaseTypeRejectionDataSource"
+              >
+                <dxo-legend
+                  orientation="horizontal"
+                  itemTextPosition="right"
+                  horizontalAlignment="center"
+                  verticalAlignment="bottom"
+                  [columnCount]="3"
+                ></dxo-legend>
+                <!-- <dxo-export [enabled]="true"></dxo-export> -->
+                <dxi-series argumentField="country" valueField="medals">
+                  <dxo-label
+                    [visible]="true"
+                    position="columns"
+                    [customizeText]="customizeLabel"
+                  >
+                    <dxo-connector
+                      [visible]="true"
+                      [width]="0.2"
+                    ></dxo-connector>
+                  </dxo-label>
+                </dxi-series>
+              </dx-pie-chart>
+            </div>
+
+            <div class="ChartContent">
+              <dx-pie-chart
+                id="pie"
+                type="doughnut"
+                title="Denial Group"
+                palette="Soft Pastel"
+                [dataSource]="DenialGroupdataSource"
+              >
+                <dxi-series argumentField="region">
+                  <dxo-label [visible]="true" format="millions">
+                    <dxo-connector [visible]="true"></dxo-connector>
+                  </dxo-label>
+                </dxi-series>
+                <!-- <dxo-export [enabled]="true"></dxo-export> -->
+                <dxo-legend
+                  horizontalAlignment="center"
+                  verticalAlignment="bottom"
+                  [columnCount]="3"
+                ></dxo-legend>
+                <dxo-tooltip
+                  [enabled]="true"
+                  [customizeTooltip]="customizeTooltip"
+                  format="millions"
+                >
+                </dxo-tooltip>
+              </dx-pie-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="graphContainer">
+      <div class="d-flex gap-1">
+        <div class="ChartContent">
+          <dx-chart
+            id="chart"
+            title="Denial Category Rejected Amt & %"
+            [dataSource]="DenialCategoryRejectionDataSource"
+          >
+            <dxo-legend
+              verticalAlignment="bottom"
+              horizontalAlignment="center"
+            ></dxo-legend>
+            <dxi-series
+              argumentField="day"
+              valueField="oranges"
+              name="My oranges"
+              type="bar"
+              color="#ffaa66"
+            >
+            </dxi-series>
+          </dx-chart>
+        </div>
+
+        <div class="ChartContent">
+          <dx-chart
+            id="chart"
+            title="Block Wise Rejected Amt & %"
+            [dataSource]="DenialCategoryRejectionDataSource"
+          >
+            <dxo-legend
+              verticalAlignment="bottom"
+              horizontalAlignment="center"
+            ></dxo-legend>
+            <dxi-series
+              argumentField="day"
+              valueField="oranges"
+              name="My oranges"
+              type="bar"
+              color="#ffaa66"
+            >
+            </dxi-series>
+          </dx-chart>
+        </div>
+
+        <div class="ChartContent">
+          <dx-chart
+            id="chart"
+            title="Rejection Accountability"
+            [dataSource]="DenialCategoryRejectionDataSource"
+          >
+            <dxo-legend
+              verticalAlignment="bottom"
+              horizontalAlignment="center"
+            ></dxo-legend>
+            <dxi-series
+              argumentField="day"
+              valueField="oranges"
+              name="My oranges"
+              type="bar"
+              color="#ffaa66"
+            >
+            </dxi-series>
+          </dx-chart>
+        </div>
+      </div>
+    </div>
+
+    <div class="graphContainer">
+      <div class="d-flex gap-1">
+        <div class="ChartContent">
+          <dx-chart
+            id="chart"
+            title="Top 10 Insurance Rejected Amt & %"
+            [dataSource]="DenialCategoryRejectionDataSource"
+            [rotated]="true"
+          >
+            <dxo-legend
+              verticalAlignment="bottom"
+              horizontalAlignment="center"
+            ></dxo-legend>
+            <dxi-series
+              argumentField="day"
+              valueField="oranges"
+              name="My oranges"
+              type="bar"
+              color="#04592d"
+            >
+            </dxi-series>
+          </dx-chart>
+        </div>
+
+        <div class="ChartContent">
+          <dx-chart
+            id="chart"
+            title="Top 10 Facility Rejected Amt & %"
+            [dataSource]="DenialCategoryRejectionDataSource"
+            [rotated]="true"
+          >
+            <dxo-legend
+              verticalAlignment="bottom"
+              horizontalAlignment="center"
+            ></dxo-legend>
+            <dxi-series
+              argumentField="day"
+              valueField="oranges"
+              name="My oranges"
+              type="bar"
+              color="#8c0808"
+            >
+            </dxi-series>
+          </dx-chart>
+        </div>
+
+        <div class="ChartContent">
+          <dx-chart
+            id="chart"
+            title="Top 10 Code Rejected Amt & %"
+            [dataSource]="DenialCategoryRejectionDataSource"
+            [rotated]="true"
+          >
+            <dxo-legend
+              verticalAlignment="bottom"
+              horizontalAlignment="center"
+            ></dxo-legend>
+            <dxi-series
+              argumentField="day"
+              valueField="oranges"
+              name="My oranges"
+              type="bar"
+              color="#152a8f"
+            >
+            </dxi-series>
+          </dx-chart>
+        </div>
+      </div>
+    </div>
+
+    <div class="graphContainer">
+      <div class="d-flex gap-1">
+        <div class="ChartContent">
+          <dx-chart
+            id="chart"
+            title="Top 10 Department Wise Rejected Amt & %"
+            [dataSource]="DenialCategoryRejectionDataSource"
+          >
+            <dxo-legend
+              verticalAlignment="bottom"
+              horizontalAlignment="center"
+            ></dxo-legend>
+            <dxi-series
+              argumentField="day"
+              valueField="oranges"
+              name="My oranges"
+              type="bar"
+              color="#04b33b"
+            >
+            </dxi-series>
+          </dx-chart>
+        </div>
+
+        <div class="ChartContent">
+          <dx-chart
+            id="chart"
+            title="Top 10 Dr Wise Rejected Amt & %"
+            [dataSource]="DenialCategoryRejectionDataSource"
+          >
+            <dxo-legend
+              verticalAlignment="bottom"
+              horizontalAlignment="center"
+            ></dxo-legend>
+            <dxi-series
+              argumentField="day"
+              valueField="oranges"
+              name="My oranges"
+              type="bar"
+              color="#d97b21"
+            >
+            </dxi-series>
+          </dx-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<dx-load-panel
+  #loadPanel
+  shadingColor="rgba(0,0,0,0.4)"
+  [position]="{ of: '#view-wrapper' }"
+  [(visible)]="loadingVisible"
+  [showIndicator]="true"
+  [showPane]="true"
+  [shading]="true"
+  [hideOnOutsideClick]="false"
+>
+</dx-load-panel>
