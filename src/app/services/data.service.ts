@@ -97,12 +97,11 @@ export class DataService {
       ProviderType: providerType,
       Facility: facility,
       Insurance: insurance,
-      Department: department
+      Department: department,
     };
 
     return this.http.post(url, reqBodyData);
   }
-
 
   // ================================================================================
   // ================================================================================
@@ -424,15 +423,8 @@ export class DataService {
   }
 
   export(reportname: any, element: any) {
-    const selectedValuesString = JSON.parse(
-      sessionStorage.getItem('selectedValues')
-    );
-    var SearchOn_Value = selectedValuesString.searchOn;
-    var facility_VAlue = selectedValuesString.facility.replace(/,/g, ', ');
-    var encounterType_Value = selectedValuesString.encounterType || 'All';
-    var fromdate = this.formatDate(selectedValuesString.DateFrom);
-    var todate = this.formatDate(selectedValuesString.DateTo);
     if (element) {
+      console.log('export function called|');
       html2canvas(element).then((canvas) => {
         const imgData = canvas.toDataURL('image/png');
         const pdf = new jsPDF('p', 'mm', 'a4');
@@ -447,17 +439,7 @@ export class DataService {
         const textX = (pdfWidth - textWidth) / 2;
         pdf.text(reportname, textX, 10); // Centered report name
 
-        // Search parameters
-        pdf.setFontSize(11);
-        pdf.setFont('Helvetica', 'normal');
-        pdf.text(`Facility: ${facility_VAlue}`, 10, 25);
-        pdf.text(
-          `Search On: ${SearchOn_Value} | Encounter Type: ${encounterType_Value}`,
-          10,
-          30
-        );
-        pdf.text(`Date Range : ${fromdate} to ${todate}`, 10, 35);
-        const startY = 40; // Adjust this value if needed for proper spacing
+        const startY = 15;
 
         // Add the image directly below the text
         const imgProps = pdf.getImageProperties(imgData);

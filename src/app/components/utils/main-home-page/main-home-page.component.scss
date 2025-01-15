@@ -12,20 +12,10 @@
   padding: 0px;
   margin: 0px;
 }
-.toggle-button{
+.toggle-button {
   width: 150px;
   height: 15px;
 }
-.custom-hide-icon::before {
-  content: "\25B2";
-  font-size: 16px;
-}
-
-.custom-show-icon::before {
-  content: "\25BC";
-  font-size: 16px;
-}
-
 .container {
   padding: 0px;
   margin: 0px;
@@ -36,13 +26,14 @@
   padding: 0px;
   margin: 0px;
   overflow-y: auto;
-
+  overflow-x: hidden;
   border-radius: 8px;
-  scrollbar-width: none;
+  scrollbar-width: 5px;
 }
-// .graph-scroll-container::-webkit-scrollbar {
-//   display: none;
-// }
+.graph-scroll-container::-webkit-scrollbar {
+  // display: none;
+  scrollbar-width: 5px;
+}
 
 .graphContainer {
   padding: 5px;
@@ -56,19 +47,22 @@
 }
 .ChartContent {
   flex: 1;
-  padding: 5px;
-  height: 50vh;
+  padding-bottom: 10px;
+  height: 53vh;
   text-align: center;
   align-items: center;
   margin: 0px;
+  padding: 5px;
   border-radius: 8px;
   background-color: var(--base-bg);
 }
 .ChartContent-2 {
   flex: 1;
-  height: 50vh;
+  height: 53vh;
+  width: auto;
   text-align: center;
   align-items: center;
   margin: 0px;
+  padding: 0px;
   border-radius: 8px;
 }

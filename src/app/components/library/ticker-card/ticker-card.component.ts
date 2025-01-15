@@ -1,19 +1,17 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  NgModule,
-  Input
-} from '@angular/core';
+import { Component, NgModule, Input } from '@angular/core';
 import { CardAnalyticsModule } from '../card-analytics/card-analytics.component';
-import { Sales, SalesOrOpportunitiesByCategory } from '../../../types/analytics';
-import { ApplyPipeModule } from "src/app/pipes/apply.pipe";
+import {
+  Sales,
+  SalesOrOpportunitiesByCategory,
+} from '../../../types/analytics';
+import { ApplyPipeModule } from 'src/app/pipes/apply.pipe';
 
 @Component({
   selector: 'ticker-card',
   templateUrl: './ticker-card.component.html',
   styleUrls: ['./ticker-card.component.scss'],
 })
-
 export class TickerCardComponent {
   @Input() titleText: string;
 
@@ -23,31 +21,32 @@ export class TickerCardComponent {
 
   @Input() percentage: number;
 
+  @Input() Showpercentage: boolean = true;
+
   @Input() icon: string;
 
   @Input() tone?: 'warning' | 'info';
 
   @Input() contentClass: string | null = null;
 
-  getTotal(data: Array<{value?: number, total?: number}> ): number {
-    return (data || []).reduce((total, item) => total + (item.value || item.total), 0);
+  getTotal(data: Array<{ value?: number; total?: number }>): number {
+    return (data || []).reduce(
+      (total, item) => total + (item.value || item.total),
+      0
+    );
   }
 
   abs(value: number): number {
     return Math.abs(value);
   }
 
-  getIconClass = () => this.tone || (this.percentage > 0 ? 'positive' : 'negative');
+  getIconClass = () =>
+    this.tone || (this.percentage > 0 ? 'positive' : 'negative');
 }
 
 @NgModule({
-  imports: [
-    CardAnalyticsModule,
-    ApplyPipeModule,
-
-    CommonModule,
-  ],
+  imports: [CardAnalyticsModule, ApplyPipeModule, CommonModule],
   declarations: [TickerCardComponent],
   exports: [TickerCardComponent],
 })
-export class TickerCardModule { }
+export class TickerCardModule {}

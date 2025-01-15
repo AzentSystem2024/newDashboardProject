@@ -26,7 +26,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { trigger, style, transition, animate } from '@angular/animations';
 import { TickerCardModule } from '../../library/ticker-card/ticker-card.component';
 import { SharedService } from 'src/app/services/shared-service';
-import { DxTreeViewTypes } from 'devextreme-angular/ui/tree-view';
+import notify from 'devextreme/ui/notify';
 
 @Component({
   selector: 'app-main-home-page',
@@ -98,143 +98,17 @@ export class MainHomePageComponent {
   userId: any;
 
   // =======================Demo Chart DataSources===================
-  RemittanceRejectionPercentDatasource: any = [
-    {
-      year: 1997,
-      smp: 263,
-      mmp: 208,
-      cnstl: 9,
-      cluster: 1,
-    },
-    {
-      year: 1999,
-      smp: 169,
-      mmp: 270,
-      cnstl: 61,
-      cluster: 7,
-    },
-    {
-      year: 2001,
-      smp: 57,
-      mmp: 261,
-      cnstl: 157,
-      cluster: 45,
-    },
-    {
-      year: 2003,
-      smp: 0,
-      mmp: 154,
-      cnstl: 121,
-      cluster: 211,
-    },
-    {
-      year: 2005,
-      smp: 0,
-      mmp: 97,
-      cnstl: 39,
-      cluster: 382,
-    },
-    {
-      year: 2007,
-      smp: 0,
-      mmp: 83,
-      cnstl: 3,
-      cluster: 437,
-    },
-  ];
-
-  CaseTypeRejectionDataSource: any = [
-    {
-      country: 'USA',
-      medals: 110,
-    },
-    {
-      country: 'China',
-      medals: 100,
-    },
-    {
-      country: 'Russia',
-      medals: 72,
-    },
-    {
-      country: 'Britain',
-      medals: 47,
-    },
-    {
-      country: 'Australia',
-      medals: 46,
-    },
-    {
-      country: 'Germany',
-      medals: 41,
-    },
-    {
-      country: 'France',
-      medals: 40,
-    },
-    {
-      country: 'South Korea',
-      medals: 31,
-    },
-  ];
-
-  DenialGroupdataSource: any = [
-    {
-      region: 'Asia',
-      val: 4119626293,
-    },
-    {
-      region: 'Africa',
-      val: 1012956064,
-    },
-    {
-      region: 'Northern America',
-      val: 344124520,
-    },
-    {
-      region: 'Latin America',
-      val: 590946440,
-    },
-    {
-      region: 'Europe',
-      val: 727082222,
-    },
-    {
-      region: 'Oceania',
-      val: 35104756,
-    },
-  ];
-
-  DenialCategoryRejectionDataSource: any = [
-    {
-      day: 'Monday',
-      oranges: 3,
-    },
-    {
-      day: 'Tuesday',
-      oranges: 2,
-    },
-    {
-      day: 'Wednesday',
-      oranges: 3,
-    },
-    {
-      day: 'Thursday',
-      oranges: 4,
-    },
-    {
-      day: 'Friday',
-      oranges: 6,
-    },
-    {
-      day: 'Saturday',
-      oranges: 11,
-    },
-    {
-      day: 'Sunday',
-      oranges: 4,
-    },
-  ];
+  RemittanceRejectionPercentDatasource: any;
+  CaseTypeRejectionDataSource: any;
+  DenialGroupdataSource: any;
+  DenialCategoryRejectionDataSource: any;
+  BlockWiseRejectionDataSource: any;
+  RejectionAccountabilityDataSource: any;
+  ToptenInsuranceRejectedDataSource: any;
+  TopTenFacilityRejectedDataSource: any;
+  TopTenCodeRejectedDataSource: any;
+  TopTenDepartmentWiseRejectedDataSource: any;
+  TopTenDoctorWiseRejectedDataSource: any;
 
   constructor(
     public service: DataService,
@@ -251,6 +125,12 @@ export class MainHomePageComponent {
   customizeLabel(arg) {
     return `${arg.valueText} (${arg.percentText})`;
   }
+
+  MillioncustomizeLabel = (args: any): string => {
+    const valueInMillions = (args.value / 1000000).toFixed(2);
+    const percentage = args.point?.data?.RejectedPercent ?? 0;
+    return `${valueInMillions}M - ${percentage}%`;
+  };
 
   customizeTooltip = ({
     valueText,
@@ -323,6 +203,7 @@ export class MainHomePageComponent {
 
   //==================Fetch data of graph datasource=====================
   get_graph_DataSource() {
+    this.showGroups = false;
     this.loadingVisible = true;
     this.dataservice
       .get_Main_Home_Dashboard_Datasource(
@@ -340,8 +221,7 @@ export class MainHomePageComponent {
         this.departmentValue
       )
       .subscribe((response: any) => {
-        if (response) {
-          this.showGroups = false;
+        if (response.flag === '1') {
           const cardData = response.summary;
           this.ClaimAmount =
             (cardData.ClaimedAmount / 1000000)
@@ -369,7 +249,21 @@ export class MainHomePageComponent {
           this.balancePrcnt = parseInt(cardData.BalancePercent);
           this.remittancePrcnt = parseInt(cardData.RemittedPercent);
           this.rejectionPrcnt = parseInt(cardData.RejectedPercent);
+
+          this.RemittanceRejectionPercentDatasource = response.MonthWise;
+          this.CaseTypeRejectionDataSource = response.CaseWise;
+          this.DenialGroupdataSource = response.GroupWise;
+          this.DenialCategoryRejectionDataSource = response.CategoryWise;
+          this.BlockWiseRejectionDataSource = response.BlockWise;
+          this.RejectionAccountabilityDataSource = response.AccountabilityWise;
+          this.ToptenInsuranceRejectedDataSource = response.InsuranceWise;
+          this.TopTenFacilityRejectedDataSource = response.FacilityWise;
+          this.TopTenCodeRejectedDataSource = response.CodeWise;
+          this.TopTenDepartmentWiseRejectedDataSource = response.DepartmentWise;
+          this.TopTenDoctorWiseRejectedDataSource = response.ClinicianWise;
           this.loadingVisible = false;
+        } else {
+          notify(`${response.message}`, 'error', 3000);
         }
       });
   }
@@ -387,12 +281,11 @@ export class MainHomePageComponent {
   }
 
   export() {
-    this.vibleExportBtn = false;
-    // const format = event.itemData;
-    const funnelContainer = document.querySelector('.ExportDiv') as HTMLElement;
-    const reportName = 'Claim Summary';
+    this.loadingVisible = true;
+    const funnelContainer = document.querySelector('.graph-scroll-container') as HTMLElement;
+    const reportName = 'Dashboard';
     this.service.export(reportName, funnelContainer);
-    this.vibleExportBtn = true;
+    this.loadingVisible = false;
   }
 }
 @NgModule({
