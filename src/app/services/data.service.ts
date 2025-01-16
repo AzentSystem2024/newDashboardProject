@@ -424,7 +424,6 @@ export class DataService {
 
   export(reportname: any, element: any) {
     if (element) {
-      console.log('export function called|');
       html2canvas(element).then((canvas) => {
         const imgData = canvas.toDataURL('image/png');
         const pdf = new jsPDF('p', 'mm', 'a4');
@@ -439,7 +438,7 @@ export class DataService {
         const textX = (pdfWidth - textWidth) / 2;
         pdf.text(reportname, textX, 10); // Centered report name
 
-        const startY = 15;
+        const startY = 15; // Adjust this value if needed for proper spacing
 
         // Add the image directly below the text
         const imgProps = pdf.getImageProperties(imgData);
@@ -456,5 +455,99 @@ export class DataService {
         pdf.save(`${reportname}.pdf`);
       });
     }
+  }
+
+  exportGraphData(reportname: any, elements: HTMLElement[]): Promise<void> {
+    return new Promise((resolve, reject) => {
+      if (elements && elements.length > 0) {
+        // Initialize jsPDF with A4 size (portrait)
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const pdfWidth = pdf.internal.pageSize.getWidth(); // A4 width
+        const pdfHeight = pdf.internal.pageSize.getHeight(); // A4 height
+        let yPosition = 10; // Starting y position for content
+
+        // Add the title at the top of the first page
+        pdf.setFontSize(15);
+        pdf.setFont('helvetica', 'bold');
+        const textWidth =
+          (pdf.getStringUnitWidth(reportname) * pdf.getFontSize()) /
+          pdf.internal.scaleFactor;
+        const textX = (pdfWidth - textWidth) / 2; // Center the title
+        pdf.text(reportname, textX, yPosition);
+        yPosition = 10; // Space below the title
+
+        // Function to add each element to the PDF
+        const processElement = (
+          element: HTMLElement,
+          resolve: () => void,
+          reject: (error: any) => void
+        ) => {
+          html2canvas(element, {
+            scale: 3, // Increase resolution for sharper output
+            useCORS: true,
+            allowTaint: false,
+            logging: false,
+          })
+            .then((canvas) => {
+              const imgData = canvas.toDataURL('image/png');
+              const imgProps = pdf.getImageProperties(imgData);
+              const imageHeight = (imgProps.height * pdfWidth) / imgProps.width; // Resize image to fit width
+
+              // Calculate scale factor to maximize content size and avoid small content
+              const scaleFactor = Math.min(
+                pdfWidth / imgProps.width,
+                pdfHeight / imageHeight
+              );
+              const scaledWidth = imgProps.width * scaleFactor;
+              const scaledHeight = imageHeight * 15 * scaleFactor;
+
+              // Add the image to the PDF (scaled to fit on one page)
+              pdf.addImage(
+                imgData,
+                'PNG',
+                0,
+                yPosition,
+                scaledWidth,
+                scaledHeight
+              );
+
+              // Update the yPosition for the next content
+              yPosition += scaledHeight;
+
+              resolve(); // Resolve when done
+            })
+            .catch((error) => {
+              reject(error); // Reject if there's an error in html2canvas
+            });
+        };
+
+        // Process each element sequentially
+        const promises = elements.map(
+          (element) =>
+            new Promise<void>((resolve, reject) =>
+              processElement(element, resolve, reject)
+            )
+        );
+
+        // Wait for all elements to be processed
+        Promise.all(promises)
+          .then(() => {
+            // Add a timestamp at the bottom of the last page
+            const exportTime = moment().format('DD-MM-YYYY hh:mm:ss A');
+            pdf.setFontSize(10);
+            pdf.text(`Exported on: ${exportTime}`, 10, pdfHeight - 5);
+
+            // Save the PDF
+            pdf.save(`${reportname}.pdf`);
+
+            resolve(); // Resolve the Promise when export is done
+          })
+          .catch((error) => {
+            reject(error); // Reject if there's an error in processing elements
+          });
+      } else {
+        reject('No elements to export'); // Reject if no elements are passed
+      }
+    });
   }
 }

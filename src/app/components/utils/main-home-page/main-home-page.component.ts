@@ -28,6 +28,8 @@ import { TickerCardModule } from '../../library/ticker-card/ticker-card.componen
 import { SharedService } from 'src/app/services/shared-service';
 import notify from 'devextreme/ui/notify';
 import * as moment from 'moment';
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
 
 @Component({
   selector: 'app-main-home-page',
@@ -286,13 +288,22 @@ export class MainHomePageComponent {
   }
 
   export() {
-    this.loadingVisible = true;
-    const funnelContainer = document.querySelector(
-      '.graph-scroll-container'
-    ) as HTMLElement;
+    // Select both divs
+    const exportDiv1 = document.querySelector('.ExportDiv1') as HTMLElement;
+    const exportDiv2 = document.querySelector('.ExportDiv2') as HTMLElement;
+    // Pass both divs to the service
     const reportName = 'Dashboard';
-    this.service.export(reportName, funnelContainer);
-    this.loadingVisible = false;
+    this.loadingVisible = true; // Show loading indicator
+    // Use async/await to ensure the export completes before hiding the loading
+    this.service
+      .exportGraphData(reportName, [exportDiv1, exportDiv2])
+      .then(() => {
+        this.loadingVisible = false; // Hide loading indicator after export completes
+      })
+      .catch((error) => {
+        this.loadingVisible = false; // Hide loading in case of an error
+        console.error('Export failed:', error); // Handle any errors if needed
+      });
   }
 }
 @NgModule({
