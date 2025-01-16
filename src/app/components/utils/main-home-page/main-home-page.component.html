@@ -21,6 +21,7 @@
           applyValueMode="useButtons"
           [(value)]="DateFrom"
           displayFormat="dd/MM/yyyy"
+          valueFormat="yyyy/MM/dd"
           label="From Date"
           labelMode="floating"
         ></dx-date-box>
@@ -31,6 +32,7 @@
           applyValueMode="useButtons"
           [(value)]="DateTo"
           displayFormat="dd/MM/yyyy"
+          valueFormat="yyyy/MM/dd"
           label="To Date"
           labelMode="floating"
         ></dx-date-box>
@@ -152,7 +154,7 @@
             class="add-card mt-1"
             icon="refresh"
             text="Apply"
-            type="success"
+            type="default"
             stylingMode="contained"
             (click)="applyButtonClicked()"
           ></dx-button>
@@ -267,6 +269,7 @@
       <div class="d-flex gap-1">
         <div class="ChartContent">
           <dx-chart
+            class="m-5 ps-5 pe-5"
             palette="violet"
             [dataSource]="RemittanceRejectionPercentDatasource"
           >
@@ -275,12 +278,23 @@
               valueField="RemittedPercent"
               name="Remitance %"
               color="#FF5733"
-            ></dxi-series>
+            >
+              <dxo-label [visible]="true">
+                <dxo-connector [visible]="false"></dxo-connector>
+                <dxo-format type="fixedPoint" precision="2"></dxo-format>
+              </dxo-label>
+            </dxi-series>
             <dxi-series
               valueField="RejectedPercent"
               name="Rejection %"
               color="#33FF57"
+            >
+              <dxo-label [visible]="true">
+                <dxo-connector [visible]="false"></dxo-connector>
+                <dxo-format type="fixedPoint" precision="2"></dxo-format>
+                <dxo-position [offset]="30"></dxo-position></dxo-label
             ></dxi-series>
+
             <dxo-common-series-settings
               #seriesSettings
               argumentField="Month"
@@ -295,75 +309,79 @@
             </dxo-legend>
             <dxo-argument-axis
               type="discrete"
-              [allowDecimals]="true"
+              [allowDecimals]="false"
               [axisDivisionFactor]="60"
             >
-              <dxo-label>
+              <dxo-label [visible]="true">
                 <dxo-format type="decimal"></dxo-format>
               </dxo-label>
             </dxo-argument-axis>
             <dxo-tooltip [enabled]="true"></dxo-tooltip>
           </dx-chart>
         </div>
+      </div>
+    </div>
 
-        <div class="ChartContent-2">
-          <div class="d-flex gap-1 p-0 m-0">
-            <div class="ChartContent">
-              <dx-pie-chart
-                id="pie"
-                palette="bright"
-                [dataSource]="CaseTypeRejectionDataSource"
-              >
-                <dxo-title text="Case Type Rejection %" hint=""></dxo-title>
-                <dxo-size [height]="400"></dxo-size>
-                <dxo-legend
-                  orientation="horizontal"
-                  itemTextPosition="right"
-                  horizontalAlignment="center"
-                  verticalAlignment="bottom"
-                  [columnCount]="3"
-                ></dxo-legend>
-                <!-- <dxo-export [enabled]="true"></dxo-export> -->
-                <dxi-series argumentField="CaseType" valueField="Rejected">
-                  <dxo-label [visible]="true" [customizeText]="customizeLabel">
-                    <dxo-connector
-                      [visible]="true"
-                      [width]="0.2"
-                    ></dxo-connector>
-                  </dxo-label>
-                </dxi-series>
-              </dx-pie-chart>
-            </div>
+    <div class="graphContainer">
+      <div class="d-flex gap-1 p-0 m-0">
+        <div class="ChartContent text-center">
+          <dx-pie-chart
+            class="p-0 m-0"
+            id="pie"
+            palette="bright"
+            [dataSource]="CaseTypeRejectionDataSource"
+            [size]="{ width: 600, height: 420 }"
 
-            <div class="ChartContent">
-              <dx-pie-chart
-                id="pie"
-                type="doughnut"
-                palette="Soft Pastel"
-                [dataSource]="DenialGroupdataSource"
+          >
+            <dxo-title text="Case Type Rejection %" hint=""></dxo-title>
+
+            <dxo-legend
+              orientation="horizontal"
+              itemTextPosition="right"
+              verticalAlignment="bottom"
+              horizontalAlignment="center"
+              [columnCount]="4"
+            ></dxo-legend>
+            <!-- <dxo-export [enabled]="true"></dxo-export> -->
+            <dxi-series argumentField="CaseType" valueField="Rejected">
+              <dxo-label
+                [visible]="true"
+                position="columns"
+                [customizeText]="customizeLabel"
               >
-                <dxo-title text="Denial Group" hint=""></dxo-title>
-                <dxi-series argumentField="Group" valueField="Rejected">
-                  <dxo-label [visible]="true" format="millions">
-                    <dxo-connector [visible]="true"></dxo-connector>
-                  </dxo-label>
-                </dxi-series>
-                <!-- <dxo-export [enabled]="true"></dxo-export> -->
-                <dxo-legend
-                  itemTextPosition="right"
-                  horizontalAlignment="center"
-                  verticalAlignment="bottom"
-                  [columnCount]="5"
-                ></dxo-legend>
-                <dxo-tooltip
-                  [enabled]="true"
-                  [customizeTooltip]="customizeTooltip"
-                  format="millions"
-                >
-                </dxo-tooltip>
-              </dx-pie-chart>
-            </div>
-          </div>
+                <dxo-connector [visible]="true" ></dxo-connector>
+              </dxo-label>
+            </dxi-series>
+          </dx-pie-chart>
+        </div>
+
+        <div class="ChartContent">
+          <dx-pie-chart
+            id="pie"
+            type="doughnut"
+            palette="Soft Pastel"
+            [dataSource]="DenialGroupdataSource"
+          >
+            <dxo-title text="Denial Group" hint=""></dxo-title>
+            <dxi-series argumentField="Group" valueField="Rejected">
+              <dxo-label [visible]="true" position="columns" format="millions">
+                <dxo-connector [visible]="true"></dxo-connector>
+              </dxo-label>
+            </dxi-series>
+            <!-- <dxo-export [enabled]="true"></dxo-export> -->
+            <dxo-legend
+              itemTextPosition="right"
+              verticalAlignment="top"
+              horizontalAlignment="right"
+              [columnCount]="1"
+            ></dxo-legend>
+            <dxo-tooltip
+              [enabled]="true"
+              [customizeTooltip]="customizeTooltip"
+              format="millions"
+            >
+            </dxo-tooltip>
+          </dx-pie-chart>
         </div>
       </div>
     </div>
@@ -417,8 +435,6 @@
               <dxo-label
                 [visible]="true"
                 format="millions"
-                position="top"
-                verticalAlignment="top"
                 [customizeText]="MillioncustomizeLabel"
               >
                 <dxo-connector [visible]="true"></dxo-connector>

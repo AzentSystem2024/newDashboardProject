@@ -27,6 +27,7 @@ import { trigger, style, transition, animate } from '@angular/animations';
 import { TickerCardModule } from '../../library/ticker-card/ticker-card.component';
 import { SharedService } from 'src/app/services/shared-service';
 import notify from 'devextreme/ui/notify';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-main-home-page',
@@ -62,8 +63,8 @@ export class MainHomePageComponent {
   DenailCategoryDatasource: any;
   denialcategoryvalue: any;
   encountertypevalue: any;
-  DateFrom: any = new Date('01/01/2018');
-  DateTo: any = new Date();
+  DateFrom: any = moment().format('DD/MM/YYYY');
+  DateTo: any = moment().format('DD/MM/YYYY');
   RejectionIndexDatasource: any;
   rejectionIndexvalue: any;
   blockDataSource: any;
@@ -123,7 +124,8 @@ export class MainHomePageComponent {
   }
 
   customizeLabel(arg) {
-    return `${arg.valueText} (${arg.percentText})`;
+    const valueInMillions = (arg.valueText / 1000000).toFixed(2);
+    return `${valueInMillions}M (${arg.percentText})`;
   }
 
   MillioncustomizeLabel = (args: any): string => {
@@ -164,6 +166,8 @@ export class MainHomePageComponent {
         this.departmentDataSource = response.Department;
         this.FacilityDataSource = response.Facility;
 
+        this.DateFrom = '2018/01/01';
+        this.DateTo = '2018/12/01';
         this.searchOnvalue =
           this.SearchOnDatasource.find((obj: any) => obj.Default === '1')?.ID ||
           ' ';
@@ -205,6 +209,7 @@ export class MainHomePageComponent {
   get_graph_DataSource() {
     this.showGroups = false;
     this.loadingVisible = true;
+
     this.dataservice
       .get_Main_Home_Dashboard_Datasource(
         this.searchOnvalue,
@@ -282,7 +287,9 @@ export class MainHomePageComponent {
 
   export() {
     this.loadingVisible = true;
-    const funnelContainer = document.querySelector('.graph-scroll-container') as HTMLElement;
+    const funnelContainer = document.querySelector(
+      '.graph-scroll-container'
+    ) as HTMLElement;
     const reportName = 'Dashboard';
     this.service.export(reportName, funnelContainer);
     this.loadingVisible = false;
