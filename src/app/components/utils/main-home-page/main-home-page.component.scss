@@ -28,12 +28,8 @@
   overflow-y: auto;
   overflow-x: hidden;
   border-radius: 8px;
-  scrollbar-width: 5px;
 }
-.graph-scroll-container::-webkit-scrollbar {
-  // display: none;
-  scrollbar-width: 5px;
-}
+
 
 .graphContainer {
   padding: 5px;
