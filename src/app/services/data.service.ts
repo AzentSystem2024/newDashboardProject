@@ -474,7 +474,7 @@ export class DataService {
           pdf.internal.scaleFactor;
         const textX = (pdfWidth - textWidth) / 2; // Center the title
         pdf.text(reportname, textX, yPosition);
-        yPosition = 10; // Space below the title
+        yPosition = 12; // Space below the title
 
         // Function to add each element to the PDF
         const processElement = (
@@ -491,36 +491,31 @@ export class DataService {
             .then((canvas) => {
               const imgData = canvas.toDataURL('image/png');
               const imgProps = pdf.getImageProperties(imgData);
-              const imageHeight = (imgProps.height * pdfWidth) / imgProps.width; // Resize image to fit width
-
+              const imageHeight = (imgProps.height * pdfWidth) / imgProps.width;
               // Calculate scale factor to maximize content size and avoid small content
               const scaleFactor = Math.min(
                 pdfWidth / imgProps.width,
                 pdfHeight / imageHeight
               );
-              const scaledWidth = imgProps.width * scaleFactor;
+              const scaledWidth = imgProps.width * scaleFactor - 20;
               const scaledHeight = imageHeight * 15 * scaleFactor;
-
               // Add the image to the PDF (scaled to fit on one page)
               pdf.addImage(
                 imgData,
                 'PNG',
-                0,
+                10,
                 yPosition,
                 scaledWidth,
                 scaledHeight
               );
-
               // Update the yPosition for the next content
               yPosition += scaledHeight;
-
               resolve(); // Resolve when done
             })
             .catch((error) => {
               reject(error); // Reject if there's an error in html2canvas
             });
         };
-
         // Process each element sequentially
         const promises = elements.map(
           (element) =>
@@ -528,25 +523,23 @@ export class DataService {
               processElement(element, resolve, reject)
             )
         );
-
         // Wait for all elements to be processed
         Promise.all(promises)
           .then(() => {
             // Add a timestamp at the bottom of the last page
             const exportTime = moment().format('DD-MM-YYYY hh:mm:ss A');
-            pdf.setFontSize(10);
+            pdf.setFontSize(5);
+            pdf.setFont('helvetica', 'normal');
             pdf.text(`Exported on: ${exportTime}`, 10, pdfHeight - 5);
-
             // Save the PDF
             pdf.save(`${reportname}.pdf`);
-
-            resolve(); // Resolve the Promise when export is done
+            resolve();
           })
           .catch((error) => {
-            reject(error); // Reject if there's an error in processing elements
+            reject(error);
           });
       } else {
-        reject('No elements to export'); // Reject if no elements are passed
+        reject('No elements to export');
       }
     });
   }

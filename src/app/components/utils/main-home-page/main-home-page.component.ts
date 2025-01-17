@@ -288,12 +288,12 @@ export class MainHomePageComponent {
   }
 
   export() {
+    this.loadingVisible = true; // Show loading indicator
     // Select both divs
     const exportDiv1 = document.querySelector('.ExportDiv1') as HTMLElement;
     const exportDiv2 = document.querySelector('.ExportDiv2') as HTMLElement;
     // Pass both divs to the service
     const reportName = 'Dashboard';
-    this.loadingVisible = true; // Show loading indicator
     // Use async/await to ensure the export completes before hiding the loading
     this.service
       .exportGraphData(reportName, [exportDiv1, exportDiv2])

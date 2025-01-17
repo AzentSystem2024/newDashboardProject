@@ -30,7 +30,6 @@
   border-radius: 8px;
 }
 
-
 .graphContainer {
   padding: 5px;
   margin: 0px;
@@ -62,4 +61,55 @@
   margin: 0px;
   padding: 0px;
   border-radius: 8px;
+}
+.iconBackground {
+  background-color: rgba(245, 222, 179, 0.413);
+  opacity: 100;
+  border-radius: 50%;
+  color: white;
+}
+.card-title {
+  font-weight: 500;
+  margin-right: 5px;
+}
+.card-text {
+  font-weight: bold;
+  font-size: large;
+}
+.card-body {
+  color: azure;
+  padding: 5px;
+}
+.percentage {
+  padding: 2px;
+  width: 50px;
+  border-radius: 15px;
+  background-color: rgba(245, 245, 220, 0.333);
+}
+.iconBackground {
+  padding: 10px;
+}
+.claimedCard {
+  background-color: #4d68ddef;
+}
+.RemittedCard {
+  background-color: #ff8522da;
+}
+.paidCard {
+  background-color: #14e34be6;
+}
+.deniedCard {
+  background-color: #e24473eb;
+}
+.balanceCard {
+  background-color: #e19977e6;
+}
+.rejectionPrcntCard {
+  background-color: #99305a;
+}
+.graphTitle
+{
+  font-size: large;
+  font-style: italic;
+
 }
