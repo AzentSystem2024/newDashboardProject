@@ -58,27 +58,27 @@ export class MainHomePageComponent {
   vibleExportBtn: boolean = true;
   SearchOnDatasource: any;
   searchOnvalue: any;
-  facilityvalue: any;
+  facilityvalue: any[] = [];
   FacilityDataSource: any;
 
   EncountrTypeDatasource: any;
   DenailCategoryDatasource: any;
-  denialcategoryvalue: any;
-  encountertypevalue: any;
+  denialcategoryvalue: any[] = [];
+  encountertypevalue: any[] = [];
   DateFrom: any = moment().format('DD/MM/YYYY');
   DateTo: any = moment().format('DD/MM/YYYY');
   RejectionIndexDatasource: any;
   rejectionIndexvalue: any;
   blockDataSource: any;
-  blockValue: any;
+  blockValue: any[] = [];
   regionDataSource: any;
-  RegionValue: any;
+  RegionValue: any[] = [];
   ProviderTypeDatasource: any;
-  ProviderTypevalue: any;
+  ProviderTypevalue: any[] = [];
   insuranceDataSource: any;
-  insuranceValue: any;
+  insuranceValue: any[] = [];
   departmentDataSource: any;
-  departmentValue: any;
+  departmentValue: any[] = [];
   showGroups: boolean = true;
 
   //=================card data variables=====================
@@ -168,40 +168,48 @@ export class MainHomePageComponent {
         this.departmentDataSource = response.Department;
         this.FacilityDataSource = response.Facility;
 
-        this.DateFrom = '2018/01/01';
-        this.DateTo = '2018/12/01';
+        // this.DateFrom = '2018/01/01';
+        // this.DateTo = '2018/12/01';
         this.searchOnvalue =
           this.SearchOnDatasource.find((obj: any) => obj.Default === '1')?.ID ||
           ' ';
-        // this.DateFrom = new Date(response.DateFrom);
-        // this.DateTo = new Date(response.DateTo);
+        this.DateFrom = new Date(response.DateFrom);
+        this.DateTo = new Date(response.DateTo);
         this.rejectionIndexvalue =
           this.RejectionIndexDatasource.find((obj: any) => obj.Default === '1')
             ?.ID || ' ';
-        this.denialcategoryvalue =
-          this.DenailCategoryDatasource.find((obj: any) => obj.Default === '1')
-            ?.ID || ' ';
-        this.encountertypevalue =
-          this.EncountrTypeDatasource.find((obj: any) => obj.Default === '1')
-            ?.ID || ' ';
-        this.blockValue =
-          this.blockDataSource.find((obj: any) => obj.Default === '1')?.ID ||
-          ' ';
-        this.RegionValue =
-          this.regionDataSource.find((obj: any) => obj.Default === '1')?.ID ||
-          ' ';
-        this.ProviderTypevalue =
-          this.ProviderTypeDatasource.find((obj: any) => obj.Default === '1')
-            ?.ID || ' ';
-        this.facilityvalue =
-          this.FacilityDataSource.find((obj: any) => obj.Default === '1')?.ID ||
-          ' ';
-        this.insuranceValue =
-          this.insuranceDataSource.find((obj: any) => obj.Default === '1')
-            ?.ID || ' ';
-        this.departmentValue =
-          this.departmentDataSource.find((obj: any) => obj.Default === '1')
-            ?.ID || ' ';
+
+        this.denialcategoryvalue = this.DenailCategoryDatasource.filter(
+          (item) => item.Default === '1'
+        ).map((item) => item.ID);
+
+        this.encountertypevalue = this.EncountrTypeDatasource.filter(
+          (item) => item.Default === '1'
+        ).map((item) => item.ID);
+
+        this.blockValue = this.blockDataSource
+          .filter((item) => item.Default === '1')
+          .map((item) => item.ID);
+
+        this.RegionValue = this.regionDataSource
+          .filter((item) => item.Default === '1')
+          .map((item) => item.ID);
+
+        this.ProviderTypevalue = this.ProviderTypeDatasource.filter(
+          (item) => item.Default === '1'
+        ).map((item) => item.ID);
+
+        this.facilityvalue = this.FacilityDataSource.filter(
+          (item) => item.Default === '1'
+        ).map((item) => item.ID);
+
+        this.insuranceValue = this.insuranceDataSource
+          .filter((item) => item.Default === '1')
+          .map((item) => item.ID);
+
+        this.departmentValue = this.departmentDataSource
+          .filter((item) => item.Default === '1')
+          .map((item) => item.ID);
       }
       this.get_graph_DataSource();
     });
@@ -218,14 +226,14 @@ export class MainHomePageComponent {
         this.DateFrom,
         this.DateTo,
         this.rejectionIndexvalue,
-        this.denialcategoryvalue,
-        this.encountertypevalue,
-        this.blockValue,
-        this.RegionValue,
-        this.ProviderTypevalue,
-        this.facilityvalue,
-        this.insuranceValue,
-        this.departmentValue
+        this.denialcategoryvalue.join(', '),
+        this.encountertypevalue.join(', '),
+        this.blockValue.join(', '),
+        this.RegionValue.join(', '),
+        this.ProviderTypevalue.join(', '),
+        this.facilityvalue.join(', '),
+        this.insuranceValue.join(', '),
+        this.departmentValue.join(', ')
       )
       .subscribe((response: any) => {
         if (response.flag === '1') {

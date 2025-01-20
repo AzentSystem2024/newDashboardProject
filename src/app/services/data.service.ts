@@ -489,7 +489,7 @@ export class DataService {
             logging: false,
           })
             .then((canvas) => {
-              const imgData = canvas.toDataURL('image/png');
+              const imgData = canvas.toDataURL('image/jpeg', 0.7);
               const imgProps = pdf.getImageProperties(imgData);
               const imageHeight = (imgProps.height * pdfWidth) / imgProps.width;
               // Calculate scale factor to maximize content size and avoid small content
@@ -502,7 +502,7 @@ export class DataService {
               // Add the image to the PDF (scaled to fit on one page)
               pdf.addImage(
                 imgData,
-                'PNG',
+                'JPEG',
                 10,
                 yPosition,
                 scaledWidth,
@@ -530,7 +530,7 @@ export class DataService {
             const exportTime = moment().format('DD-MM-YYYY hh:mm:ss A');
             pdf.setFontSize(5);
             pdf.setFont('helvetica', 'normal');
-            pdf.text(`Exported on: ${exportTime}`, 10, pdfHeight - 5);
+            pdf.text(`Exported on: ${exportTime}`, 10, pdfHeight - 2);
             // Save the PDF
             pdf.save(`${reportname}.pdf`);
             resolve();

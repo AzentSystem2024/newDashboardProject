@@ -43,25 +43,19 @@
 .ChartContent {
   flex: 1;
   padding-bottom: 10px;
-  height: 53vh;
-  text-align: center;
+  overflow: hidden;
+  max-width: 100%;
+  justify-content: center;
   align-items: center;
+  height: auto;
+  text-align: center;
   margin: 0px;
   padding: 5px;
   border-radius: 8px;
   background-color: var(--base-bg);
   border: 1px solid var(--border-color);
 }
-.ChartContent-2 {
-  flex: 1;
-  height: 53vh;
-  width: auto;
-  text-align: center;
-  align-items: center;
-  margin: 0px;
-  padding: 0px;
-  border-radius: 8px;
-}
+
 .iconBackground {
   background-color: rgba(245, 222, 179, 0.413);
   opacity: 100;
@@ -107,9 +101,7 @@
 .rejectionPrcntCard {
   background-color: #99305a;
 }
-.graphTitle
-{
+.graphTitle {
   font-size: large;
   font-style: italic;
-
 }
