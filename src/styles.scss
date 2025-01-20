@@ -1,4 +1,7 @@
 @use "variables.scss" as *;
+@import "~bootstrap/dist/css/bootstrap.min.css";
+
+
 
 html,
 body {
@@ -986,8 +989,12 @@ app-root {
   width: 50%;
 }
 
-
 /* Add this to your styles */
-.dx-chart .dx-chart-series > .dx-series-elements > .dx-bar-series > .dx-point > text {
+.dx-chart
+  .dx-chart-series
+  > .dx-series-elements
+  > .dx-bar-series
+  > .dx-point
+  > text {
   background: transparent !important; /* Remove the background of the label */
 }
