@@ -222,18 +222,15 @@
   <!-- =============================Card data Div============================= -->
   <div class="graph-scroll-container">
     <div class="ExportDiv2">
-      <div class="container mb-1 ps-3">
-        <div class="row gap-2 d-flex justify-content-start">
-          <div
-            class="card col-12 col-md-2 col-lg-2 col-sm-6 claimedCard p-0 m-0"
-          >
+      <div class="">
+        <div class="row d-flex flex-nowrap gap-2 justify-content-start overflow-auto">
+          <!-- Claimed Card -->
+          <div class="card col-12 col-md-2 col-lg-2 col-sm-6 claimedCard p-0 m-0">
             <div class="card-body">
               <div class="d-flex align-items-center">
-                <!-- Icon -->
                 <div class="d-flex justify-content-center align-items-center">
                   <i class="dx-icon dx-icon-datatrending iconBackground"></i>
                 </div>
-                <!-- Grouped Title and Card Text -->
                 <div class="ms-2">
                   <p class="card-title mb-1">Claimed</p>
                   <p class="card-text mb-0">{{ ClaimAmount }}</p>
@@ -242,83 +239,78 @@
             </div>
           </div>
 
-          <div
-            class="card col-12 col-md-2 col-lg-2 col-sm-6 RemittedCard p-0 m-0"
-          >
+          <!-- Remitted Card -->
+          <div class="card col-12 col-md-2 col-lg-2 col-sm-6 RemittedCard p-0 m-0">
             <div class="card-body">
               <div class="d-flex align-items-center text-center">
                 <i class="dx-icon dx-icon-dataarea me-1 iconBackground"></i>
                 <p class="card-title mb-0">Remitted</p>
-                <!-- Additional text on the same line -->
                 <span class="ms-auto percentage">{{ remittedPercnt }}%</span>
               </div>
               <p class="card-text ms-5">{{ remittedAmt }}</p>
             </div>
           </div>
 
+          <!-- Paid Card -->
           <div class="card col-12 col-md-2 col-lg-2 col-sm-6 paidCard p-0 m-0">
             <div class="card-body">
               <div class="d-flex align-items-center text-center">
                 <i class="dx-icon dx-icon-bookmark me-1 iconBackground"></i>
                 <p class="card-title mb-0">Paid</p>
-                <!-- Additional text on the same line -->
                 <span class="ms-auto percentage">{{ paidPrcnt }}%</span>
               </div>
               <p class="card-text ms-5">{{ paidAmt }}</p>
             </div>
           </div>
 
-          <div
-            class="card col-12 col-md-2 col-lg-2 col-sm-6 deniedCard p-0 m-0"
-          >
+          <!-- Rejected Card -->
+          <div class="card col-12 col-md-2 col-lg-2 col-sm-6 deniedCard p-0 m-0">
             <div class="card-body">
               <div class="d-flex align-items-center text-center">
                 <i class="dx-icon dx-icon-datapie me-1 iconBackground"></i>
                 <p class="card-title mb-0">Rejected</p>
-                <!-- Additional text on the same line -->
                 <span class="ms-auto percentage">{{ deniedPrcnt }}%</span>
               </div>
               <p class="card-text ms-5">{{ deniedAmt }}</p>
             </div>
           </div>
 
-          <div
-            class="card col-12 col-md-2 col-lg-2 col-sm-6 balanceCard p-0 m-0"
-          >
+          <!-- Un-Remitted Card -->
+          <div class="card col-12 col-md-2 col-lg-2 col-sm-6 balanceCard p-0 m-0">
             <div class="card-body">
               <div class="d-flex align-items-center text-center">
                 <i class="dx-icon dx-icon-dataarea me-1 iconBackground"></i>
                 <p class="card-title mb-0">Un-Remitted</p>
-                <!-- Additional text on the same line -->
                 <span class="ms-auto percentage">{{ balancePrcnt }}%</span>
               </div>
               <p class="card-text ms-5">{{ balanceAmt }}</p>
             </div>
           </div>
 
+          <!-- Remittance % Card -->
           <div class="card col-12 col-md-2 col-lg-2 col-sm-6 bg-danger p-0 m-0">
             <div class="card-body">
               <div class="d-flex align-items-center text-center">
                 <i class="dx-icon dx-icon-dataarea me-1 iconBackground"></i>
-                <p class="card-title mb-0">Remittance %"</p>
+                <p class="card-title mb-0">Remittance %</p>
               </div>
               <p class="card-text ms-5">{{ remittancePrcnt }}%</p>
             </div>
           </div>
 
-          <div
-            class="card col-12 col-md-2 col-lg-2 col-sm-6 rejectionPrcntCard p-0 m-0"
-          >
+          <!-- Rejection % Card -->
+          <div class="card col-12 col-md-2 col-lg-2 col-sm-6 rejectionPrcntCard p-0 m-0">
             <div class="card-body">
               <div class="d-flex align-items-center text-center">
                 <i class="dx-icon dx-icon-datapie me-1 iconBackground"></i>
                 <p class="card-title mb-0">Rejection %</p>
               </div>
-              <p class="card-text ms-5">{{ rejectionPrcnt }}%</p>
+              <p class="card-text ms-5">{{ rejectionPrcnt }}</p>
             </div>
           </div>
         </div>
       </div>
+
 
       <!-- ====================================Graph Loading==================== -->
 
