@@ -19,6 +19,7 @@ import {
   DxPieChartModule,
   DxTagBoxModule,
   DxLoadPanelModule,
+  DxDataGridModule,
 } from 'devextreme-angular';
 import { CardAnalyticsModule } from '../../library/card-analytics/card-analytics.component';
 import { DataService } from 'src/app/services';
@@ -30,6 +31,7 @@ import notify from 'devextreme/ui/notify';
 import * as moment from 'moment';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
+import CustomStore from 'devextreme/data/custom_store';
 
 @Component({
   selector: 'app-main-home-page',
@@ -112,6 +114,7 @@ export class MainHomePageComponent {
   TopTenCodeRejectedDataSource: any;
   TopTenDepartmentWiseRejectedDataSource: any;
   TopTenDoctorWiseRejectedDataSource: any;
+  modifiedFacilityDatasource: any;
 
   constructor(
     public service: DataService,
@@ -145,6 +148,31 @@ export class MainHomePageComponent {
   }) => ({
     text: `${valueText} - ${this.pipe.transform(percent, '1.2-2')}`,
   });
+  //======================top 10 insurance tooltip===================
+  top10InsuranceDataCustomizeTooltip(arg: any) {
+    return {
+      text: `${arg.point.data.InsuranceName}`,
+    };
+  }
+  //======================top 10 code tooltip===================
+  top10CodeDataCustomizeTooltip(arg: any) {
+    console.log('arg data', arg);
+    return {
+      text: `${arg.point.data.FacilityName}`,
+    };
+  }
+  //======================top 10 code tooltip===================
+  top10FacilityDataCustomizeTooltip(arg: any) {
+    return {
+      text: `${arg.point.data.FacilityName}`,
+    };
+  }
+  //======================top 10 code tooltip===================
+  top10ClinicianDataCustomizeTooltip(arg: any) {
+    return {
+      text: `${arg.point.data.ClinicianName}`,
+    };
+  }
 
   toggleGroups(): void {
     this.showGroups = !this.showGroups;
@@ -170,12 +198,27 @@ export class MainHomePageComponent {
     return `<span>${itemData.Name}</span>`;
   };
 
+  //==================MAking cutom datasource for facility datagrid and dropdown loADING=======
+  makeAsyncDataSourceFromJson(jsonData: any) {
+    return new CustomStore({
+      loadMode: 'raw',
+      key: 'ID',
+      load: () => {
+        return new Promise((resolve, reject) => {
+          try {
+            resolve(jsonData);
+          } catch (error) {
+            reject(error);
+          }
+        });
+      },
+    });
+  }
   //=====================fetch init dataSource =========================
   getValuesOfInitData() {
     this.loadingVisible = true;
     this.service.getInitData(this.userId).subscribe((response: any) => {
       if (response) {
-        console.log('filter values fetched response :=>', response);
         const getInitDataresponse = response;
         this.SearchOnDatasource = response.SearchOn;
         this.EncountrTypeDatasource = response.EncounterType;
@@ -187,14 +230,17 @@ export class MainHomePageComponent {
         this.insuranceDataSource = response.Insurance;
         this.departmentDataSource = response.Department;
         this.FacilityDataSource = response.Facility;
+        this.modifiedFacilityDatasource = this.makeAsyncDataSourceFromJson(
+          response.Facility
+        );
 
-        // this.DateFrom = '2018/01/01';
-        // this.DateTo = '2018/12/01';
+        this.DateFrom = new Date(response.DateFrom);
+        this.DateTo = new Date(response.DateTo);
+
         this.searchOnvalue =
           this.SearchOnDatasource.find((obj: any) => obj.Default === '1')?.ID ||
           ' ';
-        this.DateFrom = new Date(response.DateFrom);
-        this.DateTo = new Date(response.DateTo);
+
         this.rejectionIndexvalue =
           this.RejectionIndexDatasource.find((obj: any) => obj.Default === '1')
             ?.ID || ' ';
@@ -231,6 +277,22 @@ export class MainHomePageComponent {
           .filter((item) => item.Default === '1')
           .map((item) => item.ID);
       }
+      const valuesObject = {
+        searchOn: this.searchOnvalue,
+        dateFrom: this.DateFrom,
+        dateTo: this.DateTo,
+        rejectionIndex: this.rejectionIndexvalue,
+        denialCategory: this.denialcategoryvalue.join(','),
+        encounterType: this.encountertypevalue.join(','),
+        block: this.blockValue.join(','),
+        region: this.RegionValue.join(','),
+        providerType: this.ProviderTypevalue.join(','),
+        facility: this.facilityvalue.join(','),
+        insurance: this.insuranceValue.join(','),
+        department: this.departmentValue.join(','),
+      };
+
+      console.log('values passed to service', valuesObject);
       this.get_graph_DataSource();
     });
   }
@@ -357,6 +419,7 @@ export class MainHomePageComponent {
     DxPieChartModule,
     DxTagBoxModule,
     DxLoadPanelModule,
+    DxDataGridModule,
   ],
   declarations: [MainHomePageComponent],
   exports: [MainHomePageComponent],

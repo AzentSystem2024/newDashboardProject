@@ -95,8 +95,44 @@
       <!-- Wrapper for Second and Third Rows -->
       <div *ngIf="showGroups" @toggleRows>
         <!-- Second Group -->
-        <div class="row ms-1 me-1">
-          <div class="col-2">
+        <div class="row mt-1 ms-1 me-1">
+          <div class="col-12">
+            <dx-drop-down-box
+              labelMode="floating"
+              labelLocation="left"
+              label="Facility value"
+              [(value)]="facilityvalue"
+              valueExpr="ID"
+              displayExpr="Name"
+              [showClearButton]="true"
+              [dataSource]="modifiedFacilityDatasource"
+            >
+              <div *dxTemplate="let data of 'content'">
+                <dx-data-grid
+                  [dataSource]="modifiedFacilityDatasource"
+                  [columns]="[
+                    { dataField: 'ID', caption: 'Facility ID' },
+                    { dataField: 'Name', caption: 'FacilityName' },
+                    { dataField: 'Region', caption: 'Region' },
+                    { dataField: 'ProviderType', caption: 'Provider Type' }
+                  ]"
+                  [selection]="{ mode: 'multiple' }"
+                  [hoverStateEnabled]="true"
+                  [paging]="{ enabled: true, pageSize: 10 }"
+                  [filterRow]="{ visible: true }"
+                  [headerFilter]="{ visible: true }"
+                  [scrolling]="{ mode: 'virtual' }"
+                  [(selectedRowKeys)]="facilityvalue"
+                >
+                </dx-data-grid>
+              </div>
+            </dx-drop-down-box>
+          </div>
+        </div>
+
+        <!-- ---Third row--- -->
+        <div class="row mt-1 ms-1 me-1">
+          <div class="col-3">
             <dx-tag-box
               [items]="blockDataSource"
               displayExpr="Name"
@@ -139,7 +175,7 @@
             ></dx-tag-box>
           </div> -->
 
-          <div class="col-2">
+          <div class="col-3">
             <dx-tag-box
               [items]="insuranceDataSource"
               displayExpr="Name"
@@ -155,23 +191,7 @@
             ></dx-tag-box>
           </div>
 
-          <div class="col-4">
-            <dx-tag-box
-              label="Facility"
-              labelMode="floating"
-              [(value)]="facilityvalue"
-              valueExpr="ID"
-              displayExpr="Name"
-              [items]="FacilityDataSource"
-              [showSelectionControls]="true"
-              [multiline]="false"
-              applyValueMode="instantly"
-              [showClearButton]="false"
-            >
-            </dx-tag-box>
-          </div>
-
-          <div class="col-2">
+          <div class="col-3">
             <dx-tag-box
               [dataSource]="departmentDataSource"
               displayExpr="Name"
@@ -185,7 +205,7 @@
             ></dx-tag-box>
           </div>
 
-          <div class="col-1">
+          <div class="col-1 ms-1">
             <dx-button
               class="add-card mt-2"
               icon="refresh"
@@ -196,7 +216,7 @@
             ></dx-button>
           </div>
 
-          <div class="col-1 ">
+          <div class="col-1 ms-1">
             <dx-button
               class="mt-2"
               icon="exportpdf"
@@ -478,7 +498,7 @@
                 argumentField="Category"
                 valueField="Rejected"
                 type="bar"
-                color="#1e549f"
+                color="#0092ca"
               >
                 <dxo-label
                   [visible]="true"
@@ -505,7 +525,7 @@
                 argumentField="Block"
                 valueField="Rejected"
                 type="bar"
-                color="#424874"
+                color="#8594e4"
               >
                 <dxo-label
                   [visible]="true"
@@ -535,7 +555,7 @@
                 argumentField="Accountability"
                 valueField="Rejected"
                 type="bar"
-                color="#22267b"
+                color="#36626a"
               >
                 <dxo-label
                   [visible]="true"
@@ -582,6 +602,10 @@
                 >
                 </dxo-label>
               </dxi-series>
+              <dxo-tooltip
+                [enabled]="true"
+                [customizeTooltip]="top10InsuranceDataCustomizeTooltip"
+              ></dxo-tooltip>
             </dx-chart>
           </div>
 
@@ -614,6 +638,10 @@
                 >
                 </dxo-label>
               </dxi-series>
+              <dxo-tooltip
+                [enabled]="true"
+                [customizeTooltip]="top10FacilityDataCustomizeTooltip"
+              ></dxo-tooltip>
             </dx-chart>
           </div>
 
@@ -645,6 +673,10 @@
                 >
                 </dxo-label>
               </dxi-series>
+              <!-- <dxo-tooltip
+                [enabled]="true"
+                [customizeTooltip]="top10CodeDataCustomizeTooltip"
+              ></dxo-tooltip> -->
             </dx-chart>
           </div>
         </div>
@@ -715,6 +747,10 @@
                 >
                 </dxo-label>
               </dxi-series>
+              <dxo-tooltip
+                [enabled]="true"
+                [customizeTooltip]="top10FacilityDataCustomizeTooltip"
+              ></dxo-tooltip>
             </dx-chart>
           </div>
         </div>
