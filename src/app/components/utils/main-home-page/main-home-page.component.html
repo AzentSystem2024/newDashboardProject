@@ -4,42 +4,52 @@
   <div class="ExportDiv1">
     <div class="mainDiv mb-1 p-0">
       <!-- First Group -->
-      <div class="row">
-        <div class="col-3">
+      <div class="row ms-1 me-1">
+        <div class="col-2 m-0">
           <dx-select-box
+            label="Search On"
+            labelMode="floating"
             [dataSource]="SearchOnDatasource"
             displayExpr="Name"
             valueExpr="ID"
             [(value)]="searchOnvalue"
             required
-            label="Search On"
-            labelMode="floating"
           ></dx-select-box>
         </div>
 
-        <div class="col-3">
-          <dx-date-box
-            applyValueMode="useButtons"
-            [(value)]="DateFrom"
-            displayFormat="dd/MM/yyyy"
-            valueFormat="yyyy/MM/dd"
-            label="From Date"
-            labelMode="floating"
-          ></dx-date-box>
+        <div class="col-2">
+          <dx-form [labelMode]="'floating'">
+            <dxi-item
+              editorType="dxDateBox"
+              [editorOptions]="{
+                applyValueMode: 'instantly',
+                displayFormat: 'dd/MM/yyyy',
+                valueFormat: 'yyyy/MM/dd',
+                value: DateFrom
+              }"
+            >
+              <dxo-label text="From Date"></dxo-label>
+            </dxi-item>
+          </dx-form>
         </div>
 
-        <div class="col-3">
-          <dx-date-box
-            applyValueMode="useButtons"
-            [(value)]="DateTo"
-            displayFormat="dd/MM/yyyy"
-            valueFormat="yyyy/MM/dd"
-            label="To Date"
-            labelMode="floating"
-          ></dx-date-box>
+        <div class="col-2">
+          <dx-form [labelMode]="'floating'">
+            <dxi-item
+              editorType="dxDateBox"
+              [editorOptions]="{
+                applyValueMode: 'instantly',
+                displayFormat: 'dd/MM/yyyy',
+                valueFormat: 'yyyy/MM/dd',
+                value: DateTo
+              }"
+            >
+              <dxo-label text="To Date"></dxo-label>
+            </dxi-item>
+          </dx-form>
         </div>
 
-        <div class="col-3">
+        <div class="col-2">
           <dx-select-box
             [dataSource]="RejectionIndexDatasource"
             displayExpr="Name"
@@ -50,43 +60,43 @@
             labelMode="floating"
           ></dx-select-box>
         </div>
+
+        <div class="col-2">
+          <dx-tag-box
+            [items]="DenailCategoryDatasource"
+            displayExpr="Name"
+            valueExpr="ID"
+            [(value)]="denialcategoryvalue"
+            [showSelectionControls]="true"
+            [multiline]="false"
+            applyValueMode="instantly"
+            label="Denial Category"
+            labelMode="floating"
+          >
+          </dx-tag-box>
+        </div>
+
+        <div class="col-2">
+          <dx-tag-box
+            [items]="EncountrTypeDatasource"
+            [(value)]="encountertypevalue"
+            displayExpr="Name"
+            valueExpr="ID"
+            [showSelectionControls]="true"
+            [multiline]="false"
+            applyValueMode="instantly"
+            label="Encounter Type"
+            labelMode="floating"
+          >
+          </dx-tag-box>
+        </div>
       </div>
 
       <!-- Wrapper for Second and Third Rows -->
       <div *ngIf="showGroups" @toggleRows>
         <!-- Second Group -->
-        <div class="row mt-3">
-          <div class="col-3">
-            <dx-tag-box
-              [items]="DenailCategoryDatasource"
-              displayExpr="Name"
-              valueExpr="ID"
-              [(value)]="denialcategoryvalue"
-              [showSelectionControls]="true"
-              [multiline]="false"
-              applyValueMode="instantly"
-              label="Denial Category"
-              labelMode="floating"
-            >
-            </dx-tag-box>
-          </div>
-
-          <div class="col-3">
-            <dx-tag-box
-              [items]="EncountrTypeDatasource"
-              [(value)]="encountertypevalue"
-              displayExpr="Name"
-              valueExpr="ID"
-              [showSelectionControls]="true"
-              [multiline]="false"
-              applyValueMode="instantly"
-              label="Denial Category"
-              labelMode="floating"
-            >
-            </dx-tag-box>
-          </div>
-
-          <div class="col-3">
+        <div class="row ms-1 me-1">
+          <div class="col-2">
             <dx-tag-box
               [items]="blockDataSource"
               displayExpr="Name"
@@ -101,7 +111,7 @@
             ></dx-tag-box>
           </div>
 
-          <div class="col-3">
+          <!-- <div class="col-2">
             <dx-tag-box
               [items]="regionDataSource"
               displayExpr="Name"
@@ -114,11 +124,8 @@
               applyValueMode="instantly"
             ></dx-tag-box>
           </div>
-        </div>
 
-        <!-- Third Group -->
-        <div class="row mt-3">
-          <div class="col-3">
+          <div class="col-2">
             <dx-tag-box
               [items]="ProviderTypeDatasource"
               displayExpr="Name"
@@ -130,22 +137,7 @@
               [multiline]="false"
               applyValueMode="instantly"
             ></dx-tag-box>
-          </div>
-
-          <div class="col-3">
-            <dx-tag-box
-              label="Facility"
-              labelMode="floating"
-              [(value)]="facilityvalue"
-              valueExpr="ID"
-              displayExpr="Name"
-              [items]="FacilityDataSource"
-              [showSelectionControls]="true"
-              [multiline]="false"
-              applyValueMode="instantly"
-            >
-            </dx-tag-box>
-          </div>
+          </div> -->
 
           <div class="col-2">
             <dx-tag-box
@@ -163,6 +155,22 @@
             ></dx-tag-box>
           </div>
 
+          <div class="col-4">
+            <dx-tag-box
+              label="Facility"
+              labelMode="floating"
+              [(value)]="facilityvalue"
+              valueExpr="ID"
+              displayExpr="Name"
+              [items]="FacilityDataSource"
+              [showSelectionControls]="true"
+              [multiline]="false"
+              applyValueMode="instantly"
+              [showClearButton]="false"
+            >
+            </dx-tag-box>
+          </div>
+
           <div class="col-2">
             <dx-tag-box
               [dataSource]="departmentDataSource"
@@ -177,7 +185,7 @@
             ></dx-tag-box>
           </div>
 
-          <div class="col-1 text-center">
+          <div class="col-1">
             <dx-button
               class="add-card mt-1"
               icon="refresh"
@@ -187,11 +195,12 @@
               (click)="applyButtonClicked()"
             ></dx-button>
           </div>
-          <div class="col-1 text-center">
+
+          <div class="col-1 ">
             <dx-button
               class="mt-1"
               icon="exportpdf"
-              text=""
+              text="export"
               hint="export"
               type="default"
               [width]="'auto'"
@@ -204,7 +213,7 @@
       </div>
 
       <!-- Toggle Button -->
-      <div class="row mt-3 justify-content-center p-0 m-0">
+      <div class="row justify-content-center p-0 m-0">
         <div class="col-12 text-center">
           <dx-button
             class="toggle-button"
@@ -222,95 +231,93 @@
   <!-- =============================Card data Div============================= -->
   <div class="graph-scroll-container">
     <div class="ExportDiv2">
-      <div class="m-3">
-        <div class="row d-flex flex-nowrap gap-2 justify-content-start overflow-auto">
-          <!-- Claimed Card -->
-          <div class="card col-12 col-md-2 col-lg-2 col-sm-6 claimedCard p-0 m-0">
-            <div class="card-body">
-              <div class="d-flex align-items-center">
-                <div class="d-flex justify-content-center align-items-center">
-                  <i class="dx-icon dx-icon-datatrending iconBackground"></i>
-                </div>
-                <div class="ms-2">
-                  <p class="card-title mb-1">Claimed</p>
-                  <p class="card-text mb-0">{{ ClaimAmount }}</p>
-                </div>
-              </div>
+      <div
+        class="row ms-3 me-1 d-flex flex-nowrap gap-2 justify-content-start overflow-auto"
+      >
+        <div class="card col-12 col-md-2 col-lg-2 col-sm-6 claimedCard p-0 m-0">
+          <div class="card-body text-center">
+            <div class="d-flex align-items-center text-center m-0">
+              <i class="dx-icon dx-icon-datatrending me-1 iconBackground"></i>
+              <p class="card-title mb-0">Claimed</p>
             </div>
+            <p class="card-text m-0">{{ ClaimAmount }}</p>
           </div>
+        </div>
 
-          <!-- Remitted Card -->
-          <div class="card col-12 col-md-2 col-lg-2 col-sm-6 RemittedCard p-0 m-0">
-            <div class="card-body">
-              <div class="d-flex align-items-center text-center">
-                <i class="dx-icon dx-icon-dataarea me-1 iconBackground"></i>
-                <p class="card-title mb-0">Remitted</p>
-                <span class="ms-auto percentage">{{ remittedPercnt }}%</span>
-              </div>
-              <p class="card-text ms-5">{{ remittedAmt }}</p>
+        <!-- Remitted Card -->
+        <div
+          class="card col-12 col-md-2 col-lg-2 col-sm-6 RemittedCard p-0 m-0"
+        >
+          <div class="card-body text-center">
+            <div class="d-flex align-items-center text-center m-0">
+              <i class="dx-icon dx-icon-dataarea me-1 iconBackground"></i>
+              <p class="card-title mb-0">Remitted</p>
+              <span class="ms-auto percentage">{{ remittedPercnt }}%</span>
             </div>
+            <p class="card-text">{{ remittedAmt }}</p>
           </div>
+        </div>
 
-          <!-- Paid Card -->
-          <div class="card col-12 col-md-2 col-lg-2 col-sm-6 paidCard p-0 m-0">
-            <div class="card-body">
-              <div class="d-flex align-items-center text-center">
-                <i class="dx-icon dx-icon-bookmark me-1 iconBackground"></i>
-                <p class="card-title mb-0">Paid</p>
-                <span class="ms-auto percentage">{{ paidPrcnt }}%</span>
-              </div>
-              <p class="card-text ms-5">{{ paidAmt }}</p>
+        <!-- Paid Card -->
+        <div class="card col-12 col-md-2 col-lg-2 col-sm-6 paidCard p-0 m-0">
+          <div class="card-body text-center">
+            <div class="d-flex align-items-center text-center m-0">
+              <i class="dx-icon dx-icon-bookmark me-1 iconBackground"></i>
+              <p class="card-title mb-0">Paid</p>
+              <span class="ms-auto percentage">{{ paidPrcnt }}%</span>
             </div>
+            <p class="card-text">{{ paidAmt }}</p>
           </div>
+        </div>
 
-          <!-- Rejected Card -->
-          <div class="card col-12 col-md-2 col-lg-2 col-sm-6 deniedCard p-0 m-0">
-            <div class="card-body">
-              <div class="d-flex align-items-center text-center">
-                <i class="dx-icon dx-icon-datapie me-1 iconBackground"></i>
-                <p class="card-title mb-0">Rejected</p>
-                <span class="ms-auto percentage">{{ deniedPrcnt }}%</span>
-              </div>
-              <p class="card-text ms-5">{{ deniedAmt }}</p>
+        <!-- Rejected Card -->
+        <div class="card col-12 col-md-2 col-lg-2 col-sm-6 deniedCard p-0 m-0">
+          <div class="card-body text-center">
+            <div class="d-flex align-items-center text-center m-0">
+              <i class="dx-icon dx-icon-datapie me-1 iconBackground"></i>
+              <p class="card-title mb-0">Rejected</p>
+              <span class="ms-auto percentage">{{ deniedPrcnt }}%</span>
             </div>
+            <p class="card-text">{{ deniedAmt }}</p>
           </div>
+        </div>
 
-          <!-- Un-Remitted Card -->
-          <div class="card col-12 col-md-2 col-lg-2 col-sm-6 balanceCard p-0 m-0">
-            <div class="card-body">
-              <div class="d-flex align-items-center text-center">
-                <i class="dx-icon dx-icon-dataarea me-1 iconBackground"></i>
-                <p class="card-title mb-0">Un-Remitted</p>
-                <span class="ms-auto percentage">{{ balancePrcnt }}%</span>
-              </div>
-              <p class="card-text ms-5">{{ balanceAmt }}</p>
+        <!-- Un-Remitted Card -->
+        <div class="card col-12 col-md-2 col-lg-2 col-sm-6 balanceCard p-0 m-0">
+          <div class="card-body text-center">
+            <div class="d-flex align-items-center text-center m-0">
+              <i class="dx-icon dx-icon-dataarea me-1 iconBackground"></i>
+              <p class="card-title mb-0">Un-Remitted</p>
+              <span class="ms-auto percentage">{{ balancePrcnt }}%</span>
             </div>
+            <p class="card-text">{{ balanceAmt }}</p>
           </div>
+        </div>
 
-          <!-- Remittance % Card -->
-          <div class="card col-12 col-md-2 col-lg-2 col-sm-6 bg-danger p-0 m-0">
-            <div class="card-body">
-              <div class="d-flex align-items-center text-center">
-                <i class="dx-icon dx-icon-dataarea me-1 iconBackground"></i>
-                <p class="card-title mb-0">Remittance %</p>
-              </div>
-              <p class="card-text ms-5">{{ remittancePrcnt }}%</p>
+        <!-- Remittance % Card -->
+        <div class="card col-12 col-md-2 col-lg-2 col-sm-6 bg-danger p-0 m-0">
+          <div class="card-body text-center">
+            <div class="d-flex align-items-center text-center m-0">
+              <i class="dx-icon dx-icon-dataarea me-1 iconBackground"></i>
+              <p class="card-title mb-0">Remittance %</p>
             </div>
+            <p class="card-text">{{ remittancePrcnt }}%</p>
           </div>
+        </div>
 
-          <!-- Rejection % Card -->
-          <div class="card col-12 col-md-2 col-lg-2 col-sm-6 rejectionPrcntCard p-0 m-0">
-            <div class="card-body">
-              <div class="d-flex align-items-center text-center">
-                <i class="dx-icon dx-icon-datapie me-1 iconBackground"></i>
-                <p class="card-title mb-0">Rejection %</p>
-              </div>
-              <p class="card-text ms-5">{{ rejectionPrcnt }}</p>
+        <!-- Rejection % Card -->
+        <div
+          class="card col-12 col-md-2 col-lg-2 col-sm-6 rejectionPrcntCard p-0 m-0"
+        >
+          <div class="card-body text-center">
+            <div class="d-flex align-items-center text-center m-0">
+              <i class="dx-icon dx-icon-datapie me-1 iconBackground"></i>
+              <p class="card-title mb-0">Rejection %</p>
             </div>
+            <p class="card-text">{{ rejectionPrcnt }}%</p>
           </div>
         </div>
       </div>
-
 
       <!-- ====================================Graph Loading==================== -->
 
@@ -329,7 +336,6 @@
                 [font]="{
                   size: 20,
                   weight: 700,
-                  color: '#333',
                   family: 'Arial'
                 }"
                 [alignment]="'center'"

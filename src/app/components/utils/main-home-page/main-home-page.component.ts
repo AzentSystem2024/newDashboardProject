@@ -150,6 +150,26 @@ export class MainHomePageComponent {
     this.showGroups = !this.showGroups;
   }
 
+  //=====================hint for facility field=======================
+  getSelectedValues(): any {
+    // if (this.facilityvalue && this.FacilityDataSource) {
+    //   return this.facilityvalue
+    //     .map((id: any) => {
+    //       const item = this.FacilityDataSource.find(
+    //         (data: any) => data.ID === id
+    //       );
+    //       return item ? item.Name : '';
+    //     })
+    //     .filter((name: string) => name !== '')
+    //     .join(', ');
+    // }
+    // return 'No values selected';
+  }
+
+  customTagTemplate = (itemData: any) => {
+    return `<span>${itemData.Name}</span>`;
+  };
+
   //=====================fetch init dataSource =========================
   getValuesOfInitData() {
     this.loadingVisible = true;
@@ -215,7 +235,7 @@ export class MainHomePageComponent {
     });
   }
 
-  //==================Fetch data of graph datasource=====================
+  //==================Fetch data of graph datasource====================
   get_graph_DataSource() {
     this.showGroups = false;
     this.loadingVisible = true;

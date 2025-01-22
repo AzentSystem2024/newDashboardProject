@@ -1,8 +1,6 @@
 @use "variables.scss" as *;
 @import "~bootstrap/dist/css/bootstrap.min.css";
 
-
-
 html,
 body {
   margin: 0;
@@ -996,5 +994,14 @@ app-root {
   > .dx-bar-series
   > .dx-point
   > text {
-  background: transparent !important; /* Remove the background of the label */
+  background: transparent !important;
+}
+.dx-tag-remove-button {
+  display: none !important;
+  visibility: none;
+}
+.dx-tag .dx-tag-content
+{
+  padding-inline-end: 10px;
+
 }

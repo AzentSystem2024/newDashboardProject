@@ -19,7 +19,6 @@
 .container {
   width: 100%;
   padding: 0px;
- 
 }
 
 .graph-scroll-container {
@@ -40,6 +39,17 @@
   flex: 0 0 auto;
   width: 13.7%;
   padding-left: 10px;
+}
+.col-1 {
+  padding: 0 5px;
+}
+.col-2 {
+  flex: 0 0 auto;
+  width: 16.66666667%;
+  padding: 0 5px;
+}
+.col-4 {
+  padding: 0 5px;
 }
 .ChartContent {
   flex: 1;
