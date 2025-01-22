@@ -14,6 +14,8 @@
             valueExpr="ID"
             [(value)]="searchOnvalue"
             required
+            [dropDownOptions]="{ height: 250 }"
+            [searchEnabled]="true"
           ></dx-select-box>
         </div>
 
@@ -58,11 +60,15 @@
             required
             label="Rejection Index"
             labelMode="floating"
+            [dropDownOptions]="{ height: 250 }"
+            [searchEnabled]="true"
           ></dx-select-box>
         </div>
 
         <div class="col-2">
           <dx-tag-box
+            [searchEnabled]="true"
+            [dropDownOptions]="{ height: 250 }"
             [items]="DenailCategoryDatasource"
             displayExpr="Name"
             valueExpr="ID"
@@ -78,6 +84,8 @@
 
         <div class="col-2">
           <dx-tag-box
+            [searchEnabled]="true"
+            [dropDownOptions]="{ height: 250 }"
             [items]="EncountrTypeDatasource"
             [(value)]="encountertypevalue"
             displayExpr="Name"
@@ -87,6 +95,7 @@
             applyValueMode="instantly"
             label="Encounter Type"
             labelMode="floating"
+            [searchEnabled]="true"
           >
           </dx-tag-box>
         </div>
@@ -108,7 +117,7 @@
               [showClearButton]="true"
               [dataSource]="modifiedFacilityDatasource"
               [dropDownOptions]="{
-                width: '80%',
+                width: '70%',
                 position: {
                   my: 'left top',
                   at: 'left bottom',
@@ -151,6 +160,8 @@
         <div class="row mt-1 ms-1 me-1">
           <div class="col-3">
             <dx-tag-box
+              [searchEnabled]="true"
+              [dropDownOptions]="{ height: 250 }"
               [items]="blockDataSource"
               displayExpr="Name"
               valueExpr="ID"
@@ -165,7 +176,7 @@
           </div>
 
           <!-- <div class="col-2">
-            <dx-tag-box
+            <dx-tag-box [searchEnabled]="true" [dropDownOptions]="{ height: 250 }"
               [items]="regionDataSource"
               displayExpr="Name"
               valueExpr="ID"
@@ -179,7 +190,7 @@
           </div>
 
           <div class="col-2">
-            <dx-tag-box
+            <dx-tag-box [searchEnabled]="true" [dropDownOptions]="{ height: 250 }"
               [items]="ProviderTypeDatasource"
               displayExpr="Name"
               valueExpr="ID"
@@ -194,6 +205,7 @@
 
           <div class="col-3">
             <dx-tag-box
+              [searchEnabled]="true"
               [items]="insuranceDataSource"
               displayExpr="Name"
               valueExpr="ID"
@@ -204,12 +216,14 @@
               [showSelectionControls]="true"
               [multiline]="false"
               applyValueMode="instantly"
-              [dropDownOptions]="{ width: 'auto' }"
+              [dropDownOptions]="{ height: 250 }"
             ></dx-tag-box>
           </div>
 
           <div class="col-3">
             <dx-tag-box
+              [searchEnabled]="true"
+              [dropDownOptions]="{ height: 250 }"
               [dataSource]="departmentDataSource"
               displayExpr="Name"
               valueExpr="ID"
