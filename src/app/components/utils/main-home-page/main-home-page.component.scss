@@ -41,15 +41,17 @@
   padding-left: 10px;
 }
 .col-1 {
-  padding: 0 5px;
+  padding: 0 .5%;
+  width: auto;
 }
 .col-2 {
   flex: 0 0 auto;
   width: 16.66666667%;
-  padding: 0 5px;
+  padding: 0 .5%;
+  // padding: 0 5px;
 }
 .col-4 {
-  padding: 0 5px;
+  padding: 0 .5%;
 }
 .ChartContent {
   flex: 1;
