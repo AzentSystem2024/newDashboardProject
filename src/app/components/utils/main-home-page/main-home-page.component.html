@@ -98,6 +98,7 @@
         <div class="row mt-1 ms-1 me-1">
           <div class="col-12">
             <dx-drop-down-box
+              class="dropdowncontent"
               labelMode="floating"
               labelLocation="left"
               label="Facility value"
@@ -106,15 +107,30 @@
               displayExpr="Name"
               [showClearButton]="true"
               [dataSource]="modifiedFacilityDatasource"
+              [dropDownOptions]="{
+                width: '80%',
+                position: {
+                  my: 'left top',
+                  at: 'left bottom',
+                  of: '.dropdowncontent',
+                  collision: 'fit flip'
+                }
+              }"
             >
-              <div *dxTemplate="let data of 'content'">
+              <div c *dxTemplate="let data of 'content'">
                 <dx-data-grid
                   [dataSource]="modifiedFacilityDatasource"
                   [columns]="[
                     { dataField: 'ID', caption: 'Facility ID' },
-                    { dataField: 'Name', caption: 'FacilityName' },
+                    {
+                      dataField: 'Name',
+                      caption: 'FacilityName'
+                    },
                     { dataField: 'Region', caption: 'Region' },
-                    { dataField: 'ProviderType', caption: 'Provider Type' }
+                    {
+                      dataField: 'ProviderType',
+                      caption: 'Provider Type'
+                    }
                   ]"
                   [selection]="{ mode: 'multiple' }"
                   [hoverStateEnabled]="true"
@@ -123,6 +139,7 @@
                   [headerFilter]="{ visible: true }"
                   [scrolling]="{ mode: 'virtual' }"
                   [(selectedRowKeys)]="facilityvalue"
+                  width="'50%'"
                 >
                 </dx-data-grid>
               </div>
@@ -584,7 +601,7 @@
                 hint=""
               ></dxo-title>
               <dxo-legend
-                [visible]="true"
+                [visible]="false"
                 verticalAlignment="bottom"
                 horizontalAlignment="center"
               ></dxo-legend>
@@ -620,7 +637,7 @@
                 hint=""
               ></dxo-title>
               <dxo-legend
-                [visible]="true"
+                [visible]="false"
                 verticalAlignment="bottom"
                 horizontalAlignment="center"
               ></dxo-legend>
@@ -656,7 +673,7 @@
                 hint=""
               ></dxo-title>
               <dxo-legend
-                [visible]="true"
+                [visible]="false"
                 verticalAlignment="bottom"
                 horizontalAlignment="center"
               ></dxo-legend>
@@ -749,7 +766,7 @@
               </dxi-series>
               <dxo-tooltip
                 [enabled]="true"
-                [customizeTooltip]="top10FacilityDataCustomizeTooltip"
+                [customizeTooltip]="top10ClinicianDataCustomizeTooltip"
               ></dxo-tooltip>
             </dx-chart>
           </div>
