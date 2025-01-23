@@ -21,11 +21,7 @@ export class SharedService {
     this.route.queryParams.subscribe((params: Params) => {
       let userId = params['userId'];
       sessionStorage.setItem('paramsid', userId);
-      // if (userId == 0 || userId == undefined) {
-      //   this.router.navigate(['/login-Page']);
-      // } else {
-      //   this.router.navigate(['/Main-Dashboard']);
-      // }
+      
     });
   }
 

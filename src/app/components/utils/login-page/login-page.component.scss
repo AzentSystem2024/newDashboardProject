@@ -15,9 +15,35 @@
 }
 section {
   background-color: var(--base-bg);
+  background-image: url("../../../../assets/istockphoto-1407983911-612x612.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
   border-radius: 8px;
+  padding: 0px;
+  height: 100%;
+  margin: 0px;
+}
+section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Black overlay with 50% opacity */
+  z-index: 0;
+}
+
+section > * {
+  position: relative;
+  z-index: 1; /* Ensure the content stays above the overlay */
 }
 .LoginButton {
   padding-left: 2.5rem;
   padding-right: 2.5rem;
+}
+.loginFormContent {
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.17);
+  border-radius: 8px;
 }

@@ -1,15 +1,9 @@
 <section class="vh-100">
   <div class="container-fluid h-custom">
     <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-md-9 col-lg-6 col-xl-5">
-        <img
-          src="https://images.unsplash.com/photo-1503551723145-6c040742065b-v2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
-          class="img-fluid"
-          alt="Sample image"
-        />
-      </div>
-      <div class="col-md-8 col-lg-5 col-xl-5 offset-xl-1">
+      <div class="loginFormContent col-md-8 col-lg-5 col-xl-5 offset-xl-1">
         <form [formGroup]="loginpage">
+          <div class="text-center"><h5>Login....</h5></div>
           <!-- Email input -->
           <div class="form-outline mb-4">
             <input
@@ -32,9 +26,9 @@
             />
           </div>
 
-          <div class="text-center text-lg-start mt-4 pt-2">
+          <!-- Login Button -->
+          <div class="text-end mt-4 pt-2 p-4">
             <button
-              class="LoginButton ms-auto"
               type="button"
               class="btn btn-primary btn-lg"
               (click)="Login()"
