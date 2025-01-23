@@ -91,10 +91,8 @@ export class ToolbarAnalyticsComponent implements OnInit, OnDestroy {
         this.isFinanceHomeLoaded = isLoaded;
       }
     );
-    this.sharedService.getUserId().subscribe((response: any) => {
-      this.userId = response;
-      console.log('user id from component :', this.userId);
-    });
+    this.userId = this.sharedService.getUserId();
+
     this.getValuesOfInitData(this.userId);
 
     //============Year field dataSource===============

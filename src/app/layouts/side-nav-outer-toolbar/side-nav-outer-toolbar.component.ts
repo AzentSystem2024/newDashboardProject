@@ -29,6 +29,7 @@ import { OpportunitiesTickerModule } from '../../components/utils/Card-Data-Comp
 import { ConversionCardModule } from '../../components/utils/Home-Funnel-Chart/conversion-card.component';
 import { Sales, SalesOrOpportunitiesByCategory } from 'src/app/types/analytics';
 import { CardAnalyticsModule } from 'src/app/components/library/card-analytics/card-analytics.component';
+import { SharedService } from 'src/app/services/shared-service';
 
 @Component({
   selector: 'app-side-nav-outer-toolbar',
@@ -72,7 +73,8 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
     private screen: ScreenService,
     private router: Router,
     public appInfo: AppInfoService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private sharedservise: SharedService
   ) {
     this.segment = this.getCurrentSegmentFromUrl();
     // console.log('Segment:', this.segment);

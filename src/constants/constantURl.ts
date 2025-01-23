@@ -4,7 +4,10 @@ const API_BASE_URL = environment.LMS_API_BASE_URL;
 
 ///////////////////////API/////////////////////////////////////////////
 
-export const CRS_DASHBOARD_INIT_DATA =
+export const CRS_DASHBOARD_LOGIN =
+  API_BASE_URL + 'users/validate';
+
+  export const CRS_DASHBOARD_INIT_DATA =
   API_BASE_URL + 'denialdasbhoard/initdata';
 
 export const CRS_DASHBOARD_CLAIMSUMMARY_HOME =

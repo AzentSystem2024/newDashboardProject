@@ -236,7 +236,7 @@
             ></dx-tag-box>
           </div>
 
-          <div class="col-1 ms-1">
+          <div class="col-1 ms-auto">
             <dx-button
               class="add-card mt-2"
               icon="refresh"
@@ -247,7 +247,7 @@
             ></dx-button>
           </div>
 
-          <div class="col-1 ms-1">
+          <div class="col-1 ms-2 me-2">
             <dx-button
               class="mt-2"
               icon="exportpdf"
@@ -621,7 +621,7 @@
               ></dxo-legend>
               <dxi-series
                 name="Insurance"
-                argumentField="InsuranceID"
+                argumentField="InsuranceShortName"
                 valueField="Rejected"
                 type="bar"
                 color="#294730"
@@ -657,7 +657,7 @@
               ></dxo-legend>
               <dxi-series
                 name="Facility"
-                argumentField="FacilityID"
+                argumentField="FacilityShortName"
                 valueField="Rejected"
                 type="bar"
                 color="#800d09"
@@ -693,7 +693,7 @@
               ></dxo-legend>
               <dxi-series
                 name="Code"
-                argumentField="Code"
+                argumentField="CPTCode"
                 valueField="Rejected"
                 type="bar"
                 color="#1b53e0"
@@ -704,10 +704,10 @@
                 >
                 </dxo-label>
               </dxi-series>
-              <!-- <dxo-tooltip
+              <dxo-tooltip
                 [enabled]="true"
                 [customizeTooltip]="top10CodeDataCustomizeTooltip"
-              ></dxo-tooltip> -->
+              ></dxo-tooltip>
             </dx-chart>
           </div>
         </div>

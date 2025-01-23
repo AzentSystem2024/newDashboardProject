@@ -32,6 +32,7 @@ import * as moment from 'moment';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import CustomStore from 'devextreme/data/custom_store';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main-home-page',
@@ -119,13 +120,15 @@ export class MainHomePageComponent {
   constructor(
     public service: DataService,
     private sharedService: SharedService,
-    private dataservice: DataService
+    private dataservice: DataService,
+    private router: Router
   ) {
-    this.sharedService.getUserId().subscribe((response: any) => {
-      this.userId = response;
-    });
-
-    this.getValuesOfInitData();
+    this.userId = sessionStorage.getItem('paramsid');
+    if (this.userId != 'undefined' && this.userId != '') {
+      this.getValuesOfInitData();
+    } else {
+      this.router.navigate(['/login-Page']);
+    }
   }
 
   customizeLabel(arg) {
@@ -158,7 +161,7 @@ export class MainHomePageComponent {
   top10CodeDataCustomizeTooltip(arg: any) {
     console.log('arg data', arg);
     return {
-      text: `${arg.point.data.FacilityName}`,
+      text: `${arg.point.data.CPTName}`,
     };
   }
   //======================top 10 code tooltip===================
@@ -219,7 +222,6 @@ export class MainHomePageComponent {
     this.loadingVisible = true;
     this.service.getInitData(this.userId).subscribe((response: any) => {
       if (response) {
-        const getInitDataresponse = response;
         this.SearchOnDatasource = response.SearchOn;
         this.EncountrTypeDatasource = response.EncounterType;
         this.RejectionIndexDatasource = response.RejectionIndex;
@@ -277,22 +279,6 @@ export class MainHomePageComponent {
           .filter((item) => item.Default === '1')
           .map((item) => item.ID);
       }
-      const valuesObject = {
-        searchOn: this.searchOnvalue,
-        dateFrom: this.DateFrom,
-        dateTo: this.DateTo,
-        rejectionIndex: this.rejectionIndexvalue,
-        denialCategory: this.denialcategoryvalue.join(','),
-        encounterType: this.encountertypevalue.join(','),
-        block: this.blockValue.join(','),
-        region: this.RegionValue.join(','),
-        providerType: this.ProviderTypevalue.join(','),
-        facility: this.facilityvalue.join(','),
-        insurance: this.insuranceValue.join(','),
-        department: this.departmentValue.join(','),
-      };
-
-      console.log('values passed to service', valuesObject);
       this.get_graph_DataSource();
     });
   }

@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 @Injectable({
   providedIn: 'root',
 })
@@ -17,21 +17,21 @@ export class SharedService {
   private initDataLoaded = new BehaviorSubject<boolean>(false);
   initDataLoaded$ = this.initDataLoaded.asObservable();
 
-  constructor(private route: ActivatedRoute) {
-    // this.route.queryParams.subscribe((params: Params) => {
-    //   const userId = params['userId'] || "0";
-    //   this.userIdSubject.next(userId);
-    //   sessionStorage.setItem('paramsid',userId)
-    // });
+  constructor(private route: ActivatedRoute, private router: Router) {
+    this.route.queryParams.subscribe((params: Params) => {
+      let userId = params['userId'];
+      sessionStorage.setItem('paramsid', userId);
+      // if (userId == 0 || userId == undefined) {
+      //   this.router.navigate(['/login-Page']);
+      // } else {
+      //   this.router.navigate(['/Main-Dashboard']);
+      // }
+    });
   }
 
-  getUserId(): Observable<string> {
-     this.route.queryParams.subscribe((params: Params) => {
-      const userId = params['userId'] || "0";
-      this.userIdSubject.next(userId);
-      // sessionStorage.setItem('paramsid',userId)
-    });
-    return this.userIdSubject.asObservable();
+  getUserId() {
+    let userId = sessionStorage.getItem('paramsid');
+    return userId;
   }
 
   setFinanceHomeLoaded(isLoaded: boolean) {

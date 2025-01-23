@@ -18,6 +18,7 @@ import {
   CRS_DASHBOARD_RECEIVER_HOME,
   CRS_DASHBOARD_REMITTANCE_HOME,
   CRS_DASHBOARD_SUBMISSION_HOME,
+  CRS_DASHBOARD_LOGIN,
 } from 'src/constants/constantURl';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
@@ -127,6 +128,12 @@ export class DataService {
   //=================Init data for drop down fields==================
   getInitData(id: any): Observable<any> {
     return this.http.post<any>(CRS_DASHBOARD_INIT_DATA, { userid: id });
+  }
+
+  dashboard_Login(username: any, password: any) {
+    const url = CRS_DASHBOARD_LOGIN;
+    const reqBody = { Loginid: username, password: password };
+    return this.http.post(url, reqBody);
   }
 
   //================ClaimSummary Data Fetching=================
