@@ -498,7 +498,7 @@ export class DataService {
                 pdfHeight / imageHeight
               );
               const scaledWidth = imgProps.width * scaleFactor - 20;
-              const scaledHeight = imageHeight * 15 * scaleFactor;
+              const scaledHeight = imageHeight * 16 * scaleFactor;
               // Add the image to the PDF (scaled to fit on one page)
               pdf.addImage(
                 imgData,
