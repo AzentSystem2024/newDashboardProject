@@ -124,7 +124,7 @@ export class MainHomePageComponent {
     private router: Router
   ) {
     this.userId = sessionStorage.getItem('paramsid');
-    if (this.userId != 'undefined' && this.userId != '') {
+    if (this.userId != 'undefined' && this.userId != '' && this.userId > '0') {
       this.getValuesOfInitData();
     } else {
       this.router.navigate(['/login-Page']);
