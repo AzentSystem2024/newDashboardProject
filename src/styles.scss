@@ -1000,7 +1000,27 @@ app-root {
   display: none !important;
   visibility: none;
 }
-.dx-scrollbar-vertical.dx-scrollbar-hoverable {
-  width: 15px;
-  transition: width 0.2s linear 0.15s, background-color 0.2s linear 0.15s;
+// .dx-scrollbar-vertical.dx-scrollbar-hoverable {
+//   width: 10px;
+//   transition: width 0.2s linear 0.15s, background-color 0.2s linear 0.15s;
+// }
+
+// .dx-scrollbar-vertical.dx-scrollbar-hoverable
+//   .dx-scrollable-scroll.dx-state-invisible
+//   .dx-scrollable-scroll-content {
+//   transition: background-color 0.5s linear 1s;
+//   width: 10px;
+// }
+// .dx-scrollbar-vertical.dx-scrollbar-hoverable {
+//   width: 10px;
+//   /* transition: width 0.2s linear 0.15s, background-color 0.2s linear 0.15s; */
+// }
+.dx-scrollable-scroll.dx-state-invisible {
+  width: 10px;
+}
+
+.dx-datagrid .dx-row > td {
+  /* padding: 14px 16px; */
+  font-size: 14px;
+  line-height: 20px;
 }

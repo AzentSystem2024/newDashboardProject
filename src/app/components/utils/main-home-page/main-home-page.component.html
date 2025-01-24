@@ -78,6 +78,12 @@
             applyValueMode="instantly"
             label="Denial Category"
             labelMode="floating"
+            (onValueChanged)="
+              reorderDataSource(
+                'denialcategoryvalue',
+                'DenailCategoryDatasource'
+              )
+            "
           >
           </dx-tag-box>
         </div>
@@ -96,6 +102,9 @@
             label="Encounter Type"
             labelMode="floating"
             [searchEnabled]="true"
+            (onValueChanged)="
+              reorderDataSource('encountertypevalue', 'EncountrTypeDatasource')
+            "
           >
           </dx-tag-box>
         </div>
@@ -118,6 +127,7 @@
               [dataSource]="modifiedFacilityDatasource"
               [dropDownOptions]="{
                 width: '70%',
+                height: '45vh',
                 position: {
                   my: 'left top',
                   at: 'left bottom',
@@ -148,8 +158,15 @@
                   [headerFilter]="{ visible: true }"
                   [scrolling]="{ mode: 'virtual' }"
                   [(selectedRowKeys)]="facilityvalue"
+                  (onSelectionChanged)="
+                    onSelectionChanged(
+                      $event,
+                      this.FacilityDataSource,
+                      'modifiedFacilityDatasource'
+                    )
+                  "
                   width="'50%'"
-                  [height]="'30vh'"
+                  [height]="'100%'"
                 >
                 </dx-data-grid>
               </div>
@@ -173,36 +190,11 @@
               [showSelectionControls]="true"
               [multiline]="false"
               applyValueMode="instantly"
+              (onValueChanged)="
+                reorderDataSource('blockValue', 'blockDataSource')
+              "
             ></dx-tag-box>
           </div>
-
-          <!-- <div class="col-2">
-            <dx-tag-box [searchEnabled]="true" [dropDownOptions]="{ height: 250 }"
-              [items]="regionDataSource"
-              displayExpr="Name"
-              valueExpr="ID"
-              [(value)]="RegionValue"
-              label="Region"
-              labelMode="floating"
-              [showSelectionControls]="true"
-              [multiline]="false"
-              applyValueMode="instantly"
-            ></dx-tag-box>
-          </div>
-
-          <div class="col-2">
-            <dx-tag-box [searchEnabled]="true" [dropDownOptions]="{ height: 250 }"
-              [items]="ProviderTypeDatasource"
-              displayExpr="Name"
-              valueExpr="ID"
-              [(value)]="ProviderTypevalue"
-              label="Provider Type"
-              labelMode="floating"
-              [showSelectionControls]="true"
-              [multiline]="false"
-              applyValueMode="instantly"
-            ></dx-tag-box>
-          </div> -->
 
           <div class="col-3">
             <dx-tag-box
@@ -218,6 +210,9 @@
               [multiline]="false"
               applyValueMode="instantly"
               [dropDownOptions]="{ height: 250 }"
+              (onValueChanged)="
+                reorderDataSource('insuranceValue', 'insuranceDataSource')
+              "
             ></dx-tag-box>
           </div>
 
@@ -225,7 +220,7 @@
             <dx-tag-box
               [searchEnabled]="true"
               [dropDownOptions]="{ height: 250 }"
-              [dataSource]="departmentDataSource"
+              [items]="departmentDataSource"
               displayExpr="Name"
               valueExpr="ID"
               [(value)]="departmentValue"
@@ -234,6 +229,9 @@
               [showSelectionControls]="true"
               [multiline]="false"
               applyValueMode="instantly"
+              (onValueChanged)="
+                reorderDataSource('departmentValue', 'departmentDataSource')
+              "
             ></dx-tag-box>
           </div>
 
@@ -746,6 +744,15 @@
                 >
                 </dxo-label>
               </dxi-series>
+              <dxo-argument-axis
+                [position]="'bottom'"
+                [label]="{
+                  rotationAngle: -35,
+                  overlappingBehavior: 'rotate',
+                  customizeText: formatXAxisText
+                }"
+              >
+              </dxo-argument-axis>
             </dx-chart>
           </div>
 
@@ -779,6 +786,15 @@
                 >
                 </dxo-label>
               </dxi-series>
+              <dxo-argument-axis
+                [position]="'bottom'"
+                [label]="{
+                  rotationAngle: -35,
+                  overlappingBehavior: 'rotate',
+                  customizeText: formatXAxisText
+                }"
+              >
+              </dxo-argument-axis>
               <dxo-tooltip
                 [enabled]="true"
                 [customizeTooltip]="top10ClinicianDataCustomizeTooltip"

@@ -19,7 +19,7 @@ export class SharedService {
 
   constructor(private route: ActivatedRoute, private router: Router) {
     this.route.queryParams.subscribe((params: Params) => {
-      let userId = params['userId'];
+      let userId = params['userId'] || '0';
       sessionStorage.setItem('paramsid', userId);
 
     });

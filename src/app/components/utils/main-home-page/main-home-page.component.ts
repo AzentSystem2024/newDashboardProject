@@ -20,6 +20,7 @@ import {
   DxTagBoxModule,
   DxLoadPanelModule,
   DxDataGridModule,
+  DxDataGridComponent,
 } from 'devextreme-angular';
 import { CardAnalyticsModule } from '../../library/card-analytics/card-analytics.component';
 import { DataService } from 'src/app/services';
@@ -54,6 +55,9 @@ import { Router } from '@angular/router';
 export class MainHomePageComponent {
   @ViewChild(DxTreeViewComponent, { static: false })
   treeView: DxTreeViewComponent;
+
+  @ViewChild(DxDataGridComponent, { static: true })
+  dataGrid: DxDataGridComponent;
 
   pipe = new PercentPipe('en-US');
 
@@ -124,12 +128,49 @@ export class MainHomePageComponent {
     private router: Router
   ) {
     this.userId = sessionStorage.getItem('paramsid');
-    if (this.userId != 'undefined' && this.userId != '' && this.userId > '0') {
-      this.getValuesOfInitData();
-    } else {
-      this.router.navigate(['/login-Page']);
-    }
+    // if (this.userId != 'undefined' && this.userId != '' && this.userId > '0') {
+    this.getValuesOfInitData();
+    // } else {
+    //   this.router.navigate(['/login-Page']);
+    // }
   }
+  //=========== reorder list options to selected data to the top side ========
+  reorderDataSource(selectedvalues: string, datsourceName: string) {
+    // Filter the selected items
+    const selectedItems = this[datsourceName].filter((item) =>
+      this[selectedvalues].includes(item.ID)
+    );
+    const nonSelectedItems = this[datsourceName].filter(
+      (item) => !this[selectedvalues].includes(item.ID)
+    );
+    nonSelectedItems.sort((a, b) => a.Name.localeCompare(b.Name));
+    this[datsourceName] = [...selectedItems, ...nonSelectedItems];
+  }
+
+  //===========Function to handle selection change and sort the data==========
+  onSelectionChanged(event: any, jsonData: any[], dataSourceKey: string): void {
+    console.log('Original JSON Data:', jsonData);
+    const selectedRows = event.selectedRowsData;
+    const selectedRowIds = selectedRows.map((row) => row.ID);
+    const unselectedRows = jsonData.filter(
+      (row) => !selectedRowIds.includes(row.ID)
+    );
+    const reorderedData = [...selectedRows, ...unselectedRows];
+    this[dataSourceKey] = this.makeAsyncDataSourceFromJson(reorderedData);
+    console.log('Updated DataSource:', this[dataSourceKey]);
+    this.dataGrid.instance.refresh();
+  }
+  // ======================== X-Axis value rotated and value custom==============
+  formatXAxisText = (axisInfo: any): string => {
+    const text = axisInfo.value;
+    const parts = text.split(' ');
+    // Calculate the middle point
+    const middleIndex = Math.ceil(parts.length / 2);
+    // Split the text into two halves and join them with a newline
+    const firstLine = parts.slice(0, middleIndex).join(' ');
+    const secondLine = parts.slice(middleIndex).join(' ');
+    return `${firstLine}\n${secondLine}`; // Return the text with two lines
+  };
 
   customizeLabel(arg) {
     const valueInMillions = (arg.valueText / 1000000).toFixed(2);
@@ -151,6 +192,7 @@ export class MainHomePageComponent {
   }) => ({
     text: `${valueText} - ${this.pipe.transform(percent, '1.2-2')}`,
   });
+
   //======================top 10 insurance tooltip===================
   top10InsuranceDataCustomizeTooltip(arg: any) {
     return {
