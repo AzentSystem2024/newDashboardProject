@@ -21,7 +21,7 @@ export class SharedService {
     this.route.queryParams.subscribe((params: Params) => {
       let userId = params['userId'];
       sessionStorage.setItem('paramsid', userId);
-      
+
     });
   }
 

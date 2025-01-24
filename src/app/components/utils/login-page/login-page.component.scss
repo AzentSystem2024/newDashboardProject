@@ -15,7 +15,7 @@
 }
 section {
   background-color: var(--base-bg);
-  background-image: url("../../../../assets/istockphoto-1407983911-612x612.jpg");
+  background-image: url("../../../../assets/pexels-pixabay-257904.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   border-radius: 8px;
@@ -44,6 +44,6 @@ section > * {
 }
 .loginFormContent {
   padding: 10px;
-  background-color: rgba(0, 0, 0, 0.17);
+  background-color: var(--background-color);
   border-radius: 8px;
 }

@@ -1000,4 +1000,7 @@ app-root {
   display: none !important;
   visibility: none;
 }
-
+.dx-scrollbar-vertical.dx-scrollbar-hoverable {
+  width: 15px;
+  transition: width 0.2s linear 0.15s, background-color 0.2s linear 0.15s;
+}
