@@ -34,6 +34,7 @@ import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import CustomStore from 'devextreme/data/custom_store';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-main-home-page',
@@ -72,8 +73,8 @@ export class MainHomePageComponent {
   DenailCategoryDatasource: any;
   denialcategoryvalue: any[] = [];
   encountertypevalue: any[] = [];
-  DateFrom: any = moment().format('DD/MM/YYYY');
-  DateTo: any = moment().format('DD/MM/YYYY');
+  DateFrom: any = new Date();
+  DateTo: any = new Date();
   RejectionIndexDatasource: any;
   rejectionIndexvalue: any;
   blockDataSource: any;
@@ -120,6 +121,10 @@ export class MainHomePageComponent {
   TopTenDepartmentWiseRejectedDataSource: any;
   TopTenDoctorWiseRejectedDataSource: any;
   modifiedFacilityDatasource: any;
+  dateForm = {
+    fromdate: '',
+    todate: '',
+  };
 
   constructor(
     public service: DataService,
@@ -128,11 +133,11 @@ export class MainHomePageComponent {
     private router: Router
   ) {
     this.userId = sessionStorage.getItem('paramsid');
-    // if (this.userId != 'undefined' && this.userId != '' && this.userId > '0') {
-    this.getValuesOfInitData();
-    // } else {
-    //   this.router.navigate(['/login-Page']);
-    // }
+    if (this.userId != 'undefined' && this.userId != '' && this.userId > '0') {
+      this.getValuesOfInitData();
+    } else {
+      this.router.navigate(['/login-Page']);
+    }
   }
   //=========== reorder list options to selected data to the top side ========
   reorderDataSource(selectedvalues: string, datsourceName: string) {
@@ -278,8 +283,8 @@ export class MainHomePageComponent {
           response.Facility
         );
 
-        this.DateFrom = new Date(response.DateFrom);
-        this.DateTo = new Date(response.DateTo);
+        this.dateForm.fromdate = response.DateFrom;
+        this.dateForm.todate = response.DateTo;
 
         this.searchOnvalue =
           this.SearchOnDatasource.find((obj: any) => obj.Default === '1')?.ID ||
@@ -329,6 +334,9 @@ export class MainHomePageComponent {
   get_graph_DataSource() {
     this.showGroups = false;
     this.loadingVisible = true;
+
+    this.DateFrom = this.dateForm.fromdate;
+    this.DateTo = this.dateForm.todate;
 
     this.dataservice
       .get_Main_Home_Dashboard_Datasource(
@@ -448,6 +456,7 @@ export class MainHomePageComponent {
     DxTagBoxModule,
     DxLoadPanelModule,
     DxDataGridModule,
+    FormsModule,
   ],
   declarations: [MainHomePageComponent],
   exports: [MainHomePageComponent],
