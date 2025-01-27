@@ -383,7 +383,7 @@
             >
               <dxo-title
                 class="graphTitle"
-                text="Remitance % and Rejection %"
+                text="Remittance % and Rejection %"
                 hint=""
                 [font]="{
                   size: 20,
@@ -394,7 +394,7 @@
               ></dxo-title>
               <dxi-series
                 valueField="RemittedPercent"
-                name="Remitance %"
+                name="Remittance %"
                 color="#FF5733"
               >
                 <dxo-label [visible]="true">
@@ -541,6 +541,15 @@
                 >
                 </dxo-label>
               </dxi-series>
+              <dxo-argument-axis
+                [position]="'bottom'"
+                [label]="{
+                  rotationAngle: -35,
+                  overlappingBehavior: 'rotate',
+                  customizeText: formatXAxisText
+                }"
+              >
+              </dxo-argument-axis>
             </dx-chart>
           </div>
 
@@ -568,6 +577,15 @@
                 >
                 </dxo-label>
               </dxi-series>
+              <dxo-argument-axis
+                [position]="'bottom'"
+                [label]="{
+                  rotationAngle: -35,
+                  overlappingBehavior: 'rotate',
+                  customizeText: formatXAxisText
+                }"
+              >
+              </dxo-argument-axis>
             </dx-chart>
           </div>
 
@@ -598,6 +616,15 @@
                 >
                 </dxo-label>
               </dxi-series>
+              <dxo-argument-axis
+                [position]="'bottom'"
+                [label]="{
+                  rotationAngle: -35,
+                  overlappingBehavior: 'rotate',
+                  customizeText: formatXAxisText
+                }"
+              >
+              </dxo-argument-axis>
             </dx-chart>
           </div>
         </div>
@@ -774,7 +801,7 @@
               ></dxo-legend>
               <dxi-series
                 name="Clinician"
-                argumentField="ClinicianID"
+                argumentField="ClinicianShortName"
                 valueField="Rejected"
                 type="bar"
                 color="#c97f34"

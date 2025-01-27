@@ -42,11 +42,20 @@
   background-color: var(--base-bg);
   border-radius: 15px;
   padding: 0px;
-  
+  margin: 0px;
+  width: 70%;
 }
 .formHeading {
   color: var(--text-color);
 }
 .button-container {
   text-align: center;
+}
+.bottom-left-text {
+  position: fixed;
+  bottom: 0;
+  left: 2px;
+  margin: 0px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.559);
 }
