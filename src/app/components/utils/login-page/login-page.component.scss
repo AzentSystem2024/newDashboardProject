@@ -1,49 +1,52 @@
-.divider:after,
-.divider:before {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: #eee;
-}
-.h-custom {
-  height: calc(100% - 73px);
-}
-@media (max-width: 450px) {
-  .h-custom {
-    height: 100%;
-  }
-}
-section {
-  background-color: var(--base-bg);
-  background-image: url("../../../../assets/pexels-pixabay-257904.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-radius: 8px;
-  padding: 0px;
-  height: 100%;
-  margin: 0px;
-}
-section::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Black overlay with 50% opacity */
-  z-index: 0;
+.background-radial-gradient {
+  background-color: hsl(218, 41%, 15%);
+  height: 100vh;
+  background-image: radial-gradient(
+      650px circle at 0% 0%,
+      hsl(218, 41%, 35%) 15%,
+      hsl(218, 41%, 30%) 35%,
+      hsl(218, 41%, 20%) 75%,
+      hsl(218, 41%, 19%) 80%,
+      transparent 100%
+    ),
+    radial-gradient(
+      1250px circle at 100% 100%,
+      hsl(218, 41%, 45%) 15%,
+      hsl(218, 41%, 30%) 35%,
+      hsl(218, 41%, 20%) 75%,
+      hsl(218, 41%, 19%) 80%,
+      transparent 100%
+    );
 }
 
-section > * {
-  position: relative;
-  z-index: 1; /* Ensure the content stays above the overlay */
+#radius-shape-1 {
+  height: 220px;
+  width: 220px;
+  top: -60px;
+  right: 100%;
+  background: radial-gradient(#44006b, #ad1fff);
+  overflow: hidden;
 }
-.LoginButton {
-  padding-left: 2.5rem;
-  padding-right: 2.5rem;
+
+#radius-shape-2 {
+  border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
+  bottom: -60px;
+  right: 170%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(#44006b, #ad1fff);
+  overflow: hidden;
 }
-.loginFormContent {
-  padding: 10px;
-  background-color: var(--background-color);
-  border-radius: 8px;
+
+.bg-glass {
+  background-color: var(--base-bg);
+  border-radius: 15px;
+  padding: 0px;
+  
+}
+.formHeading {
+  color: var(--text-color);
+}
+.button-container {
+  text-align: center;
 }

@@ -46,7 +46,10 @@ $theme-mode: null !default;
   --card-background: var(--base-bg);
   --calendar-width: 292px;
   --border-color: rgb(27, 27, 27);
+  --text-color: black;
   @if $theme-mode == dark {
+    --text-color: white;
+
     --card-background: var(--base-bg-darken-5);
     --border-color: rgb(212, 212, 212);
   }

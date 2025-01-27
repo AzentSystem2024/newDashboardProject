@@ -21,10 +21,10 @@ import notify from 'devextreme/ui/notify';
   styleUrls: ['./login-page.component.scss'],
 })
 export class LoginPageComponent {
-  loginpage = this.formb.group({
-    UserName: ['', [Validators.required]],
-    Password: ['', [Validators.required]],
-  });
+  loginpage = {
+    UserName: null,
+    Password: null,
+  };
 
   constructor(
     private formb: FormBuilder,
@@ -33,9 +33,9 @@ export class LoginPageComponent {
   ) {}
 
   Login() {
-    var userName = this.loginpage.value.UserName;
-    var Password = this.loginpage.value.Password;
-    if (this.loginpage.valid) {
+    var userName = this.loginpage.UserName;
+    var Password = this.loginpage.Password;
+    if (userName && Password) {
       this.service
         .dashboard_Login(userName, Password)
         .subscribe((response: any) => {
