@@ -25,7 +25,7 @@ export class LoginPageComponent {
     UserName: null,
     Password: null,
   };
-
+  loadingVisible: boolean = false;
   constructor(
     private formb: FormBuilder,
     private router: Router,
@@ -33,6 +33,7 @@ export class LoginPageComponent {
   ) {}
 
   Login() {
+    this.loadingVisible = true;
     var userName = this.loginpage.UserName;
     var Password = this.loginpage.Password;
     if (userName && Password) {
@@ -43,6 +44,7 @@ export class LoginPageComponent {
             notify(`${response.message}`, 'success', 3000);
             let userId = response.userid;
             sessionStorage.setItem('paramsid', userId);
+            this.loadingVisible = false;
             this.router.navigate(['/Main-Dashboard']);
           } else {
             notify(`${response.message}`, 'error', 3000);

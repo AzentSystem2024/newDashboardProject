@@ -389,11 +389,28 @@ export class MainHomePageComponent {
           this.DenialCategoryRejectionDataSource = response.CategoryWise;
           this.BlockWiseRejectionDataSource = response.BlockWise;
           this.RejectionAccountabilityDataSource = response.AccountabilityWise;
-          this.ToptenInsuranceRejectedDataSource = response.InsuranceWise;
+          this.ToptenInsuranceRejectedDataSource = response.InsuranceWise.map(
+            (insurance) => {
+              if (!insurance.InsuranceShortName) {
+                const nameParts = insurance.InsuranceName.split(' ');
+                const shortName = nameParts.slice(0, 2).join(' ');
+                return { ...insurance, InsuranceShortName: shortName };
+              }
+              return insurance;
+            }
+          );
           this.TopTenFacilityRejectedDataSource = response.FacilityWise;
           this.TopTenCodeRejectedDataSource = response.CodeWise;
           this.TopTenDepartmentWiseRejectedDataSource = response.DepartmentWise;
-          this.TopTenDoctorWiseRejectedDataSource = response.ClinicianWise;
+          this.TopTenDoctorWiseRejectedDataSource = response.ClinicianWise.map(
+            (clinician) => {
+              if (!clinician.ClinicianShortName && clinician.ClinicianName) {
+                const nameParts = clinician.ClinicianName.trim().split(/\s+/);
+                clinician.ClinicianShortName = nameParts.slice(0, 2).join(' ');
+              }
+              return clinician;
+            }
+          );
           this.loadingVisible = false;
         } else {
           notify(`${response.message}`, 'error', 3000);
