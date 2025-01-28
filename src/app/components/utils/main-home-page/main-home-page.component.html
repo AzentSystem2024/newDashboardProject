@@ -395,7 +395,7 @@
               <dxi-series
                 valueField="RemittedPercent"
                 name="Remittance %"
-                color="#FF5733"
+                color="#f0d43a"
               >
                 <dxo-label [visible]="true">
                   <dxo-connector [visible]="false"></dxo-connector>
@@ -405,7 +405,7 @@
               <dxi-series
                 valueField="RejectedPercent"
                 name="Rejection %"
-                color="#33FF57"
+                color="#ff5959"
               >
                 <dxo-label [visible]="true">
                   <dxo-connector [visible]="false"></dxo-connector>
@@ -511,6 +511,7 @@
 
       <div class="graphContainer">
         <div class="d-flex gap-1">
+
           <div class="ChartContent">
             <dx-chart
               id="chart"
@@ -527,7 +528,7 @@
               ></dxo-legend>
               <dxi-series
                 name="Category"
-                argumentField="Category"
+                argumentField="Code"
                 valueField="Rejected"
                 type="bar"
                 color="#0092ca"
@@ -541,11 +542,16 @@
                 >
                 </dxo-label>
               </dxi-series>
+              <dxo-tooltip
+                [enabled]="true"
+                [customizeTooltip]="DenialCategoryDataCustomizeTooltip"
+              ></dxo-tooltip>
               <dxo-argument-axis
                 [position]="'bottom'"
                 [label]="{
                   rotationAngle: -60,
                   overlappingBehavior: 'rotate',
+                  customizeText: formatXAxisText
                 }"
               >
               </dxo-argument-axis>
@@ -562,7 +568,7 @@
               ></dxo-legend>
               <dxi-series
                 name="Block"
-                argumentField="Block"
+                argumentField="Code"
                 valueField="Rejected"
                 type="bar"
                 color="#8594e4"
@@ -576,11 +582,16 @@
                 >
                 </dxo-label>
               </dxi-series>
+              <dxo-tooltip
+                [enabled]="true"
+                [customizeTooltip]="BlockWiseDataCustomizeTooltip"
+              ></dxo-tooltip>
               <dxo-argument-axis
                 [position]="'bottom'"
                 [label]="{
                   rotationAngle: -60,
                   overlappingBehavior: 'rotate',
+                  customizeText: formatXAxisText
                 }"
               >
               </dxo-argument-axis>
@@ -600,7 +611,7 @@
               ></dxo-legend>
               <dxi-series
                 name="Accountability"
-                argumentField="Accountability"
+                argumentField="Code"
                 valueField="Rejected"
                 type="bar"
                 color="#36626a"
@@ -614,11 +625,16 @@
                 >
                 </dxo-label>
               </dxi-series>
+              <dxo-tooltip
+                [enabled]="true"
+                [customizeTooltip]="RejectionAccountabilityDataCustomizeTooltip"
+              ></dxo-tooltip>
               <dxo-argument-axis
                 [position]="'bottom'"
                 [label]="{
                   rotationAngle: -60,
                   overlappingBehavior: 'rotate',
+                  customizeText: formatXAxisText
                 }"
               >
               </dxo-argument-axis>
@@ -629,7 +645,7 @@
 
       <div class="graphContainer">
         <div class="d-flex gap-1">
-          <div class="ChartContent">
+          <div class="ChartContent p-3">
             <dx-chart
               id="chart"
               [dataSource]="ToptenInsuranceRejectedDataSource"
@@ -658,6 +674,15 @@
                 >
                 </dxo-label>
               </dxi-series>
+              <dxo-argument-axis
+                [position]="'bottom'"
+                [label]="{
+                  rotationAngle: -60,
+                  overlappingBehavior: 'rotate',
+                  customizeText: formatXAxisText
+                }"
+              >
+              </dxo-argument-axis>
               <dxo-tooltip
                 [enabled]="true"
                 [customizeTooltip]="top10InsuranceDataCustomizeTooltip"
@@ -665,7 +690,7 @@
             </dx-chart>
           </div>
 
-          <div class="ChartContent">
+          <div class="ChartContent p-3">
             <dx-chart
               id="chart"
               [dataSource]="TopTenFacilityRejectedDataSource"
@@ -698,10 +723,19 @@
                 [enabled]="true"
                 [customizeTooltip]="top10FacilityDataCustomizeTooltip"
               ></dxo-tooltip>
+              <dxo-argument-axis
+                [position]="'bottom'"
+                [label]="{
+                  rotationAngle: -60,
+                  overlappingBehavior: 'rotate',
+                  customizeText: formatXAxisText
+                }"
+              >
+              </dxo-argument-axis>
             </dx-chart>
           </div>
 
-          <div class="ChartContent">
+          <div class="ChartContent p-3">
             <dx-chart
               id="chart"
               [dataSource]="TopTenCodeRejectedDataSource"
@@ -733,6 +767,15 @@
                 [enabled]="true"
                 [customizeTooltip]="top10CodeDataCustomizeTooltip"
               ></dxo-tooltip>
+              <dxo-argument-axis
+                [position]="'bottom'"
+                [label]="{
+                  rotationAngle: -60,
+                  overlappingBehavior: 'rotate',
+                  customizeText: formatXAxisText
+                }"
+              >
+              </dxo-argument-axis>
             </dx-chart>
           </div>
         </div>
@@ -779,6 +822,10 @@
                 }"
               >
               </dxo-argument-axis>
+              <dxo-tooltip
+                [enabled]="true"
+                [customizeTooltip]="top10DepartmentDataCustomizeTooltip"
+              ></dxo-tooltip>
             </dx-chart>
           </div>
 

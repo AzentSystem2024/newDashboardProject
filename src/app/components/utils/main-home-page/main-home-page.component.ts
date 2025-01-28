@@ -165,16 +165,16 @@ export class MainHomePageComponent {
     console.log('Updated DataSource:', this[dataSourceKey]);
     this.dataGrid.instance.refresh();
   }
+
   // ======================== X-Axis value rotated and value custom==============
   formatXAxisText = (axisInfo: any): string => {
     const text = axisInfo.value;
-    const parts = text.split(' ');
-    // Calculate the middle point
+    const truncatedText = text.length > 14 ? text.slice(0, 14) : text;
+    const parts = truncatedText.split(' ');
     const middleIndex = Math.ceil(parts.length / 2);
-    // Split the text into two halves and join them with a newline
     const firstLine = parts.slice(0, middleIndex).join(' ');
     const secondLine = parts.slice(middleIndex).join(' ');
-    return `${firstLine}\n${secondLine}`; // Return the text with two lines
+    return `${firstLine}\n${secondLine}`;
   };
 
   customizeLabel(arg) {
@@ -211,16 +211,41 @@ export class MainHomePageComponent {
       text: `${arg.point.data.CPTName}`,
     };
   }
-  //======================top 10 code tooltip===================
+  //======================top 10 facility tooltip===================
   top10FacilityDataCustomizeTooltip(arg: any) {
     return {
       text: `${arg.point.data.FacilityName}`,
     };
   }
-  //======================top 10 code tooltip===================
+  //======================top 10 clinician tooltip===================
   top10ClinicianDataCustomizeTooltip(arg: any) {
     return {
       text: `${arg.point.data.ClinicianName}`,
+    };
+  }
+
+  //======================top 10 department tooltip===================
+  top10DepartmentDataCustomizeTooltip(arg: any) {
+    return {
+      text: `${arg.point.data.Department}`,
+    };
+  }
+   //======================Denial Category tooltip===================
+   DenialCategoryDataCustomizeTooltip(arg: any) {
+    return {
+      text: `${arg.point.data.Category}`,
+    };
+  }
+   //======================Block Wise tooltip===================
+   BlockWiseDataCustomizeTooltip(arg: any) {
+    return {
+      text: `${arg.point.data.Block}`,
+    };
+  }
+   //======================rejection acountability tooltip===================
+   RejectionAccountabilityDataCustomizeTooltip(arg: any) {
+    return {
+      text: `${arg.point.data.Accountability}`,
     };
   }
 
