@@ -1,14 +1,14 @@
 .view-wrapper {
   margin: 0px;
   padding: 0px;
-  height: 92vh;
+  height: 90vh;
   border-radius: 8px;
   // background-color: var(--base-bg);
 }
 
 .mainDiv {
   background-color: var(--base-bg);
-  // border-radius: 8px;
+  border-radius: 8px;
   padding: 0px;
   margin: 0px;
 }
@@ -22,9 +22,10 @@
 }
 
 .graph-scroll-container {
-  max-height: 85vh;
+  max-height: auto;
   padding: 0px;
   margin: 0px;
+  margin-bottom: 5px;
   overflow-y: auto;
   overflow-x: hidden;
   border-radius: 8px;

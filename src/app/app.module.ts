@@ -14,12 +14,13 @@ import {
 import { AuthService, ScreenService, AppInfoService } from './services';
 import { UnauthenticatedContentModule } from './layouts/unauthenticated-content/unauthenticated-content';
 import { AppRoutingModule } from './app-routing.module';
-import { CrmContactDetailsModule } from './pages/crm-contact-details/crm-contact-details.component';
 import { PlanningTaskListModule } from './components/utils/Operations-Receivers-Drill-Page/planning-task-list.component';
 import { PlanningTaskDetailsModule } from './components/utils/Operations-Denial-Code-BreakUp/planning-task-details.component';
 import { AnalyticsDashboardModule } from './pages/analytics-dashboard/analytics-dashboard.component';
 import { ThemeService } from './services';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouteReuseStrategy } from '@angular/router';
+import { CustomReuseStrategy } from './State-Management/custom-reuse-strategy';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -32,14 +33,19 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     LoginFormModule,
     UnauthenticatedContentModule,
     BrowserAnimationsModule,
-    CrmContactDetailsModule,
     PlanningTaskListModule,
     PlanningTaskDetailsModule,
     AnalyticsDashboardModule,
     HttpClientModule,
     AppRoutingModule,
   ],
-  providers: [AuthService, ScreenService, AppInfoService, ThemeService],
+  providers: [
+    AuthService,
+    ScreenService,
+    AppInfoService,
+    ThemeService,
+    // { provide: RouteReuseStrategy, useClass: CustomReuseStrategy },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

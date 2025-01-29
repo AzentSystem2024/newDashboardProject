@@ -1,3 +1,4 @@
+import { DxTabsModule } from 'devextreme-angular/ui/tabs';
 import {
   Component,
   OnInit,
@@ -25,14 +26,15 @@ import {
 } from '../../components';
 import { Subscription } from 'rxjs';
 import { ToolbarAnalyticsModule } from '../../components/utils/Search-Parameters-Page/toolbar-analytics.component';
-import { OpportunitiesTickerModule } from '../../components/utils/Card-Data-Component/opportunities-ticker.component';
 import { ConversionCardModule } from '../../components/utils/Home-Funnel-Chart/conversion-card.component';
 import { Sales, SalesOrOpportunitiesByCategory } from 'src/app/types/analytics';
 import { CardAnalyticsModule } from 'src/app/components/library/card-analytics/card-analytics.component';
 import { SharedService } from 'src/app/services/shared-service';
+import { DxTabPanelModule } from 'devextreme-angular';
+import { MainHomePageComponent } from 'src/app/pages/main-home-page/main-home-page.component';
+import { AuthDashboardPageComponent } from 'src/app/pages/auth-dashboard-page/auth-dashboard-page.component';
 
 @Component({
-  selector: 'app-side-nav-outer-toolbar',
   templateUrl: './side-nav-outer-toolbar.component.html',
   styleUrls: ['./side-nav-outer-toolbar.component.scss'],
 })
@@ -62,11 +64,21 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
 
   shaderEnabled = false;
 
+  tabs = [
+    { text: 'Dashboard', path: '/Main-Dashboard' },
+    { text: 'Auth-Dashboard', path: '/Auth-Dashboard' },
+  ];
+  selectedIndex = 0;
+  orientation: any = 'horizonal';
+
   routerSubscription: Subscription;
 
   screenSubscription: Subscription;
 
   private applyButtonSubscription: Subscription;
+  userId: any;
+  showHeadersDiv: boolean=false
+  currentRoute: any;
 
   constructor(
     public service: DataService,
@@ -76,15 +88,14 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private sharedservise: SharedService
   ) {
-    this.segment = this.getCurrentSegmentFromUrl();
-    // console.log('Segment:', this.segment);
-    this.routerSubscription = this.router.events.subscribe((event: Event) => {
-      if (event instanceof NavigationEnd) {
-        this.selectedRoute = event.urlAfterRedirects.split('?')[0];
-      }
+    this.currentRoute = this.router.url;
+    console.log('Current route:', this.currentRoute);
+
+    this.service.loggedIn$.subscribe((isLoggedIn) => {
+      this.showHeadersDiv = isLoggedIn;
     });
   }
-
+  //=================== On Init Iunction =================
   ngOnInit() {
     // console.log('=>', this.route);
     this.route.url.subscribe((segments) => {
@@ -100,6 +111,14 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
 
     this.updateDrawer();
   }
+  //====================Tab Clicke Event====================
+  onTabChanged(event: any) {
+    console.log('event is ', event);
+    const selectedTab: any = event.addedItems[0];
+    console.log('selected component :>>', selectedTab);
+    this.router.navigate([selectedTab.path]);
+  }
+  //==========================================================
   getCurrentSegmentFromUrl(): string {
     // Get the current URL from the browser
     const currentUrl = window.location.href;
@@ -174,11 +193,8 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
     DxDrawerModule,
     AppHeaderModule,
     CommonModule,
-    AppFooterModule,
-    ToolbarAnalyticsModule,
-    OpportunitiesTickerModule,
-    CardAnalyticsModule,
-    ConversionCardModule,
+    DxTabPanelModule,
+    DxTabsModule,
   ],
   exports: [SideNavOuterToolbarComponent],
   declarations: [SideNavOuterToolbarComponent],

@@ -30,21 +30,16 @@ export class LoginFormComponent implements OnInit {
 
   passwordEditorOptions = {
     placeholder: 'Password',
-    stylingMode:'filled',
+    stylingMode: 'filled',
     mode: this.passwordMode,
     value: 'password',
-    // buttons: [{
-    //   name: 'password',
-    //   location: 'after',
-    //   options: {
-    //     icon: 'info',
-    //     stylingMode:'text',
-    //     onClick: () => this.changePasswordMode(),
-    //   }
-    // }]
-  }
+  };
 
-  constructor(private authService: AuthService, private router: Router, private themeService: ThemeService) {
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private themeService: ThemeService
+  ) {
     this.themeService.isDark.subscribe((value: boolean) => {
       this.btnStylingMode = value ? 'outlined' : 'contained';
     });
@@ -53,7 +48,7 @@ export class LoginFormComponent implements OnInit {
   changePasswordMode() {
     debugger;
     this.passwordMode = this.passwordMode === 'text' ? 'password' : 'text';
-  };
+  }
 
   async onSubmit(e: Event) {
     e.preventDefault();
@@ -82,9 +77,9 @@ export class LoginFormComponent implements OnInit {
     LoginOauthModule,
     DxFormModule,
     DxLoadIndicatorModule,
-    DxButtonModule
+    DxButtonModule,
   ],
   declarations: [LoginFormComponent],
   exports: [LoginFormComponent],
 })
-export class LoginFormModule { }
+export class LoginFormModule {}

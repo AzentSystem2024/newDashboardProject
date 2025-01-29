@@ -1,6 +1,6 @@
 import { Injectable, asNativeElements } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, from, Subject, throwError, catchError } from 'rxjs';
+import { Observable, from, Subject, throwError, catchError, BehaviorSubject } from 'rxjs';
 import {
   CRS_DASHBOARD_CLAIMSMRY_DOCTORDATA,
   CRS_DASHBOARD_CLAIMSMRY_RECEIVEDATA,
@@ -29,6 +29,11 @@ const colors: string[] = ['#6babac', '#e55253'];
   providedIn: 'root',
 })
 export class DataService {
+
+  private loggedInSource = new BehaviorSubject<boolean>(false);
+  loggedIn$ = this.loggedInSource.asObservable();
+
+
   private months: { name: string; value: any }[] = [
     { name: 'All', value: ' ' },
     { name: 'January', value: 0 },
@@ -65,6 +70,17 @@ export class DataService {
   lookupDatatoolbar: any;
 
   constructor(private http: HttpClient) {}
+//============= show headers in dashboard pages ============
+  setHeaderDivTrue(){
+    this.loggedInSource.next(true);
+  }
+//============= hide headers in login page ============
+
+  setHeaderDivFalse(){
+    this.loggedInSource.next(false);
+  }
+
+
   //============Share months to component ================
   getMonths(): { name: string; value: number }[] {
     return this.months;
@@ -134,6 +150,7 @@ export class DataService {
     const url = CRS_DASHBOARD_LOGIN;
     const reqBody = { Loginid: username, password: password };
     return this.http.post(url, reqBody);
+
   }
 
   //================ClaimSummary Data Fetching=================

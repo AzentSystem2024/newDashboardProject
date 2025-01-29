@@ -1,5 +1,5 @@
 <!-- Main card => 100vh scrollable start -->
-<div class="view-wrapper">
+<div class="view-wrapper fullpageDiv">
   <!-- =============================Filter Params============================= -->
   <div class="ExportDiv1">
     <div class="mainDiv mb-1 p-0">
@@ -511,7 +511,6 @@
 
       <div class="graphContainer">
         <div class="d-flex gap-1">
-
           <div class="ChartContent">
             <dx-chart
               id="chart"
@@ -884,11 +883,11 @@
   *ngIf="loadingVisible"
   #loadPanel
   shadingColor="rgba(0,0,0,0.4)"
-  [position]="{ of: '#view-wrapper' }"
+  [position]="{ of: '#fullpageDiv' }"
   [(visible)]="loadingVisible"
   [showIndicator]="true"
   [showPane]="true"
-  [shading]="true"
+  [shading]="false"
   [hideOnOutsideClick]="false"
 >
 </dx-load-panel>

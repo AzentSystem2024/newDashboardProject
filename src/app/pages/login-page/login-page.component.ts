@@ -30,7 +30,9 @@ export class LoginPageComponent {
     private formb: FormBuilder,
     private router: Router,
     private service: DataService
-  ) {}
+  ) {
+    this.service.setHeaderDivFalse();
+  }
 
   Login() {
     this.loadingVisible = true;
@@ -41,10 +43,11 @@ export class LoginPageComponent {
         .dashboard_Login(userName, Password)
         .subscribe((response: any) => {
           if (response.flag == '1') {
+            this.loadingVisible = false;
             notify(`${response.message}`, 'success', 3000);
             let userId = response.userid;
             sessionStorage.setItem('paramsid', userId);
-            this.loadingVisible = false;
+            this.service.setHeaderDivTrue();
             this.router.navigate(['/Main-Dashboard']);
           } else {
             notify(`${response.message}`, 'error', 3000);

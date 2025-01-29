@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, ActivatedRouteSnapshot } from '@angular/router';
-
+import { BehaviorSubject } from 'rxjs';
 export interface IUser {
   email: string;
   name?: string;
@@ -22,6 +22,12 @@ export const defaultUser: IUser = {
 
 @Injectable()
 export class AuthService {
+
+  private loggedInSource = new BehaviorSubject<boolean>(false);
+  loggedIn$ = this.loggedInSource.asObservable();
+
+
+
   private _user: IUser | null = defaultUser;
 
   get loggedIn(): boolean {

@@ -22,11 +22,11 @@ import {
   DxDataGridModule,
   DxDataGridComponent,
 } from 'devextreme-angular';
-import { CardAnalyticsModule } from '../../library/card-analytics/card-analytics.component';
+// import { CardAnalyticsModule } from '../../library/card-analytics/card-analytics.component';
 import { DataService } from 'src/app/services';
 import { BrowserModule } from '@angular/platform-browser';
 import { trigger, style, transition, animate } from '@angular/animations';
-import { TickerCardModule } from '../../library/ticker-card/ticker-card.component';
+// import { TickerCardModule } from '../../library/ticker-card/ticker-card.component';
 import { SharedService } from 'src/app/services/shared-service';
 import notify from 'devextreme/ui/notify';
 import * as moment from 'moment';
@@ -40,6 +40,7 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-main-home-page',
   templateUrl: './main-home-page.component.html',
   styleUrls: ['./main-home-page.component.scss'],
+  providers: [DataService],
   animations: [
     trigger('toggleRows', [
       transition(':enter', [
@@ -128,7 +129,6 @@ export class MainHomePageComponent {
 
   constructor(
     public service: DataService,
-    private sharedService: SharedService,
     private dataservice: DataService,
     private router: Router
   ) {
@@ -136,7 +136,7 @@ export class MainHomePageComponent {
     if (this.userId != 'undefined' && this.userId != '' && this.userId > '0') {
       this.getValuesOfInitData();
     } else {
-      this.router.navigate(['/login-Page']);
+      this.router.navigate(['/login']);
     }
   }
   //=========== reorder list options to selected data to the top side ========
@@ -169,8 +169,8 @@ export class MainHomePageComponent {
   // ======================== X-Axis value rotated and value custom==============
   formatXAxisText = (axisInfo: any): string => {
     const text = axisInfo.value;
-    const truncatedText = text.length > 14 ? text.slice(0, 14) : text;
-    const parts = truncatedText.split(' ');
+    // const truncatedText = text.length > 14 ? text.slice(0, 14) : text;
+    const parts = text.split(' ');
     const middleIndex = Math.ceil(parts.length / 2);
     const firstLine = parts.slice(0, middleIndex).join(' ');
     const secondLine = parts.slice(middleIndex).join(' ');
@@ -230,20 +230,20 @@ export class MainHomePageComponent {
       text: `${arg.point.data.Department}`,
     };
   }
-   //======================Denial Category tooltip===================
-   DenialCategoryDataCustomizeTooltip(arg: any) {
+  //======================Denial Category tooltip===================
+  DenialCategoryDataCustomizeTooltip(arg: any) {
     return {
       text: `${arg.point.data.Category}`,
     };
   }
-   //======================Block Wise tooltip===================
-   BlockWiseDataCustomizeTooltip(arg: any) {
+  //======================Block Wise tooltip===================
+  BlockWiseDataCustomizeTooltip(arg: any) {
     return {
       text: `${arg.point.data.Block}`,
     };
   }
-   //======================rejection acountability tooltip===================
-   RejectionAccountabilityDataCustomizeTooltip(arg: any) {
+  //======================rejection acountability tooltip===================
+  RejectionAccountabilityDataCustomizeTooltip(arg: any) {
     return {
       text: `${arg.point.data.Accountability}`,
     };
@@ -273,22 +273,22 @@ export class MainHomePageComponent {
     return `<span>${itemData.Name}</span>`;
   };
 
-  //==================MAking cutom datasource for facility datagrid and dropdown loADING=======
-  makeAsyncDataSourceFromJson(jsonData: any) {
-    return new CustomStore({
-      loadMode: 'raw',
-      key: 'ID',
-      load: () => {
-        return new Promise((resolve, reject) => {
-          try {
-            resolve(jsonData);
-          } catch (error) {
-            reject(error);
-          }
-        });
-      },
-    });
-  }
+    //==================MAking cutom datasource for facility datagrid and dropdown loADING=======
+    makeAsyncDataSourceFromJson(jsonData: any) {
+      return new CustomStore({
+        loadMode: 'raw',
+        key: 'ID',
+        load: () => {
+          return new Promise((resolve, reject) => {
+            try {
+              resolve(jsonData);
+            } catch (error) {
+              reject(error);
+            }
+          });
+        },
+      });
+    }
   //=====================fetch init dataSource =========================
   getValuesOfInitData() {
     this.loadingVisible = true;
@@ -477,7 +477,6 @@ export class MainHomePageComponent {
 @NgModule({
   imports: [
     CommonModule,
-    CardAnalyticsModule,
     DxLoadIndicatorModule,
     DxFunnelModule,
     DxButtonModule,
@@ -492,7 +491,6 @@ export class MainHomePageComponent {
     DxFormModule,
     DxDropDownBoxModule,
     DxSelectBoxModule,
-    TickerCardModule,
     DxChartModule,
     DxPieChartModule,
     DxTagBoxModule,

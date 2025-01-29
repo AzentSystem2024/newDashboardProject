@@ -11,8 +11,6 @@ import { DataService } from 'src/app/services';
 import { CardAnalyticsModule } from 'src/app/components/library/card-analytics/card-analytics.component';
 import { ToolbarAnalyticsModule } from 'src/app/components/utils/Search-Parameters-Page/toolbar-analytics.component';
 import { ConversionCardModule } from 'src/app/components/utils/Home-Funnel-Chart/conversion-card.component';
-import { RevenueAnalysisCardModule } from 'src/app/components/utils/Finance-Dashboard/revenue-analysis-card.component';
-import { OpportunitiesTickerModule } from 'src/app/components/utils/Card-Data-Component/opportunities-ticker.component';
 
 import { ApplyPipeModule } from 'src/app/pipes/apply.pipe';
 
@@ -47,8 +45,8 @@ export class AnalyticsDashboardComponent implements OnInit {
     DxLoadPanelModule,
     ApplyPipeModule,
     ConversionCardModule,
-    RevenueAnalysisCardModule,
-    OpportunitiesTickerModule,
+
+
     CommonModule,
   ],
   providers: [],
