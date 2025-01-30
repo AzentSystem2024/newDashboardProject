@@ -5,7 +5,7 @@
     <div class="mainDiv mb-1 p-0">
       <!-- First Group -->
       <div class="row mt-1 ms-1 me-1">
-        <div class="col-12">
+        <div class="col-10">
           <dx-drop-down-box
             class="dropdowncontent"
             labelMode="floating"
@@ -63,6 +63,19 @@
             </div>
           </dx-drop-down-box>
         </div>
+        <div class="col-2">
+          <dx-select-box
+            [dataSource]="SubmissionIndexDatasource"
+            displayExpr="Name"
+            valueExpr="ID"
+            [(value)]="SubmissionIndexvalue"
+            required
+            label="Submission"
+            labelMode="floating"
+            [dropDownOptions]="{ height: 250 }"
+            [searchEnabled]="true"
+          ></dx-select-box>
+        </div>
       </div>
 
       <!-- Wrapper for Second and Third Rows -->
@@ -114,7 +127,7 @@
               [showSelectionControls]="true"
               [multiline]="false"
               applyValueMode="instantly"
-              label="Physician"
+              label="Physician Category"
               labelMode="floating"
               (onValueChanged)="
                 reorderDataSource(
@@ -199,7 +212,7 @@
       </div>
 
       <!-- Toggle Button -->
-      <div class="row justify-content-center p-0 m-0">
+      <!-- <div class="row justify-content-center p-0 m-0">
         <div class="col-12 text-center">
           <dx-button
             class="toggle-button"
@@ -209,7 +222,7 @@
             (click)="toggleGroups()"
           ></dx-button>
         </div>
-      </div>
+      </div> -->
       <!-- Toggle Button end -->
     </div>
   </div>
@@ -225,11 +238,15 @@
           <div
             class="card col-12 col-md-2 col-lg-2 col-sm-6 claimedCard p-0 m-0"
           >
-            <div class="card-body text-center align-items-center">
-              <div class="d-flex align-items-center text-center m-0">
-                <p class="card-text">Total Request Sent</p>
-              </div>
-              <p class="card-text mt-2">10,000</p>
+            <div
+              class="card-body d-flex flex-column justify-content-center text-center"
+            >
+              <p class="card-text mt-5">Total Request Sent</p>
+              <!-- Title at the top -->
+              <p class="card-text flex-grow-1 d-flex justify-content-center">
+                {{ ReguestSendCardValue }}
+              </p>
+              <!-- Value centered -->
             </div>
           </div>
 
@@ -244,8 +261,8 @@
               <dxi-series
                 color="#79cac4"
                 type="bar"
-                argumentField="day"
-                valueField="sales"
+                argumentField="Code"
+                valueField="Rejected"
                 [barWidth]="20"
               >
                 <dxo-label
@@ -268,11 +285,24 @@
           <div class="ChartContent">
             <dx-chart id="chart" [dataSource]="mainSeriesChartDatasource">
               <dxo-title text="Prior Analysis" hint=""></dxo-title>
-              <dxi-series valueField="year2018" name="2018"></dxi-series>
-              <dxi-series valueField="year2017" name="2017"></dxi-series>
-              <dxi-series valueField="year2016" name="2016"></dxi-series>
+              <dxi-series
+                valueField="FullyApproved"
+                name="FullyApproved"
+              ></dxi-series>
+              <dxi-series
+                valueField="PartiallyApproved"
+                name="PartiallyApproved"
+              ></dxi-series>
+              <dxi-series
+                valueField="FullyRejected"
+                name="FullyRejected"
+              ></dxi-series>
+              <dxi-series
+                valueField="InProgress"
+                name="InProgress"
+              ></dxi-series>
               <dxo-common-series-settings
-                argumentField="state"
+                argumentField="EncounterType"
                 type="bar"
                 hoverMode="allArgumentPoints"
                 selectionMode="allArgumentPoints"
@@ -303,12 +333,13 @@
             <dx-chart id="chart" [dataSource]="TaTstatusDataSource">
               <dxo-title text="TAT Status" hint=""></dxo-title>
               <dxi-series
-                argumentField="day"
-                valueField="oranges"
+                argumentField="TatDelay"
+                valueField="DocumentCount"
                 name="TAT Delay"
                 type="bar"
-                color="#ffaa66"
+                color="#8a1253"
               >
+                <dxo-label [visible]="true" [position]="'outside'"> </dxo-label>
               </dxi-series>
               <dxo-legend
                 [visible]="true"
@@ -319,24 +350,32 @@
           </div>
 
           <div class="ChartContent text-center">
-            <dx-chart [dataSource]="CountPerDayaData" [valueAxis]="">
+            <dx-chart [dataSource]="CountPerDaysData" [valueAxis]="">
               <dxo-title text="Count Per Day" hint=""></dxo-title>
               <dxo-size [height]="420"></dxo-size>
               <dxi-series
-                argumentField="name"
-                valueField="id"
+                argumentField="Day"
+                valueField="DocumentCount"
+                name="Day"
                 type="spline"
                 [dashStyle]="'dot'"
-              ></dxi-series>
+              >
+                <dxo-label
+                  [visible]="true"
+                  [position]="'outside'"
+                  [overlappingBehavior]="'stagger'"
+                ></dxo-label>
+              </dxi-series>
               <dxo-legend [visible]="false"></dxo-legend>
               <dxo-common-pane-settings>
                 <dxo-border
                   [visible]="true"
-                  [width]="2"
+                  [width]="1"
                   [top]="false"
                   [right]="false"
                 ></dxo-border>
               </dxo-common-pane-settings>
+
               <dxo-export [enabled]="false"></dxo-export>
               <dxo-tooltip [enabled]="true"></dxo-tooltip>
               <dxo-legend
@@ -344,7 +383,14 @@
                 verticalAlignment="bottom"
                 horizontalAlignment="center"
               ></dxo-legend>
-              <dxo-argument-axis type="discrete">
+              <dxo-argument-axis
+                type="discrete"
+                [position]="'bottom'"
+                [label]="{
+                rotationAngle: -70,
+                overlappingBehavior: 'rotate',
+              }"
+              >
                 <dxo-grid [visible]="true" [opacity]="0.5"></dxo-grid>
               </dxo-argument-axis>
               <dxo-loading-indicator [enabled]="true"></dxo-loading-indicator>

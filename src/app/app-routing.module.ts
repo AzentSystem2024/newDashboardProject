@@ -10,17 +10,22 @@ import {
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { MainHomePageComponent } from './pages/main-home-page/main-home-page.component';
 import { AuthDashboardPageComponent } from './pages/auth-dashboard-page/auth-dashboard-page.component';
-import { LoginFormComponent } from './components';
-
 const routes: Routes = [
   {
-    path: '',
-    component: SideNavOuterToolbarComponent,
+    path: 'auth',
+    component: UnauthenticatedContentComponent,
     children: [
       {
         path: 'login',
         component: LoginPageComponent,
       },
+    ],
+  },
+  {
+    path: '',
+    component: SideNavOuterToolbarComponent,
+    canActivate: [AuthGuardService],
+    children: [
       {
         path: 'Main-Dashboard',
         component: MainHomePageComponent,
@@ -37,7 +42,6 @@ const routes: Routes = [
     ],
   },
 ];
-
 @NgModule({
   imports: [RouterModule.forRoot(routes, { useHash: true }), BrowserModule],
   providers: [AuthGuardService],

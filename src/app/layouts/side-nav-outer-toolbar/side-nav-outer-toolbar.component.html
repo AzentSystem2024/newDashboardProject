@@ -1,5 +1,4 @@
 <app-header
-  *ngIf="showHeadersDiv"
   class="layout-header"
   [title]="appInfo.title"
   [menuToggleEnabled]="true"
@@ -7,22 +6,21 @@
 ></app-header>
 
 <div class="layout-body">
-    <dx-tabs
-      *ngIf="showHeadersDiv"
-      #withText
-      [width]="'auto'"
-      [selectedIndex]="0"
-      [rtlEnabled]="false"
-      [scrollByContent]="false"
-      [showNavButtons]="false"
-      [dataSource]="tabs"
-      [orientation]="orientation"
-      stylingMode="primary"
-      iconPosition="start"
-      (onSelectionChanged)="onTabChanged($event)"
-    >
-      ></dx-tabs
-    >
+  <dx-tabs
+    #withText
+    [width]="'auto'"
+    [selectedIndex]="0"
+    [rtlEnabled]="false"
+    [scrollByContent]="false"
+    [showNavButtons]="false"
+    [dataSource]="tabs"
+    [orientation]="orientation"
+    stylingMode="primary"
+    iconPosition="start"
+    (onSelectionChanged)="onTabChanged($event)"
+  >
+    ></dx-tabs
+  >
 
   <div class="mt-1">
     <router-outlet> </router-outlet>

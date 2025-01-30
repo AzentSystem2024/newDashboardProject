@@ -14,6 +14,9 @@ import { DxoValidationModule } from 'devextreme-angular/ui/nested';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DataService } from 'src/app/services';
 import notify from 'devextreme/ui/notify';
+import { firstValueFrom } from 'rxjs';
+import { ReuseStrategyService } from 'src/app/State-Management/reuse-strategy.service';
+import { CustomReuseStrategy } from 'src/app/State-Management/custom-reuse-strategy';
 
 @Component({
   selector: 'app-login-page',
@@ -29,13 +32,14 @@ export class LoginPageComponent {
   constructor(
     private formb: FormBuilder,
     private router: Router,
-    private service: DataService
+    private service: DataService,
+    private reuseStrategy: CustomReuseStrategy
   ) {
     this.service.setHeaderDivFalse();
   }
 
   Login() {
-    this.loadingVisible = true;
+    // this.loadingVisible = true;
     var userName = this.loginpage.UserName;
     var Password = this.loginpage.Password;
     if (userName && Password) {
@@ -43,12 +47,14 @@ export class LoginPageComponent {
         .dashboard_Login(userName, Password)
         .subscribe((response: any) => {
           if (response.flag == '1') {
-            this.loadingVisible = false;
             notify(`${response.message}`, 'success', 3000);
             let userId = response.userid;
             sessionStorage.setItem('paramsid', userId);
             this.service.setHeaderDivTrue();
-            this.router.navigate(['/Main-Dashboard']);
+            setTimeout(() => {
+              // this.loadingVisible = false; // Ensure loading is hidden before navigation
+              this.router.navigate(['/Main-Dashboard']);
+            }, 500);
           } else {
             notify(`${response.message}`, 'error', 3000);
           }

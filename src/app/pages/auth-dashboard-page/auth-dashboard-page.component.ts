@@ -1,6 +1,6 @@
 import { trigger, transition, style, animate } from '@angular/animations';
 import { CommonModule, PercentPipe } from '@angular/common';
-import { Component, NgModule, ViewChild } from '@angular/core';
+import { Component, NgModule, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import {
@@ -27,6 +27,7 @@ import {
 import { CardAnalyticsModule } from 'src/app/components/library/card-analytics/card-analytics.component';
 import CustomStore from 'devextreme/data/custom_store';
 import { Router } from '@angular/router';
+import { DataService } from 'src/app/services';
 @Component({
   selector: 'app-auth-dashboard-page',
   templateUrl: './auth-dashboard-page.component.html',
@@ -44,7 +45,7 @@ import { Router } from '@angular/router';
     ]),
   ],
 })
-export class AuthDashboardPageComponent {
+export class AuthDashboardPageComponent implements OnInit {
   @ViewChild(DxDataGridComponent, { static: true })
   dataGrid: DxDataGridComponent;
 
@@ -63,124 +64,33 @@ export class AuthDashboardPageComponent {
   modifiedFacilityDatasource: any;
   facilityvalue: any[];
   FacilityDataSource: any;
-
+  SubmissionIndexvalue: any;
+  SubmissionIndexDatasource: any;
   showGroups: boolean = true;
   loadingVisible: boolean = false;
 
-  mainSeriesChartDatasource: any = [
-    {
-      state: 'Illinois',
-      year2016: 803,
-      year2017: 823,
-      year2018: 863,
-    },
-    {
-      state: 'Indiana',
-      year2016: 316,
-      year2017: 332,
-      year2018: 332,
-    },
-    {
-      state: 'Michigan',
-      year2016: 452,
-      year2017: 459,
-      year2018: 470,
-    },
-    {
-      state: 'Ohio',
-      year2016: 621,
-      year2017: 642,
-      year2018: 675,
-    },
-    {
-      state: 'Wisconsin',
-      year2016: 290,
-      year2017: 294,
-      year2018: 301,
-    },
-  ];
-  TaTstatusDataSource: any = [
-    {
-      day: 'Within 48 Hrs',
-      oranges: 1797,
-    },
-    {
-      day: 'Above 72 Hrs',
-      oranges: 369,
-    },
-    {
-      day: 'Within 72 Hrs',
-      oranges: 291,
-    },
-  ];
-  CountPerDayaData: any = [
-    {
-      id: 1,
-      name: 'January',
-    },
-    {
-      id: 2,
-      name: 'February',
-    },
-    {
-      id: 3,
-      name: 'March',
-    },
-    {
-      id: 4,
-      name: 'April',
-    },
-    {
-      id: 5,
-      name: 'May',
-    },
-    {
-      id: 6,
-      name: 'June',
-    },
-    {
-      id: 7,
-      name: 'July',
-    },
-    {
-      id: 8,
-      name: 'August',
-    },
-    {
-      id: 9,
-      name: 'September',
-    },
-    {
-      id: 10,
-      name: 'October',
-    },
-    {
-      id: 11,
-      name: 'November',
-    },
-    {
-      id: 12,
-      name: 'December',
-    },
-  ];
+  mainSeriesChartDatasource: any;
+  TaTstatusDataSource: any;
+  CountPerDaysData: any;
 
-  DenialCategoryChartData: any = [
-    { day: '1', sales: 4 },
-    { day: '2', sales: 9 },
-  ];
+  DenialCategoryChartData: any;
 
   userId: string;
-
-  constructor(private router: Router) {
+  ReguestSendCardValue: any;
+  //========================= Constructor =======================
+  constructor(private router: Router, private service: DataService) {
     this.userId = sessionStorage.getItem('paramsid');
     if (this.userId != 'undefined' && this.userId != '' && this.userId > '0') {
     } else {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/auth/login']);
     }
   }
-  toggleGroups(): void {
-    this.showGroups = !this.showGroups;
+
+  //======================Page on init ========================
+  ngOnInit(): void {
+    this.get_chart_datasource();
   }
+
   //=========MAking cutom datasource for facility datagrid and dropdown loADING=======
   makeAsyncDataSourceFromJson(jsonData: any) {
     return new CustomStore({
@@ -225,6 +135,21 @@ export class AuthDashboardPageComponent {
 
   //================== Apply button click event ===================
   applyButtonClicked() {}
+
+  //================== Fetch Cgarts Datasource ===================
+  get_chart_datasource() {
+    this.loadingVisible = true;
+    this.service.get_Prior_Dashboard_Datasource().subscribe((response: any) => {
+      if (response.flag == '1') {
+        this.ReguestSendCardValue = response.card.RequestCount;
+        this.DenialCategoryChartData = response.CategoryWise;
+        this.mainSeriesChartDatasource = response.EncounterWise;
+        this.TaTstatusDataSource = response.TATWise;
+        this.CountPerDaysData = response.DayWise;
+        this.loadingVisible = false;
+      }
+    });
+  }
 
   //==================export function=======================
   export() {}

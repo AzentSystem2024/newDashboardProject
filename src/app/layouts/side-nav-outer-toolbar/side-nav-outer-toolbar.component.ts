@@ -37,6 +37,7 @@ import { AuthDashboardPageComponent } from 'src/app/pages/auth-dashboard-page/au
 @Component({
   templateUrl: './side-nav-outer-toolbar.component.html',
   styleUrls: ['./side-nav-outer-toolbar.component.scss'],
+  providers: [DataService],
 })
 export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
   @ViewChild(DxScrollViewComponent, { static: true })
@@ -64,8 +65,8 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
 
   shaderEnabled = false;
 
-  tabs = [
-    { text: 'Dashboard', path: '/Main-Dashboard' },
+  tabs: any = [
+    { text: 'Denial-Dashboard', path: '/Main-Dashboard' },
     { text: 'Auth-Dashboard', path: '/Auth-Dashboard' },
   ];
   selectedIndex = 0;
@@ -77,7 +78,7 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
 
   private applyButtonSubscription: Subscription;
   userId: any;
-  showHeadersDiv: boolean=false
+  showHeadersDiv: boolean = false;
   currentRoute: any;
 
   constructor(
@@ -85,8 +86,7 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
     private screen: ScreenService,
     private router: Router,
     public appInfo: AppInfoService,
-    private route: ActivatedRoute,
-    private sharedservise: SharedService
+    private route: ActivatedRoute
   ) {
     this.currentRoute = this.router.url;
     console.log('Current route:', this.currentRoute);
@@ -97,10 +97,9 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
   }
   //=================== On Init Iunction =================
   ngOnInit() {
-    // console.log('=>', this.route);
+    this.router.navigate([this.tabs[this.selectedIndex].path]);
     this.route.url.subscribe((segments) => {
       this.currentUrl = segments.join('/');
-      // console.log('Current URL:', this.currentUrl);
     });
 
     this.menuOpened = this.screen.sizes['screen-large'];
@@ -113,25 +112,19 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
   }
   //====================Tab Clicke Event====================
   onTabChanged(event: any) {
-    console.log('event is ', event);
     const selectedTab: any = event.addedItems[0];
-    console.log('selected component :>>', selectedTab);
     this.router.navigate([selectedTab.path]);
   }
   //==========================================================
   getCurrentSegmentFromUrl(): string {
     // Get the current URL from the browser
     const currentUrl = window.location.href;
-
     // Split the URL by '/'
     const urlParts = currentUrl.split('/');
-
     // Find the last part of the URL
     const lastPart = urlParts[urlParts.length - 1];
-
     // Remove any query parameters
     const segment = lastPart.split('?')[0];
-
     return segment;
   }
 

@@ -1,5 +1,5 @@
 import { CommonModule, PercentPipe } from '@angular/common';
-import { Component, NgModule, ViewChild } from '@angular/core';
+import { Component, NgModule, OnInit, ViewChild } from '@angular/core';
 import {
   DxLoadIndicatorModule,
   DxFunnelModule,
@@ -54,7 +54,7 @@ import { FormsModule } from '@angular/forms';
     ]),
   ],
 })
-export class MainHomePageComponent {
+export class MainHomePageComponent implements OnInit {
   @ViewChild(DxTreeViewComponent, { static: false })
   treeView: DxTreeViewComponent;
 
@@ -131,12 +131,14 @@ export class MainHomePageComponent {
     public service: DataService,
     private dataservice: DataService,
     private router: Router
-  ) {
+  ) {}
+
+  ngOnInit(): void {
     this.userId = sessionStorage.getItem('paramsid');
     if (this.userId != 'undefined' && this.userId != '' && this.userId > '0') {
       this.getValuesOfInitData();
     } else {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/auth/login']);
     }
   }
   //=========== reorder list options to selected data to the top side ========
@@ -253,42 +255,26 @@ export class MainHomePageComponent {
     this.showGroups = !this.showGroups;
   }
 
-  //=====================hint for facility field=======================
-  getSelectedValues(): any {
-    // if (this.facilityvalue && this.FacilityDataSource) {
-    //   return this.facilityvalue
-    //     .map((id: any) => {
-    //       const item = this.FacilityDataSource.find(
-    //         (data: any) => data.ID === id
-    //       );
-    //       return item ? item.Name : '';
-    //     })
-    //     .filter((name: string) => name !== '')
-    //     .join(', ');
-    // }
-    // return 'No values selected';
-  }
-
   customTagTemplate = (itemData: any) => {
     return `<span>${itemData.Name}</span>`;
   };
 
-    //==================MAking cutom datasource for facility datagrid and dropdown loADING=======
-    makeAsyncDataSourceFromJson(jsonData: any) {
-      return new CustomStore({
-        loadMode: 'raw',
-        key: 'ID',
-        load: () => {
-          return new Promise((resolve, reject) => {
-            try {
-              resolve(jsonData);
-            } catch (error) {
-              reject(error);
-            }
-          });
-        },
-      });
-    }
+  //==================MAking cutom datasource for facility datagrid and dropdown loADING=======
+  makeAsyncDataSourceFromJson(jsonData: any) {
+    return new CustomStore({
+      loadMode: 'raw',
+      key: 'ID',
+      load: () => {
+        return new Promise((resolve, reject) => {
+          try {
+            resolve(jsonData);
+          } catch (error) {
+            reject(error);
+          }
+        });
+      },
+    });
+  }
   //=====================fetch init dataSource =========================
   getValuesOfInitData() {
     this.loadingVisible = true;

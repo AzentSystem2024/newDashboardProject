@@ -44,7 +44,7 @@ import { CustomReuseStrategy } from './State-Management/custom-reuse-strategy';
     ScreenService,
     AppInfoService,
     ThemeService,
-    // { provide: RouteReuseStrategy, useClass: CustomReuseStrategy },
+    { provide: RouteReuseStrategy, useClass: CustomReuseStrategy },
   ],
   bootstrap: [AppComponent],
 })

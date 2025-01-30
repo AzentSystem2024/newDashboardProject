@@ -1,11 +1,19 @@
 import { Injectable, asNativeElements } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, from, Subject, throwError, catchError, BehaviorSubject } from 'rxjs';
+import {
+  Observable,
+  from,
+  Subject,
+  throwError,
+  catchError,
+  BehaviorSubject,
+} from 'rxjs';
 import {
   CRS_DASHBOARD_CLAIMSMRY_DOCTORDATA,
   CRS_DASHBOARD_CLAIMSMRY_RECEIVEDATA,
   CRS_DASHBOARD_CLAIMSUMMARY_BRKUP,
   CRS_DASHBOARD_CLAIMSUMMARY_HOME,
+  CRS_DASHBOARD_PRIOR_DASHBOARD,
   CRS_DASHBOARD_CLINICIANRECEIVER_CPT,
   CRS_DASHBOARD_CLINICIANRECIVER_BRKUP,
   CRS_DASHBOARD_CLINICIAN_HOME,
@@ -29,10 +37,8 @@ const colors: string[] = ['#6babac', '#e55253'];
   providedIn: 'root',
 })
 export class DataService {
-
   private loggedInSource = new BehaviorSubject<boolean>(false);
   loggedIn$ = this.loggedInSource.asObservable();
-
 
   private months: { name: string; value: any }[] = [
     { name: 'All', value: ' ' },
@@ -70,16 +76,15 @@ export class DataService {
   lookupDatatoolbar: any;
 
   constructor(private http: HttpClient) {}
-//============= show headers in dashboard pages ============
-  setHeaderDivTrue(){
+  //============= show headers in dashboard pages ============
+  setHeaderDivTrue() {
     this.loggedInSource.next(true);
   }
-//============= hide headers in login page ============
+  //============= hide headers in login page ============
 
-  setHeaderDivFalse(){
+  setHeaderDivFalse() {
     this.loggedInSource.next(false);
   }
-
 
   //============Share months to component ================
   getMonths(): { name: string; value: number }[] {
@@ -120,6 +125,27 @@ export class DataService {
     return this.http.post(url, reqBodyData);
   }
 
+  //================ClaimSummary Data Fetching=================
+  get_Prior_Dashboard_Datasource() {
+    const url = CRS_DASHBOARD_PRIOR_DASHBOARD;
+    const reqBodyData = {
+      SearchOn: 'EncounterStartDate',
+      DateFrom: '2018-01-01',
+      DateTo: '2018-03-31',
+      RejectionIndex: '2',
+      DenialCategory: 'All',
+      EncounterType: 'All',
+      Block: 'All',
+      Region: 'All',
+      ProviderType: 'All',
+      Facility: 'MF90001, MF90002, PF10001, PF10002, PF10003',
+      Insurance: 'All',
+      Department: 'All',
+    };
+
+    return this.http.post(url, reqBodyData);
+  }
+
   // ================================================================================
   // ================================================================================
   // ================================================================================
@@ -150,7 +176,6 @@ export class DataService {
     const url = CRS_DASHBOARD_LOGIN;
     const reqBody = { Loginid: username, password: password };
     return this.http.post(url, reqBody);
-
   }
 
   //================ClaimSummary Data Fetching=================

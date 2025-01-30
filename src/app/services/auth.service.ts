@@ -17,16 +17,14 @@ const defaultPath = '/';
 export const defaultUser: IUser = {
   email: 'azentdeveloper@dx-email.com',
   name: 'Azent Developer',
-  avatarUrl: 'https://js.devexpress.com/Demos/WidgetsGallery/JSDemos/images/employees/01.png',
+  avatarUrl:
+    'https://js.devexpress.com/Demos/WidgetsGallery/JSDemos/images/employees/01.png',
 };
 
 @Injectable()
 export class AuthService {
-
   private loggedInSource = new BehaviorSubject<boolean>(false);
   loggedIn$ = this.loggedInSource.asObservable();
-
-
 
   private _user: IUser | null = defaultUser;
 
@@ -40,7 +38,7 @@ export class AuthService {
     this._lastAuthenticatedPath = value;
   }
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {}
 
   async logIn(email: string, password: string) {
     try {
@@ -129,25 +127,14 @@ export class AuthService {
 
 @Injectable()
 export class AuthGuardService implements CanActivate {
-  constructor(private router: Router, private authService: AuthService) { }
+  constructor(private router: Router, private authService: AuthService) {}
 
-  canActivate(route: ActivatedRouteSnapshot): boolean {
-    const isLoggedIn = this.authService.loggedIn;
-    const isAuthForm = [
-      'login',
-      'reset-password',
-      'create-account',
-      'change-password/:recoveryCode',
-    ].includes(route.routeConfig?.path || defaultPath);
-
-    if (!isLoggedIn && isAuthForm) {
+  canActivate(): boolean {
+    const isAuthenticated = !!sessionStorage.getItem('paramsid'); // Check authentication
+    if (!isAuthenticated) {
       this.router.navigate(['/auth/login']);
+      return false;
     }
-
-    if (isLoggedIn) {
-      this.authService.lastAuthenticatedPath = route.routeConfig?.path || defaultPath;
-    }
-
-    return isLoggedIn || isAuthForm;
+    return true;
   }
 }
