@@ -28,6 +28,7 @@ import { CardAnalyticsModule } from 'src/app/components/library/card-analytics/c
 import CustomStore from 'devextreme/data/custom_store';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services';
+import { SharedService } from 'src/app/services/shared.service';
 @Component({
   selector: 'app-auth-dashboard-page',
   templateUrl: './auth-dashboard-page.component.html',
@@ -78,7 +79,11 @@ export class AuthDashboardPageComponent implements OnInit {
   userId: string;
   ReguestSendCardValue: any;
   //========================= Constructor =======================
-  constructor(private router: Router, private service: DataService) {
+  constructor(
+    private router: Router,
+    private service: DataService,
+    
+  ) {
     this.userId = sessionStorage.getItem('paramsid');
     if (this.userId != 'undefined' && this.userId != '' && this.userId > '0') {
     } else {

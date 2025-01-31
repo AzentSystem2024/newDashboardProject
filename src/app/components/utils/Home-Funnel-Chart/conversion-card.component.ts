@@ -13,7 +13,7 @@ import {
 } from 'devextreme-angular';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { SharedService } from 'src/app/services/shared-service';
+import { SharedService } from 'src/app/services/shared.service';
 import { Location } from '@angular/common';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
@@ -60,11 +60,13 @@ export class ConversionCardComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     // Subscribe to initDataLoaded$
-    this.subscription = this.sharedService.initDataLoaded$.subscribe((isLoaded) => {
-      if (isLoaded) {
-        this.handleDataLoaded();
+    this.subscription = this.sharedService.initDataLoaded$.subscribe(
+      (isLoaded) => {
+        if (isLoaded) {
+          this.handleDataLoaded();
+        }
       }
-    });
+    );
 
     // Separate subscription to reloadComponents$
     this.subscription.add(

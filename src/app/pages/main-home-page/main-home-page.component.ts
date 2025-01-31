@@ -27,7 +27,7 @@ import { DataService } from 'src/app/services';
 import { BrowserModule } from '@angular/platform-browser';
 import { trigger, style, transition, animate } from '@angular/animations';
 // import { TickerCardModule } from '../../library/ticker-card/ticker-card.component';
-import { SharedService } from 'src/app/services/shared-service';
+import { SharedService } from 'src/app/services/shared.service';
 import notify from 'devextreme/ui/notify';
 import * as moment from 'moment';
 import html2canvas from 'html2canvas';
@@ -130,12 +130,14 @@ export class MainHomePageComponent implements OnInit {
   constructor(
     public service: DataService,
     private dataservice: DataService,
-    private router: Router
+    private router: Router,
+  
   ) {}
 
   ngOnInit(): void {
     this.userId = sessionStorage.getItem('paramsid');
-    if (this.userId != 'undefined' && this.userId != '' && this.userId > '0') {
+    console.log('user id:>>', this.userId);
+    if (this.userId != 'undefined' && this.userId != '') {
       this.getValuesOfInitData();
     } else {
       this.router.navigate(['/auth/login']);

@@ -16,6 +16,9 @@ export const CRS_DASHBOARD_CLAIMSUMMARY_HOME =
   export const CRS_DASHBOARD_PRIOR_DASHBOARD =
   API_BASE_URL + 'priordasbhoard/home';
 
+  export const CRS_DASHBOARD_TABS_DATA =
+  API_BASE_URL + 'users/dashboards';
+
 export const CRS_DASHBOARD_SUBMISSION_HOME = API_BASE_URL + '/Submission/home';
 
 export const CRS_DASHBOARD_REMITTANCE_HOME = API_BASE_URL + '/Remittance/home';

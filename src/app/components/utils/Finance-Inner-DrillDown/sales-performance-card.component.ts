@@ -14,7 +14,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
 
-import { SharedService } from 'src/app/services/shared-service';
+import { SharedService } from 'src/app/services/shared.service';
 @Component({
   selector: 'sales-performance-card',
   templateUrl: './sales-performance-card.component.html',

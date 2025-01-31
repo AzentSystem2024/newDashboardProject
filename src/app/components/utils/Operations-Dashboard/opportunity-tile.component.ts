@@ -27,7 +27,7 @@ import { CardMessagesModule } from '../../library/card-messages/card-messages.co
 import { Router } from '@angular/router';
 import { exportWidgets } from 'devextreme/viz/export';
 import { Subscription } from 'rxjs';
-import { SharedService } from 'src/app/services/shared-service';
+import { SharedService } from 'src/app/services/shared.service';
 @Component({
   selector: 'opportunity-tile',
   templateUrl: 'opportunity-tile.component.html',

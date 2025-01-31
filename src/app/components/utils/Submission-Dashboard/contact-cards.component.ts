@@ -30,7 +30,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { Route, Router } from '@angular/router';
 import { exportWidgets } from 'devextreme/viz/export';
 import { Subscription } from 'rxjs';
-import { SharedService } from 'src/app/services/shared-service';
+import { SharedService } from 'src/app/services/shared.service';
 @Component({
   selector: 'contact-cards',
   templateUrl: './contact-cards.component.html',

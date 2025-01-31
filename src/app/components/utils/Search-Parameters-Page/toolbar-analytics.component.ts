@@ -29,7 +29,7 @@ import { Dates, PanelItem } from 'src/app/types/resource';
 import { DxTextBoxModule } from 'devextreme-angular';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
-import { SharedService } from 'src/app/services/shared-service';
+import { SharedService } from 'src/app/services/shared.service';
 import { Subscription } from 'rxjs';
 @Component({
   selector: 'toolbar-analytics',

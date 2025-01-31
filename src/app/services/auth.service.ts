@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router, ActivatedRouteSnapshot } from '@angular/router';
+import {
+  CanActivate,
+  Router,
+  ActivatedRouteSnapshot,
+  Params,
+  ActivatedRoute,
+} from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 export interface IUser {
   email: string;
@@ -127,14 +133,24 @@ export class AuthService {
 
 @Injectable()
 export class AuthGuardService implements CanActivate {
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private route: ActivatedRoute
+  ) {}
 
   canActivate(): boolean {
-    const isAuthenticated = !!sessionStorage.getItem('paramsid'); // Check authentication
-    if (!isAuthenticated) {
+    const userId = this.route.snapshot.queryParams['userId'];
+
+    if (userId) {
+      console.log('Params userId fetched >>', userId);
+      sessionStorage.setItem('paramsid', userId);
+    } else {
+      console.warn('No userId found in URL parameters. Process stopped.');
       this.router.navigate(['/auth/login']);
       return false;
     }
-    return true;
+
+    return true; // Allow navigation
   }
 }

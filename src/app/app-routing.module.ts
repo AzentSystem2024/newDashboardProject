@@ -24,7 +24,7 @@ const routes: Routes = [
   {
     path: '',
     component: SideNavOuterToolbarComponent,
-    canActivate: [AuthGuardService],
+    
     children: [
       {
         path: 'Main-Dashboard',

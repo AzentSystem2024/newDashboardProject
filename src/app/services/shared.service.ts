@@ -1,5 +1,5 @@
 // shared.service.ts
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -19,9 +19,9 @@ export class SharedService {
 
   constructor(private route: ActivatedRoute, private router: Router) {
     this.route.queryParams.subscribe((params: Params) => {
-      let userId = params['userId'] ;
+      let userId = params['userId'];
+      console.log('params userid fetched >>', userId);
       sessionStorage.setItem('paramsid', userId);
-
     });
   }
 

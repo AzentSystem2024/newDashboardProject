@@ -17,6 +17,7 @@ import {
   NavigationEnd,
   Event,
   ActivatedRoute,
+  Params,
 } from '@angular/router';
 import { ScreenService, AppInfoService, DataService } from '../../services';
 import {
@@ -29,7 +30,6 @@ import { ToolbarAnalyticsModule } from '../../components/utils/Search-Parameters
 import { ConversionCardModule } from '../../components/utils/Home-Funnel-Chart/conversion-card.component';
 import { Sales, SalesOrOpportunitiesByCategory } from 'src/app/types/analytics';
 import { CardAnalyticsModule } from 'src/app/components/library/card-analytics/card-analytics.component';
-import { SharedService } from 'src/app/services/shared-service';
 import { DxTabPanelModule } from 'devextreme-angular';
 import { MainHomePageComponent } from 'src/app/pages/main-home-page/main-home-page.component';
 import { AuthDashboardPageComponent } from 'src/app/pages/auth-dashboard-page/auth-dashboard-page.component';
@@ -65,10 +65,8 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
 
   shaderEnabled = false;
 
-  tabs: any = [
-    { text: 'Denial-Dashboard', path: '/Main-Dashboard' },
-    { text: 'Auth-Dashboard', path: '/Auth-Dashboard' },
-  ];
+  tabs: any;
+
   selectedIndex = 0;
   orientation: any = 'horizonal';
 
@@ -88,16 +86,26 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
     public appInfo: AppInfoService,
     private route: ActivatedRoute
   ) {
-    this.currentRoute = this.router.url;
-    console.log('Current route:', this.currentRoute);
+    this.route.queryParams.subscribe((params: Params) => {
+      let userId = params['userId'];
+      if (userId) {
 
+        console.log('Params userId fetched >>', userId);
+        sessionStorage.setItem('paramsid', userId);
+      } else {
+        console.warn('No userId found in URL parameters. Process stopped.');
+        return;
+      }
+    });
+
+    this.currentRoute = this.router.url;
     this.service.loggedIn$.subscribe((isLoggedIn) => {
       this.showHeadersDiv = isLoggedIn;
     });
   }
   //=================== On Init Iunction =================
   ngOnInit() {
-    this.router.navigate([this.tabs[this.selectedIndex].path]);
+    this.on_Load_tab_data();
     this.route.url.subscribe((segments) => {
       this.currentUrl = segments.join('/');
     });
@@ -110,6 +118,24 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
 
     this.updateDrawer();
   }
+
+  //================== Tab data fetching ===================
+  on_Load_tab_data() {
+    let userId = sessionStorage.getItem('paramsid');
+    if (userId) {
+      this.service.fetch_tab_Data_mainLayout().subscribe((response: any) => {
+        if (response.flag == '1') {
+          this.tabs = response.dashboards.filter(
+            (dashboard) => dashboard.enabled
+          );
+          console.log('tabs data:>>', this.tabs);
+          this.router.navigate([this.tabs[this.selectedIndex].path]);
+        }
+      });
+    } else {
+    }
+  }
+
   //====================Tab Clicke Event====================
   onTabChanged(event: any) {
     const selectedTab: any = event.addedItems[0];

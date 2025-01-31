@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { TickerCardModule } from 'src/app/components/library/ticker-card/ticker-card.component';
 import { DataService } from 'src/app/services';
 import { Subscription } from 'rxjs';
-import { SharedService } from 'src/app/services/shared-service';
+import { SharedService } from 'src/app/services/shared.service';
 @Component({
   selector: 'opportunities-ticker',
   templateUrl: 'opportunities-ticker.component.html',

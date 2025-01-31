@@ -13,7 +13,7 @@ import { DataService } from 'src/app/services/data.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { SharedService } from 'src/app/services/shared-service';
+import { SharedService } from 'src/app/services/shared.service';
 @Component({
   selector: 'revenue-analysis-by-states-card',
   templateUrl: './revenue-analysis-by-states-card.component.html',

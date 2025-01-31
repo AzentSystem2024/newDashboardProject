@@ -5,7 +5,7 @@ import {
   ScreenService,
   ThemeService,
 } from './services';
-import { SharedService } from './services/shared-service';
+import { SharedService } from './services/shared.service';
 
 @Component({
   selector: 'app-root',
@@ -23,8 +23,7 @@ export class AppComponent implements OnDestroy {
     private authService: AuthService,
     private themeService: ThemeService,
     private screen: ScreenService,
-    public appInfo: AppInfoService,
-   
+    public appInfo: AppInfoService
   ) {
     themeService.setAppTheme();
   }

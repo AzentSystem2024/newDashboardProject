@@ -22,7 +22,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { exportWidgets } from 'devextreme/viz/export';
 import { Subscription } from 'rxjs';
-import { SharedService } from 'src/app/services/shared-service';
+import { SharedService } from 'src/app/services/shared.service';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import * as moment from 'moment';

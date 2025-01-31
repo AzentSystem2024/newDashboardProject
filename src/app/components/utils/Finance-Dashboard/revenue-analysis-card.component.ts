@@ -14,7 +14,7 @@ import {
 import { DataService } from 'src/app/services/data.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { SharedService } from 'src/app/services/shared-service';
+import { SharedService } from 'src/app/services/shared.service';
 @Component({
   selector: 'revenue-analysis-card',
   templateUrl: './revenue-analysis-card.component.html',
