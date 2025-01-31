@@ -24,7 +24,7 @@ const routes: Routes = [
   {
     path: '',
     component: SideNavOuterToolbarComponent,
-    canActivate: [AuthGuardService],
+    // canActivate: [AuthGuardService],
     children: [
       {
         path: 'Main-Dashboard',
@@ -43,7 +43,7 @@ const routes: Routes = [
   },
 ];
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: true }), BrowserModule],
+  imports: [RouterModule.forRoot(routes, { useHash: false }), BrowserModule],
   providers: [AuthGuardService],
   exports: [RouterModule],
   declarations: [],

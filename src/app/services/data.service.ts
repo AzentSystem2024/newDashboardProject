@@ -38,8 +38,7 @@ const colors: string[] = ['#6babac', '#e55253'];
   providedIn: 'root',
 })
 export class DataService {
-  private loggedInSource = new BehaviorSubject<boolean>(false);
-  loggedIn$ = this.loggedInSource.asObservable();
+  isLoggedIn: any;
 
   private months: { name: string; value: any }[] = [
     { name: 'All', value: ' ' },
@@ -78,13 +77,14 @@ export class DataService {
 
   constructor(private http: HttpClient) {}
   //============= show headers in dashboard pages ============
-  setHeaderDivTrue() {
-    this.loggedInSource.next(true);
+  set_Loggin_Value(Value: any) {
+    this.isLoggedIn = Value;
+    console.log('logging value changed', this.isLoggedIn);
   }
   //============= hide headers in login page ============
 
-  setHeaderDivFalse() {
-    this.loggedInSource.next(false);
+  get_Loggin_Value() {
+    return this.isLoggedIn;
   }
 
   //============Share months to component ================

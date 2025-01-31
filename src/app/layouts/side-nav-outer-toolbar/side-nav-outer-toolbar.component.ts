@@ -76,7 +76,7 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
 
   private applyButtonSubscription: Subscription;
   userId: any;
-  showHeadersDiv: boolean = false;
+  showHeadersDiv: boolean;
   currentRoute: any;
 
   constructor(
@@ -86,22 +86,7 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
     public appInfo: AppInfoService,
     private route: ActivatedRoute
   ) {
-    this.route.queryParams.subscribe((params: Params) => {
-      let userId = params['userId'];
-      if (userId) {
-
-        console.log('Params userId fetched >>', userId);
-        sessionStorage.setItem('paramsid', userId);
-      } else {
-        console.warn('No userId found in URL parameters. Process stopped.');
-        return;
-      }
-    });
-
     this.currentRoute = this.router.url;
-    this.service.loggedIn$.subscribe((isLoggedIn) => {
-      this.showHeadersDiv = isLoggedIn;
-    });
   }
   //=================== On Init Iunction =================
   ngOnInit() {

@@ -34,9 +34,7 @@ export class LoginPageComponent {
     private router: Router,
     private service: DataService,
     private reuseStrategy: CustomReuseStrategy
-  ) {
-    this.service.setHeaderDivFalse();
-  }
+  ) {}
 
   Login() {
     // this.loadingVisible = true;
@@ -50,7 +48,7 @@ export class LoginPageComponent {
             notify(`${response.message}`, 'success', 3000);
             let userId = response.userid;
             sessionStorage.setItem('paramsid', userId);
-            this.service.setHeaderDivTrue();
+            this.service.set_Loggin_Value(true);
             setTimeout(() => {
               // this.loadingVisible = false; // Ensure loading is hidden before navigation
               this.router.navigate(['/Main-Dashboard']);

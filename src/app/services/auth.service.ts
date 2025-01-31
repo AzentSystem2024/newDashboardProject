@@ -133,6 +133,8 @@ export class AuthService {
 
 @Injectable()
 export class AuthGuardService implements CanActivate {
+  sessionUserId: any;
+  paramsUserId: any;
   constructor(
     private router: Router,
     private authService: AuthService,
@@ -141,17 +143,15 @@ export class AuthGuardService implements CanActivate {
 
   canActivate(): Observable<boolean> {
     return this.route.queryParams.pipe(
-      map((params: any) => {
-        let userId = params['userId'] || sessionStorage.getItem('paramsid');
-        console.log('Params userId fetched >>', userId);
+      map((params: Params) => {
+        let userId = params['userId'];
 
         if (userId) {
+          console.log('UserId found:', userId);
           sessionStorage.setItem('paramsid', userId);
           return true;
         } else {
-          console.warn(
-            'No userId found in URL parameters. Redirecting to login.'
-          );
+          console.warn('No userId found. Redirecting to login.');
           this.router.navigate(['/auth/login']);
           return false;
         }

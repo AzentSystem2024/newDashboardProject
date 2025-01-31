@@ -33,7 +33,7 @@ import * as moment from 'moment';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import CustomStore from 'devextreme/data/custom_store';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -127,22 +127,40 @@ export class MainHomePageComponent implements OnInit {
     todate: '',
   };
 
+  isloggedIn: any;
+  ParamsUserId: any;
+
   constructor(
     public service: DataService,
     private dataservice: DataService,
     private router: Router,
-  
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    // Fetching userId from sessionStorage
     this.userId = sessionStorage.getItem('paramsid');
-    console.log('user id:>>', this.userId);
-    if (this.userId != 'undefined' && this.userId != '') {
-      this.getValuesOfInitData();
-    } else {
-      this.router.navigate(['/auth/login']);
-    }
+
+    this.route.queryParams.subscribe((params: Params) => {
+      this.ParamsUserId = params['userId'];
+      console.log('User data fetched from URL params:', this.ParamsUserId);
+
+      if (this.userId && this.userId !== 'undefined') {
+        sessionStorage.setItem('paramsid', this.userId);
+        this.getValuesOfInitData();
+      } else if (this.ParamsUserId) {
+        this.userId = this.ParamsUserId;
+        sessionStorage.setItem('paramsid', this.userId);
+        this.getValuesOfInitData();
+      } else {
+        console.log('No user data available');
+        this.router.navigate(['/auth/login']);
+      }
+    });
+    // Logging the values fetched from session storage
+    console.log('User data fetched from session storage:', this.userId);
   }
+
   //=========== reorder list options to selected data to the top side ========
   reorderDataSource(selectedvalues: string, datsourceName: string) {
     // Filter the selected items
