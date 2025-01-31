@@ -6,7 +6,7 @@ import {
   Params,
   ActivatedRoute,
 } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 export interface IUser {
   email: string;
   name?: string;
@@ -139,18 +139,23 @@ export class AuthGuardService implements CanActivate {
     private route: ActivatedRoute
   ) {}
 
-  canActivate(): boolean {
-    const userId = this.route.snapshot.queryParams['userId'];
+  canActivate(): Observable<boolean> {
+    return this.route.queryParams.pipe(
+      map((params: any) => {
+        let userId = params['userId'] || sessionStorage.getItem('paramsid');
+        console.log('Params userId fetched >>', userId);
 
-    if (userId) {
-      console.log('Params userId fetched >>', userId);
-      sessionStorage.setItem('paramsid', userId);
-    } else {
-      console.warn('No userId found in URL parameters. Process stopped.');
-      this.router.navigate(['/auth/login']);
-      return false;
-    }
-
-    return true; // Allow navigation
+        if (userId) {
+          sessionStorage.setItem('paramsid', userId);
+          return true;
+        } else {
+          console.warn(
+            'No userId found in URL parameters. Redirecting to login.'
+          );
+          this.router.navigate(['/auth/login']);
+          return false;
+        }
+      })
+    );
   }
 }
