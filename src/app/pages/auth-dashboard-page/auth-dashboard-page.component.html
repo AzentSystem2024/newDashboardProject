@@ -2,9 +2,9 @@
 <div class="view-wrapper">
   <!-- =============================Filter Params============================= -->
   <div class="ExportDiv1">
-    <div class="mainDiv mb-1 p-0">
+    <div class="mainDiv mb-1 p-0 m-0">
       <!-- First Group -->
-      <div class="row mt-1 ms-1 me-1">
+      <div class="row mt-1 mb-1 m-0 p-1">
         <div class="col-10">
           <dx-drop-down-box
             class="dropdowncontent"
@@ -79,9 +79,9 @@
       </div>
 
       <!-- Wrapper for Second and Third Rows -->
-      <div *ngIf="showGroups" @toggleRows>
+      <div class="p-0 m-0" *ngIf="showGroups" @toggleRows>
         <!-- Second Group -->
-        <div class="row ms-1 me-1">
+        <div class="row ms-1 m-0 p-1">
           <div class="col-2">
             <dx-form [formData]="dateForm" [labelMode]="'floating'">
               <dxi-item
@@ -210,20 +210,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Toggle Button -->
-      <!-- <div class="row justify-content-center p-0 m-0">
-        <div class="col-12 text-center">
-          <dx-button
-            class="toggle-button"
-            [icon]="showGroups ? 'chevronup' : 'chevrondown'"
-            stylingMode="outlined"
-            type="default"
-            (click)="toggleGroups()"
-          ></dx-button>
-        </div>
-      </div> -->
-      <!-- Toggle Button end -->
     </div>
   </div>
 

@@ -215,9 +215,13 @@ export class MainHomePageComponent implements OnInit {
   }
 
   MillioncustomizeLabel = (args: any): string => {
-    const valueInMillions = (args.value / 1000000).toFixed(2);
-    const percentage = args.point?.data?.RejectedPercent ?? 0;
-    return `${valueInMillions}M`;
+    const value = args.value;
+    if (value >= 10000) {
+      return `${(value / 1000000).toFixed(2)} M`;
+    } else if (value > 0) {
+      return `${(value / 1000).toFixed(2)} K`;
+    }
+    return `${value}`; // Show as is if less than 1000
   };
 
   customizeTooltip = ({
