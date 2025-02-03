@@ -127,7 +127,7 @@
               [showSelectionControls]="true"
               [multiline]="false"
               applyValueMode="instantly"
-              label="Physician Category"
+              label="Department"
               labelMode="floating"
               (onValueChanged)="
                 reorderDataSource(
@@ -173,7 +173,7 @@
               [showSelectionControls]="true"
               [multiline]="false"
               applyValueMode="instantly"
-              label="Encounter Type"
+              label="Service Category"
               labelMode="floating"
               [searchEnabled]="true"
               (onValueChanged)="
@@ -185,7 +185,7 @@
             >
             </dx-tag-box>
           </div>
-          <div class="col-1 ms-auto">
+          <div class="col-1">
             <dx-button
               class="add-card mt-2"
               icon="refresh"
@@ -196,7 +196,7 @@
             ></dx-button>
           </div>
 
-          <div class="col-1 ms-2 me-2">
+          <div class="col-1 me-2">
             <dx-button
               class="mt-2"
               icon="exportpdf"
@@ -267,7 +267,9 @@
               >
                 <dxo-label
                   [visible]="true"
-                  backgroundColor="#c18e92"
+                  [backgroundColor]="'transparent'"
+                  [border]="{ visible: false, color: '#294730', width: 1 }"
+                  [font]="{ color: 'var(--text-color)', weight: 600, size: 14 }"
                 ></dxo-label>
               </dxi-series>
               <dxo-legend
@@ -313,6 +315,9 @@
                     type: 'fixedPoint',
                     precision: 0
                   }"
+                  [backgroundColor]="'transparent'"
+                  [border]="{ visible: false, color: '#294730', width: 1 }"
+                  [font]="{ color: 'var(--text-color)', weight: 600, size: 14 }"
                 >
                 </dxo-label>
               </dxo-common-series-settings>
@@ -339,7 +344,14 @@
                 type="bar"
                 color="#8a1253"
               >
-                <dxo-label [visible]="true" [position]="'outside'"> </dxo-label>
+                <dxo-label
+                  [visible]="true"
+                  [position]="'outside'"
+                  [backgroundColor]="'transparent'"
+                  [border]="{ visible: false, color: '#294730', width: 1 }"
+                  [font]="{ color: 'var(--text-color)', weight: 600, size: 14 }"
+                >
+                </dxo-label>
               </dxi-series>
               <dxo-legend
                 [visible]="true"
@@ -364,6 +376,9 @@
                   [visible]="true"
                   [position]="'outside'"
                   [overlappingBehavior]="'stagger'"
+                  [backgroundColor]="'transparent'"
+                  [border]="{ visible: false, color: '#294730', width: 1 }"
+                  [font]="{ color: 'var(--text-color)', weight: 600, size: 14 }"
                 ></dxo-label>
               </dxi-series>
               <dxo-legend [visible]="false"></dxo-legend>
@@ -406,7 +421,7 @@
   *ngIf="loadingVisible"
   #loadPanel
   shadingColor="rgba(0,0,0,0.4)"
-  [position]="{ of: '#view-wrapper' }"
+  [position]="{ of: '#graph-scroll-container' }"
   [(visible)]="loadingVisible"
   [showIndicator]="true"
   [showPane]="true"

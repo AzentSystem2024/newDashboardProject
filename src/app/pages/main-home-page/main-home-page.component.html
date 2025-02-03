@@ -397,7 +397,12 @@
                 name="Remittance %"
                 color="#f0d43a"
               >
-                <dxo-label [visible]="true">
+                <dxo-label
+                  [visible]="true"
+                  [backgroundColor]="'transparent'"
+                  [border]="{ visible: false, color: '#294730', width: 1 }"
+                  [font]="{ color: 'var(--text-color)', weight: 600, size: 14 }"
+                >
                   <dxo-connector [visible]="false"></dxo-connector>
                   <dxo-format type="fixedPoint" precision="2"></dxo-format>
                 </dxo-label>
@@ -407,7 +412,12 @@
                 name="Rejection %"
                 color="#ff5959"
               >
-                <dxo-label [visible]="true">
+                <dxo-label
+                  [visible]="true"
+                  [backgroundColor]="'transparent'"
+                  [border]="{ visible: false, color: '#294730', width: 1 }"
+                  [font]="{ color: 'var(--text-color)', weight: 600, size: 14 }"
+                >
                   <dxo-connector [visible]="false"></dxo-connector>
                   <dxo-format type="fixedPoint" precision="2"></dxo-format>
                   <dxo-position [offset]="30"></dxo-position></dxo-label
@@ -437,7 +447,7 @@
                   <dxo-format type="decimal"></dxo-format>
                 </dxo-label>
               </dxo-argument-axis>
-              <dxo-tooltip [enabled]="true"></dxo-tooltip>
+              <!-- <dxo-tooltip [enabled]="true"></dxo-tooltip> -->
             </dx-chart>
           </div>
         </div>
@@ -536,8 +546,10 @@
                   [visible]="true"
                   format="millions"
                   position="outside"
-                  [rotationAngle]="-90"
                   [customizeText]="MillioncustomizeLabel"
+                  [backgroundColor]="'transparent'"
+                  [border]="{ visible: false, color: '#294730', width: 1 }"
+                  [font]="{ color: 'var(--text-color)', weight: 600, size: 14 }"
                 >
                 </dxo-label>
               </dxi-series>
@@ -576,8 +588,10 @@
                   [visible]="true"
                   format="millions"
                   position="outside"
-                  [rotationAngle]="-90"
                   [customizeText]="MillioncustomizeLabel"
+                  [backgroundColor]="'transparent'"
+                  [border]="{ visible: false, color: '#294730', width: 1 }"
+                  [font]="{ color: 'var(--text-color)', weight: 600, size: 14 }"
                 >
                 </dxo-label>
               </dxi-series>
@@ -619,8 +633,10 @@
                   [visible]="true"
                   format="millions"
                   position="outside"
-                  [rotationAngle]="-90"
                   [customizeText]="MillioncustomizeLabel"
+                  [backgroundColor]="'transparent'"
+                  [border]="{ visible: false, color: '#294730', width: 1 }"
+                  [font]="{ color: 'var(--text-color)', weight: 600, size: 14 }"
                 >
                 </dxo-label>
               </dxi-series>
@@ -670,6 +686,9 @@
                   [visible]="true"
                   format="millions"
                   [customizeText]="MillioncustomizeLabel"
+                  [backgroundColor]="'transparent'"
+                  [border]="{ visible: false, color: '#294730', width: 1 }"
+                  [font]="{ color: 'var(--text-color)', weight: 600, size: 14 }"
                 >
                 </dxo-label>
               </dxi-series>
@@ -715,6 +734,9 @@
                   [visible]="true"
                   format="millions"
                   [customizeText]="MillioncustomizeLabel"
+                  [backgroundColor]="'transparent'"
+                  [border]="{ visible: false, color: '#294730', width: 1 }"
+                  [font]="{ color: 'var(--text-color)', weight: 600, size: 14 }"
                 >
                 </dxo-label>
               </dxi-series>
@@ -759,6 +781,9 @@
                 <dxo-label
                   [visible]="true"
                   [customizeText]="MillioncustomizeLabel"
+                  [backgroundColor]="'transparent'"
+                  [border]="{ visible: false, color: '#294730', width: 1 }"
+                  [font]="{ color: 'var(--text-color)', weight: 600, size: 14 }"
                 >
                 </dxo-label>
               </dxi-series>
@@ -807,8 +832,10 @@
                   [visible]="true"
                   format="millions"
                   position="outside"
-                  [rotationAngle]="-90"
                   [customizeText]="MillioncustomizeLabel"
+                  [backgroundColor]="'transparent'"
+                  [border]="{ visible: false, color: '#294730', width: 1 }"
+                  [font]="{ color: 'var(--text-color)', weight: 600, size: 14 }"
                 >
                 </dxo-label>
               </dxi-series>
@@ -853,8 +880,10 @@
                   [visible]="true"
                   format="millions"
                   position="outside"
-                  [rotationAngle]="-90"
                   [customizeText]="MillioncustomizeLabel"
+                  [backgroundColor]="'transparent'"
+                  [border]="{ visible: false, color: '#294730', width: 1 }"
+                  [font]="{ color: 'var(--text-color)', weight: 600, size: 14 }"
                 >
                 </dxo-label>
               </dxi-series>

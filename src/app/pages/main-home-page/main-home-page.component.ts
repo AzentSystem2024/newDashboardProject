@@ -138,27 +138,37 @@ export class MainHomePageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Fetching userId from sessionStorage
-    this.userId = sessionStorage.getItem('paramsid');
+    this.get_initial_data();
+  }
 
-    this.route.queryParams.subscribe((params: Params) => {
-      this.ParamsUserId = params['userId'];
-      console.log('User data fetched from URL params:', this.ParamsUserId);
+  get_initial_data() {
+    // Read from sessionStorage first
+    let storedUserId = sessionStorage.getItem('paramsid');
 
-      if (this.userId && this.userId !== 'undefined') {
-        sessionStorage.setItem('paramsid', this.userId);
-        this.getValuesOfInitData();
-      } else if (this.ParamsUserId) {
-        this.userId = this.ParamsUserId;
-        sessionStorage.setItem('paramsid', this.userId);
-        this.getValuesOfInitData();
-      } else {
-        console.log('No user data available');
-        this.router.navigate(['/auth/login']);
-      }
-    });
-    // Logging the values fetched from session storage
-    console.log('User data fetched from session storage:', this.userId);
+    if (storedUserId && storedUserId !== 'undefined' && storedUserId !== null) {
+      this.userId = storedUserId;
+      console.log('Session storage userId found:', this.userId);
+      this.getValuesOfInitData();
+    } else {
+      // If sessionStorage is empty, check queryParams
+      this.route.queryParams.subscribe((params: Params) => {
+        let queryUserId = params['userId'];
+
+        if (
+          queryUserId &&
+          queryUserId !== 'undefined' &&
+          queryUserId !== null
+        ) {
+          this.userId = queryUserId;
+          sessionStorage.setItem('paramsid', this.userId);
+          console.log('Query param userId found:', this.userId);
+          this.getValuesOfInitData();
+        } else {
+          console.warn('No user data available, redirecting to login.');
+          this.router.navigate(['/auth/login']);
+        }
+      });
+    }
   }
 
   //=========== reorder list options to selected data to the top side ========
@@ -207,7 +217,7 @@ export class MainHomePageComponent implements OnInit {
   MillioncustomizeLabel = (args: any): string => {
     const valueInMillions = (args.value / 1000000).toFixed(2);
     const percentage = args.point?.data?.RejectedPercent ?? 0;
-    return `${valueInMillions}M - ${percentage}%`;
+    return `${valueInMillions}M`;
   };
 
   customizeTooltip = ({

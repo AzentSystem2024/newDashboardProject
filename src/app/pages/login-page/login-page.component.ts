@@ -38,27 +38,42 @@ export class LoginPageComponent {
 
   Login() {
     // this.loadingVisible = true;
-    var userName = this.loginpage.UserName;
-    var Password = this.loginpage.Password;
-    if (userName && Password) {
+    let userName = this.loginpage.UserName;
+    let password = this.loginpage.Password;
+
+    if (userName && password) {
       this.service
-        .dashboard_Login(userName, Password)
+        .dashboard_Login(userName, password)
         .subscribe((response: any) => {
           if (response.flag == '1') {
             notify(`${response.message}`, 'success', 3000);
+
             let userId = response.userid;
             sessionStorage.setItem('paramsid', userId);
-            this.service.set_Loggin_Value(true);
+
+            // Ensure session storage is completely set before navigating
             setTimeout(() => {
-              // this.loadingVisible = false; // Ensure loading is hidden before navigation
-              this.router.navigate(['/Main-Dashboard']);
-            }, 500);
+              let userID = sessionStorage.getItem('paramsid');
+
+              if (userID && userID !== 'undefined') {
+                this.router.navigate(['/Main-Dashboard']).then(() => {
+                  console.log(
+                    'Navigated to Main-Dashboard with userID:',
+                    userID
+                  );
+                });
+              } else {
+                console.error('UserID not found in sessionStorage');
+              }
+
+              this.loadingVisible = false;
+            }, 100); // Reduced timeout to 100ms (500ms is unnecessary)
           } else {
             notify(`${response.message}`, 'error', 3000);
           }
         });
     } else {
-      alert('please fill all the fields');
+      alert('Please fill all the fields');
     }
   }
 }

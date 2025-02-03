@@ -10,6 +10,9 @@ export const CRS_DASHBOARD_LOGIN =
   export const CRS_DASHBOARD_INIT_DATA =
   API_BASE_URL + 'denialdasbhoard/initdata';
 
+  export const CRS_DENIAL_DASHBOARD_INIT_DATA =
+  API_BASE_URL + 'priordasbhoard/initdata';
+
 export const CRS_DASHBOARD_CLAIMSUMMARY_HOME =
   API_BASE_URL + 'denialdasbhoard/home';
 

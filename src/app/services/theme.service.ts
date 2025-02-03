@@ -1,18 +1,21 @@
-import { currentTheme as currentVizTheme, refreshTheme } from 'devextreme/viz/themes';
-import { current } from 'devextreme/ui/themes'
+import {
+  currentTheme as currentVizTheme,
+  refreshTheme,
+} from 'devextreme/viz/themes';
+import { current } from 'devextreme/ui/themes';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-const themes = ['light', 'dark'] as const;
+const themes = ['dark', 'light'] as const;
 
-type Theme = typeof themes[number];
+type Theme = (typeof themes)[number];
 
 function getNextTheme(theme?: Theme) {
   return themes[themes.indexOf(theme) + 1] || themes[0];
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ThemeService {
   private storageKey = 'app-theme';
@@ -23,14 +26,16 @@ export class ThemeService {
   public isDark = new BehaviorSubject<boolean>(this.currentTheme === 'dark');
 
   private getThemeStyleSheets() {
-    return   Array.from(document.styleSheets).filter(
-      (styleSheet) => styleSheet?.href?.includes(this.themeMarker)
+    return Array.from(document.styleSheets).filter((styleSheet) =>
+      styleSheet?.href?.includes(this.themeMarker)
     );
   }
 
   setAppTheme(theme = this.currentTheme) {
     this.getThemeStyleSheets().forEach((styleSheet) => {
-      styleSheet.disabled = !styleSheet?.href?.includes(`${this.themeMarker}${theme}`);
+      styleSheet.disabled = !styleSheet?.href?.includes(
+        `${this.themeMarker}${theme}`
+      );
     });
 
     this.currentTheme = theme;

@@ -6,29 +6,33 @@ import { DetachedRouteHandle } from '@angular/router';
 })
 export class ReuseStrategyService {
   private handlers: { [key: string]: DetachedRouteHandle } = {};
+  private excludedRoutes: string[] = ['/auth/login']; // Exclude login page
 
   storeHandler(routePath: string, handle: DetachedRouteHandle): void {
-    // console.log(`Storing handler for route: ${routePath}`, handle);
+    if (this.excludedRoutes.includes(routePath)) {
+      return; // Do not store handler for excluded routes
+    }
     this.handlers[routePath] = handle;
   }
 
   getHandler(routePath: string): DetachedRouteHandle | null {
-    // console.log(`Retrieving handler for route: ${routePath}`);
+    if (this.excludedRoutes.includes(routePath)) {
+      return null; // Do not retrieve handler for excluded routes
+    }
     return this.handlers[routePath] || null;
   }
 
   hasHandler(routePath: string): boolean {
-    // console.log(`Checking existence of handler for route: ${routePath}`);
-    return !!this.handlers[routePath];
+    return (
+      !!this.handlers[routePath] && !this.excludedRoutes.includes(routePath)
+    );
   }
 
   removeHandler(routePath: string): void {
-    // console.log(`Removing handler for route: ${routePath}`);
     delete this.handlers[routePath];
   }
 
   clearHandlers(): void {
-    // console.log('Clearing all handlers');
     this.handlers = {};
   }
 }

@@ -91,6 +91,7 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
   //=================== On Init Iunction =================
   ngOnInit() {
     this.on_Load_tab_data();
+
     this.route.url.subscribe((segments) => {
       this.currentUrl = segments.join('/');
     });
@@ -113,7 +114,6 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
           this.tabs = response.dashboards.filter(
             (dashboard) => dashboard.enabled
           );
-          console.log('tabs data:>>', this.tabs);
           this.router.navigate([this.tabs[this.selectedIndex].path]);
         }
       });

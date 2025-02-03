@@ -23,6 +23,11 @@ const routes: Routes = [
   },
   {
     path: '',
+    redirectTo: 'auth/login',
+    pathMatch: 'full',
+  },
+  {
+    path: '',
     component: SideNavOuterToolbarComponent,
     // canActivate: [AuthGuardService],
     children: [

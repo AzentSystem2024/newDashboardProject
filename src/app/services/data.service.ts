@@ -28,6 +28,7 @@ import {
   CRS_DASHBOARD_SUBMISSION_HOME,
   CRS_DASHBOARD_LOGIN,
   CRS_DASHBOARD_TABS_DATA,
+  CRS_DENIAL_DASHBOARD_INIT_DATA,
 } from 'src/constants/constantURl';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
@@ -176,11 +177,17 @@ export class DataService {
       : formattedInteger;
   }
 
-  //=================Init data for drop down fields==================
+  //=================Init data for denial Dashboard drop down fields==================
   getInitData(id: any): Observable<any> {
     return this.http.post<any>(CRS_DASHBOARD_INIT_DATA, { userid: id });
   }
 
+  //=================Init data for auth-dashboard drop down fields==================
+  get_Denial_Dashboard_InitData(id: any): Observable<any> {
+    return this.http.post<any>(CRS_DENIAL_DASHBOARD_INIT_DATA, { userid: id });
+  }
+
+//===================== Login dashboard ============================
   dashboard_Login(username: any, password: any) {
     const url = CRS_DASHBOARD_LOGIN;
     const reqBody = { Loginid: username, password: password };

@@ -25,6 +25,9 @@ export class AppComponent implements OnDestroy {
     private screen: ScreenService,
     public appInfo: AppInfoService
   ) {
+    if (!localStorage.getItem('app-theme')) {
+      localStorage.setItem('app-theme', 'dark');
+    }
     themeService.setAppTheme();
   }
 

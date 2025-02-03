@@ -65,7 +65,7 @@ export class AuthDashboardPageComponent implements OnInit {
   modifiedFacilityDatasource: any;
   facilityvalue: any[];
   FacilityDataSource: any;
-  SubmissionIndexvalue: any;
+  SubmissionIndexvalue: any[] = [];
   SubmissionIndexDatasource: any;
   showGroups: boolean = true;
   loadingVisible: boolean = false;
@@ -79,11 +79,7 @@ export class AuthDashboardPageComponent implements OnInit {
   userId: string;
   ReguestSendCardValue: any;
   //========================= Constructor =======================
-  constructor(
-    private router: Router,
-    private service: DataService,
-    
-  ) {
+  constructor(private router: Router, private service: DataService) {
     this.userId = sessionStorage.getItem('paramsid');
     if (this.userId != 'undefined' && this.userId != '' && this.userId > '0') {
     } else {
@@ -93,7 +89,7 @@ export class AuthDashboardPageComponent implements OnInit {
 
   //======================Page on init ========================
   ngOnInit(): void {
-    this.get_chart_datasource();
+    this.get_Init_Data();
   }
 
   //=========MAking cutom datasource for facility datagrid and dropdown loADING=======
@@ -141,7 +137,52 @@ export class AuthDashboardPageComponent implements OnInit {
   //================== Apply button click event ===================
   applyButtonClicked() {}
 
-  //================== Fetch Cgarts Datasource ===================
+  //================= fetch Init For DropDown Values =================
+  get_Init_Data() {
+    this.loadingVisible = true;
+    this.service
+      .get_Denial_Dashboard_InitData(this.userId)
+      .subscribe((response: any) => {
+        if (response.flag == '1') {
+          this.dateForm.fromdate = response.DateFrom;
+          this.dateForm.todate = response.DateTo;
+
+          this.FacilityDataSource = response.Facility;
+          this.modifiedFacilityDatasource = this.makeAsyncDataSourceFromJson(
+            response.Facility
+          );
+          this.facilityvalue = this.FacilityDataSource.filter(
+            (item) => item.Default === '1'
+          ).map((item) => item.ID);
+
+          this.SubmissionIndexDatasource = response.Submission;
+          this.SubmissionIndexvalue =
+            this.SubmissionIndexDatasource.find(
+              (obj: any) => obj.Default === '1'
+            )?.ID || ' ';
+
+          console.log('submission value :>>', this.SubmissionIndexvalue);
+
+          this.PhysicianDatasource = response.Department;
+          this.physicianvalue = this.PhysicianDatasource.filter(
+            (item) => item.Default === '1'
+          ).map((item) => item.ID);
+
+          this.DenailCategoryDatasource = response.DenialCategory;
+          this.denialcategoryvalue = this.DenailCategoryDatasource.filter(
+            (item) => item.Default === '1'
+          ).map((item) => item.ID);
+
+          this.ServiceCategoryDatasource = response.ServiceCategory;
+          this.servicecategoryvalue = this.ServiceCategoryDatasource.filter(
+            (item) => item.Default === '1'
+          ).map((item) => item.ID);
+        }
+      });
+
+    this.get_chart_datasource();
+  }
+  //==================== Fetch Cgarts Datasource =====================
   get_chart_datasource() {
     this.loadingVisible = true;
     this.service.get_Prior_Dashboard_Datasource().subscribe((response: any) => {
