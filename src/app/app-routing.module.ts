@@ -48,7 +48,7 @@ const routes: Routes = [
   },
 ];
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: false }), BrowserModule],
+  imports: [RouterModule.forRoot(routes, { useHash: true }), BrowserModule],
   providers: [AuthGuardService],
   exports: [RouterModule],
   declarations: [],

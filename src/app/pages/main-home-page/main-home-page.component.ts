@@ -22,11 +22,9 @@ import {
   DxDataGridModule,
   DxDataGridComponent,
 } from 'devextreme-angular';
-// import { CardAnalyticsModule } from '../../library/card-analytics/card-analytics.component';
 import { DataService } from 'src/app/services';
 import { BrowserModule } from '@angular/platform-browser';
 import { trigger, style, transition, animate } from '@angular/animations';
-// import { TickerCardModule } from '../../library/ticker-card/ticker-card.component';
 import { SharedService } from 'src/app/services/shared.service';
 import notify from 'devextreme/ui/notify';
 import * as moment from 'moment';
