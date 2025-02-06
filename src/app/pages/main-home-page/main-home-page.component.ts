@@ -214,7 +214,7 @@ export class MainHomePageComponent implements OnInit {
 
   MillioncustomizeLabel = (args: any): string => {
     const value = args.value;
-    if (value >= 10000) {
+    if (value >= 100000) {
       return `${(value / 1000000).toFixed(2)} M`;
     } else if (value > 0) {
       return `${(value / 1000).toFixed(2)} K`;

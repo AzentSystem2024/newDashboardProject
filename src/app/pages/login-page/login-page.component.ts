@@ -37,7 +37,7 @@ export class LoginPageComponent {
   ) {}
 
   Login() {
-    // this.loadingVisible = true;
+    this.loadingVisible = true;
     let userName = this.loginpage.UserName;
     let password = this.loginpage.Password;
 
@@ -50,11 +50,11 @@ export class LoginPageComponent {
 
             let userId = response.userid;
             sessionStorage.setItem('paramsid', userId);
-
+            this.loadingVisible = false;
             // Ensure session storage is completely set before navigating
             setTimeout(() => {
               let userID = sessionStorage.getItem('paramsid');
-
+              
               if (userID && userID !== 'undefined') {
                 this.router.navigate(['/Main-Dashboard']).then(() => {
                   console.log(
@@ -65,8 +65,6 @@ export class LoginPageComponent {
               } else {
                 console.error('UserID not found in sessionStorage');
               }
-
-              this.loadingVisible = false;
             }, 100); // Reduced timeout to 100ms (500ms is unnecessary)
           } else {
             notify(`${response.message}`, 'error', 3000);
