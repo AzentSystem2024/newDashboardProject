@@ -107,18 +107,29 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
 
   //================== Tab data fetching ===================
   on_Load_tab_data() {
-    let userId = sessionStorage.getItem('paramsid');
-    if (userId) {
-      this.service.fetch_tab_Data_mainLayout().subscribe((response: any) => {
-        if (response.flag == '1') {
-          this.tabs = response.dashboards.filter(
-            (dashboard) => dashboard.enabled
-          );
-          this.router.navigate([this.tabs[this.selectedIndex].path]);
-        }
-      });
-    } else {
-    }
+    this.route.queryParams.subscribe((params: Params) => {
+      let queryUserId = params['userId'];
+      // Check if userId exists in query params
+      if (queryUserId && queryUserId !== 'undefined' && queryUserId !== null) {
+        this.userId = queryUserId;
+        sessionStorage.setItem('paramsid', this.userId);
+      }
+      // Get userId from session storage (fallback if query param is absent)
+      let userId = sessionStorage.getItem('paramsid');
+
+      if (userId) {
+        this.service.fetch_tab_Data_mainLayout().subscribe((response: any) => {
+          if (response.flag == '1') {
+            this.tabs = response.dashboards.filter(
+              (dashboard) => dashboard.enabled
+            );
+            if (this.tabs.length > 0) {
+              this.router.navigate([this.tabs[this.selectedIndex].path]);
+            }
+          }
+        });
+      }
+    });
   }
 
   //====================Tab Clicke Event====================
