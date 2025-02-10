@@ -317,8 +317,6 @@ export class MainHomePageComponent implements OnInit {
         this.RejectionIndexDatasource = response.RejectionIndex;
         this.DenailCategoryDatasource = response.DenialCategory;
         this.blockDataSource = response.Block;
-        this.regionDataSource = response.Region;
-        this.ProviderTypeDatasource = response.ProviderType;
         this.insuranceDataSource = response.Insurance;
         this.departmentDataSource = response.Department;
         this.FacilityDataSource = response.Facility;
@@ -348,14 +346,6 @@ export class MainHomePageComponent implements OnInit {
         this.blockValue = this.blockDataSource
           .filter((item) => item.Default === '1')
           .map((item) => item.ID);
-
-        this.RegionValue = this.regionDataSource
-          .filter((item) => item.Default === '1')
-          .map((item) => item.ID);
-
-        this.ProviderTypevalue = this.ProviderTypeDatasource.filter(
-          (item) => item.Default === '1'
-        ).map((item) => item.ID);
 
         this.facilityvalue = this.FacilityDataSource.filter(
           (item) => item.Default === '1'
@@ -390,8 +380,6 @@ export class MainHomePageComponent implements OnInit {
         this.denialcategoryvalue.join(', '),
         this.encountertypevalue.join(', '),
         this.blockValue.join(', '),
-        this.RegionValue.join(', '),
-        this.ProviderTypevalue.join(', '),
         this.facilityvalue.join(', '),
         this.insuranceValue.join(', '),
         this.departmentValue.join(', ')

@@ -4,23 +4,27 @@ const API_BASE_URL = environment.LMS_API_BASE_URL;
 
 ///////////////////////API/////////////////////////////////////////////
 
-export const CRS_DASHBOARD_LOGIN =
-  API_BASE_URL + 'users/validate';
+export const CRS_DASHBOARD_LOGIN = API_BASE_URL + 'users/validate';
 
-  export const CRS_DASHBOARD_INIT_DATA =
+export const CRS_DASHBOARD_INIT_DATA =
   API_BASE_URL + 'denialdasbhoard/initdata';
 
-  export const CRS_DENIAL_DASHBOARD_INIT_DATA =
+export const CRS_DENIAL_DASHBOARD_INIT_DATA =
   API_BASE_URL + 'priordasbhoard/initdata';
+
+export const CRS_FINANCE_DASHBOARD_INIT_DATA =
+  API_BASE_URL + 'financedashboard/initdata';
 
 export const CRS_DASHBOARD_CLAIMSUMMARY_HOME =
   API_BASE_URL + 'denialdasbhoard/home';
 
-  export const CRS_DASHBOARD_PRIOR_DASHBOARD =
+export const CRS_FINANCE_DASHBOARD_CLAIMSUMMARY_HOME =
+  API_BASE_URL + 'financedashboard/home';
+
+export const CRS_DASHBOARD_PRIOR_DASHBOARD =
   API_BASE_URL + 'priordasbhoard/home';
 
-  export const CRS_DASHBOARD_TABS_DATA =
-  API_BASE_URL + 'users/dashboards';
+export const CRS_DASHBOARD_TABS_DATA = API_BASE_URL + 'users/dashboards';
 
 export const CRS_DASHBOARD_SUBMISSION_HOME = API_BASE_URL + '/Submission/home';
 

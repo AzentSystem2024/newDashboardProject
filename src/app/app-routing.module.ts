@@ -10,6 +10,7 @@ import {
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { MainHomePageComponent } from './pages/main-home-page/main-home-page.component';
 import { AuthDashboardPageComponent } from './pages/auth-dashboard-page/auth-dashboard-page.component';
+import { FinanceDashboardComponent } from './pages/finance-dashboard/finance-dashboard.component';
 const routes: Routes = [
   {
     path: 'auth',
@@ -38,6 +39,10 @@ const routes: Routes = [
       {
         path: 'Auth-Dashboard',
         component: AuthDashboardPageComponent,
+      },
+      {
+        path: 'Finance-Dashboard',
+        component: FinanceDashboardComponent,
       },
       {
         path: '**',

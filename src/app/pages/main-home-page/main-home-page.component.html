@@ -531,7 +531,7 @@
                 hint=""
               ></dxo-title>
               <dxo-legend
-                [visible]="true"
+                [visible]="false"
                 verticalAlignment="bottom"
                 horizontalAlignment="center"
               ></dxo-legend>
@@ -573,7 +573,7 @@
             <dx-chart id="chart" [dataSource]="BlockWiseRejectionDataSource">
               <dxo-title text="Block Wise Rejected Amount" hint=""></dxo-title>
               <dxo-legend
-                [visible]="true"
+                [visible]="false"
                 verticalAlignment="bottom"
                 horizontalAlignment="center"
               ></dxo-legend>
@@ -618,7 +618,7 @@
             >
               <dxo-title text="Rejection Accountability" hint=""></dxo-title>
               <dxo-legend
-                [visible]="true"
+                [visible]="false"
                 verticalAlignment="bottom"
                 horizontalAlignment="center"
               ></dxo-legend>
@@ -857,7 +857,10 @@
               id="chart"
               [dataSource]="TopTenDoctorWiseRejectedDataSource"
             >
-              <dxo-title text="Top 10 Dr Wise Rejected Amount" hint=""></dxo-title>
+              <dxo-title
+                text="Top 10 Dr Wise Rejected Amount"
+                hint=""
+              ></dxo-title>
               <dxo-legend
                 [visible]="true"
                 verticalAlignment="bottom"

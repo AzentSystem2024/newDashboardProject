@@ -29,6 +29,8 @@ import {
   CRS_DASHBOARD_LOGIN,
   CRS_DASHBOARD_TABS_DATA,
   CRS_DENIAL_DASHBOARD_INIT_DATA,
+  CRS_FINANCE_DASHBOARD_INIT_DATA,
+  CRS_FINANCE_DASHBOARD_CLAIMSUMMARY_HOME,
 } from 'src/constants/constantURl';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
@@ -102,8 +104,6 @@ export class DataService {
     denialCategory: any,
     encounterType: any,
     block: any,
-    region: any,
-    providerType: any,
     facility: any,
     insurance: any,
     department: any
@@ -117,8 +117,36 @@ export class DataService {
       DenialCategory: denialCategory,
       EncounterType: encounterType,
       Block: block,
-      Region: region,
-      ProviderType: providerType,
+      Region: '',
+      ProviderType: '',
+      Facility: facility,
+      Insurance: insurance,
+      Department: department,
+    };
+
+    return this.http.post(url, reqBodyData);
+  }
+
+  //================Finance dashboard Data Fetching=================
+  get_Finance_Home_Dashboard_Datasource(
+    searchOn: any,
+    fromdate: any,
+    todate: any,
+    asOnDate: any,
+    encounterType: any,
+    facility: any,
+    insurance: any,
+    department: any
+  ) {
+    const url = CRS_FINANCE_DASHBOARD_CLAIMSUMMARY_HOME;
+    const reqBodyData = {
+      SearchOn: searchOn,
+      DateFrom: fromdate,
+      DateTo: todate,
+      DateAsOn: asOnDate,
+      EncounterType: encounterType,
+      Region: '',
+      ProviderType: '',
       Facility: facility,
       Insurance: insurance,
       Department: department,
@@ -183,11 +211,16 @@ export class DataService {
   }
 
   //=================Init data for auth-dashboard drop down fields==================
+  get_Finance_Dashboard_InitData(id: any): Observable<any> {
+    return this.http.post<any>(CRS_FINANCE_DASHBOARD_INIT_DATA, { UserID: id });
+  }
+
+  //=================Init data for auth-dashboard drop down fields==================
   get_Denial_Dashboard_InitData(id: any): Observable<any> {
     return this.http.post<any>(CRS_DENIAL_DASHBOARD_INIT_DATA, { userid: id });
   }
 
-//===================== Login dashboard ============================
+  //===================== Login dashboard ============================
   dashboard_Login(username: any, password: any) {
     const url = CRS_DASHBOARD_LOGIN;
     const reqBody = { Loginid: username, password: password };

@@ -120,11 +120,24 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
       if (userId) {
         this.service.fetch_tab_Data_mainLayout().subscribe((response: any) => {
           if (response.flag == '1') {
-            this.tabs = response.dashboards.filter(
-              (dashboard) => dashboard.enabled
-            );
+            this.tabs = response.dashboards;
             if (this.tabs.length > 0) {
-              this.router.navigate([this.tabs[this.selectedIndex].path]);
+              const dashboardText = this.tabs[this.selectedIndex].text;
+              // this.router.navigate(['/Main-Dashboard']);
+
+              if (dashboardText.includes('Finance')) {
+                this.router.navigate(['/Finance-Dashboard']);
+              } else if (dashboardText.includes('Denial')) {
+                this.router.navigate(['/Main-Dashboard']);
+              } else if (dashboardText.includes('Authorization')) {
+                this.router.navigate(['/Auth-Dashboard']);
+              } else if (dashboardText.includes('Resubmission')) {
+                this.router.navigate(['/Resubmission-Dashboard']);
+              } else if (dashboardText.includes('Clinical Outlier')) {
+                this.router.navigate(['/Clinical-Outlier-Dashboard']);
+              } else {
+                console.warn('No matching dashboard path found.');
+              }
             }
           }
         });
@@ -134,8 +147,22 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
 
   //====================Tab Clicke Event====================
   onTabChanged(event: any) {
-    const selectedTab: any = event.addedItems[0];
-    this.router.navigate([selectedTab.path]);
+    console.log('selected tag event :>>', event);
+    const dashboardText: any = event.itemData.text;
+    if (dashboardText.includes('Finance')) {
+      this.router.navigate(['/Finance-Dashboard']);
+    } else if (dashboardText.includes('Denial')) {
+      this.router.navigate(['/Main-Dashboard']);
+    } else if (dashboardText.includes('Authorization')) {
+      this.router.navigate(['/Auth-Dashboard']);
+    } else if (dashboardText.includes('Resubmission')) {
+      this.router.navigate(['/Resubmission-Dashboard']);
+    } else if (dashboardText.includes('Clinical Outlier')) {
+      this.router.navigate(['/Clinical-Outlier-Dashboard']);
+    } else {
+      // Default case if no match
+      console.warn('No matching dashboard path found.');
+    }
   }
   //==========================================================
   getCurrentSegmentFromUrl(): string {

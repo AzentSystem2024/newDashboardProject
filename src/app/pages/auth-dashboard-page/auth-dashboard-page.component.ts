@@ -135,7 +135,9 @@ export class AuthDashboardPageComponent implements OnInit {
   }
 
   //================== Apply button click event ===================
-  applyButtonClicked() {}
+  applyButtonClicked() {
+    this.get_chart_datasource();
+  }
 
   //================= fetch Init For DropDown Values =================
   get_Init_Data() {
@@ -198,7 +200,24 @@ export class AuthDashboardPageComponent implements OnInit {
   }
 
   //==================export function=======================
-  export() {}
+  export() {
+    this.loadingVisible = true; // Show loading indicator
+    // Select both divs
+    const exportDiv1 = document.querySelector('.ExportDiv1') as HTMLElement;
+    const exportDiv2 = document.querySelector('.ExportDiv2') as HTMLElement;
+    // Pass both divs to the service
+    const reportName = 'Dashboard';
+    // Use async/await to ensure the export completes before hiding the loading
+    this.service
+      .exportGraphData(reportName, [exportDiv1, exportDiv2])
+      .then(() => {
+        this.loadingVisible = false; // Hide loading indicator after export completes
+      })
+      .catch((error) => {
+        this.loadingVisible = false; // Hide loading in case of an error
+        console.error('Export failed:', error); // Handle any errors if needed
+      });
+  }
 }
 
 @NgModule({
