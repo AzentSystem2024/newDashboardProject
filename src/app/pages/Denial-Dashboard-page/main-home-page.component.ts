@@ -144,10 +144,8 @@ export class MainHomePageComponent implements OnInit {
   get_initial_data() {
     // Read from sessionStorage first
     let storedUserId = sessionStorage.getItem('paramsid');
-
     if (storedUserId && storedUserId !== 'undefined' && storedUserId !== null) {
       this.userId = storedUserId;
-      console.log('Session storage userId found:', this.userId);
       this.getValuesOfInitData();
     } else {
       // If sessionStorage is empty, check queryParams
@@ -161,7 +159,7 @@ export class MainHomePageComponent implements OnInit {
         ) {
           this.userId = queryUserId;
           sessionStorage.setItem('paramsid', this.userId);
-          console.log('Query param userId found:', this.userId);
+
           this.getValuesOfInitData();
         } else {
           console.warn('No user data available, redirecting to login.');
@@ -311,7 +309,7 @@ export class MainHomePageComponent implements OnInit {
   }
   //=====================fetch init dataSource =========================
   getValuesOfInitData() {
-    this.loadingVisible = true;
+    // this.loadingVisible = true;
     this.service.getInitData(this.userId).subscribe((response: any) => {
       if (response) {
         this.SearchOnDatasource = response.SearchOn;

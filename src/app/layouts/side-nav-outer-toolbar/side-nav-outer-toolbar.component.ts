@@ -31,7 +31,7 @@ import { ConversionCardModule } from '../../components/utils/Home-Funnel-Chart/c
 import { Sales, SalesOrOpportunitiesByCategory } from 'src/app/types/analytics';
 import { CardAnalyticsModule } from 'src/app/components/library/card-analytics/card-analytics.component';
 import { DxTabPanelModule } from 'devextreme-angular';
-import { MainHomePageComponent } from 'src/app/pages/main-home-page/main-home-page.component';
+import { MainHomePageComponent } from 'src/app/pages/Denial-Dashboard-page/main-home-page.component';
 import { AuthDashboardPageComponent } from 'src/app/pages/auth-dashboard-page/auth-dashboard-page.component';
 
 @Component({
@@ -110,7 +110,7 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
 
             // Check if we should navigate based on tabs and login status
             if (this.tabs.length > 0) {
-              this.navigateToDashboard(this.tabs[this.selectedIndex].text);
+              this.navigateToDashboard(this.tabs[this.selectedIndex].ID);
             }
           }
         });
@@ -118,26 +118,25 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
     });
   }
 
-  navigateToDashboard(dashboardText: string) {
+  navigateToDashboard(dashboardText: any) {
     const routes = {
-      Finance: '/Finance-Dashboard',
-      Denial: '/Denial-Dashboard',
-      Authorization: '/Auth-Dashboard',
-      Resubmission: '/Resubmission-Dashboard',
-      ClinicalOutlier: '/Clinical-Outlier-Dashboard',
+      2: '/Finance-Dashboard',
+      1: '/Denial-Dashboard',
+      3: '/Auth-Dashboard',
     };
 
     for (const key in routes) {
-      if (dashboardText.includes(key)) {
+      if (dashboardText == key) {
         this.router.navigate([routes[key]]);
         return;
       }
     }
+    console.warn('No matching dashboard path found.');
   }
 
   //====================Tab Clicke Event====================
   onTabChanged(event: any) {
-    const dashboardText: any = event.itemData.text;
+    const dashboardText: any = event.itemData.ID;
     this.navigateToDashboard(dashboardText);
   }
   //==========================================================

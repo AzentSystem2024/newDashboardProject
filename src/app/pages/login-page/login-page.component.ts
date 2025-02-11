@@ -17,6 +17,7 @@ import notify from 'devextreme/ui/notify';
 import { firstValueFrom } from 'rxjs';
 import { ReuseStrategyService } from 'src/app/State-Management/reuse-strategy.service';
 import { CustomReuseStrategy } from 'src/app/State-Management/custom-reuse-strategy';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-login-page',
@@ -34,7 +35,7 @@ export class LoginPageComponent {
     private formb: FormBuilder,
     private router: Router,
     private service: DataService,
-    private reuseStrategy: CustomReuseStrategy
+    private sharedServc: SharedService
   ) {}
 
   Login() {
@@ -64,9 +65,9 @@ export class LoginPageComponent {
                   .subscribe((response: any) => {
                     if (response.flag === '1') {
                       this.tabs = response.dashboards;
-                      const firstTabText = this.tabs[0]?.text;
+                      const firstTabText = this.tabs[0].ID;
                       if (firstTabText) {
-                        this.navigateToDashboard(firstTabText);
+                        this.sharedServc.navigateToDashboard(firstTabText);
                       } else {
                         console.warn('No tabs found.');
                       }
@@ -83,25 +84,6 @@ export class LoginPageComponent {
     } else {
       alert('Please fill all the fields');
     }
-  }
-
-  navigateToDashboard(dashboardText: string) {
-    const routes = {
-      Finance: '/Finance-Dashboard',
-      Denial: '/Denial-Dashboard',
-      Authorization: '/Auth-Dashboard',
-      Resubmission: '/Resubmission-Dashboard',
-      Clinical: '/Clinical-Outlier-Dashboard',
-    };
-
-    for (const key in routes) {
-      if (dashboardText.includes(key)) {
-        this.router.navigate([routes[key]]);
-        return;
-      }
-    }
-
-    console.warn('No matching dashboard path found.');
   }
 }
 @NgModule({

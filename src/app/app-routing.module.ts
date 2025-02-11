@@ -8,7 +8,7 @@ import {
   UnauthenticatedContentComponent,
 } from './layouts';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
-import { MainHomePageComponent } from './pages/main-home-page/main-home-page.component';
+import { MainHomePageComponent } from './pages/Denial-Dashboard-page/main-home-page.component';
 import { AuthDashboardPageComponent } from './pages/auth-dashboard-page/auth-dashboard-page.component';
 import { FinanceDashboardComponent } from './pages/finance-dashboard/finance-dashboard.component';
 const routes: Routes = [
@@ -44,11 +44,11 @@ const routes: Routes = [
         path: 'Finance-Dashboard',
         component: FinanceDashboardComponent,
       },
-      {
-        path: '**',
-        redirectTo: 'Denial-Dashboard',
-        pathMatch: 'full',
-      },
+      // {
+      //   path: '**',
+      //   redirectTo: 'Denial-Dashboard',
+      //   pathMatch: 'full',
+      // },
     ],
   },
 ];

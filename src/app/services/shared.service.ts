@@ -41,4 +41,20 @@ export class SharedService {
   reloadComponents() {
     this.reloadComponentsSource.next();
   }
+
+  navigateToDashboard(dashboardText: any) {
+    const routes = {
+      2: '/Finance-Dashboard',
+      1: '/Denial-Dashboard',
+      3: '/Auth-Dashboard',
+    };
+
+    for (const key in routes) {
+      if (dashboardText == key) {
+        this.router.navigate([routes[key]]);
+        return;
+      }
+    }
+    console.warn('No matching dashboard path found.');
+  }
 }
