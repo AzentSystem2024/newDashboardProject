@@ -45,7 +45,7 @@ export class SharedService {
   navigateToDashboard(dashboardText: any) {
     const routes = {
       2: '/Finance-Dashboard',
-      1: '/Denial-Dashboard',
+      1: '/Main-Dashboard',
       3: '/Auth-Dashboard',
     };
 

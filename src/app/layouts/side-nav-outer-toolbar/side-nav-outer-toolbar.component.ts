@@ -110,7 +110,7 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
 
             // Check if we should navigate based on tabs and login status
             if (this.tabs.length > 0) {
-              this.navigateToDashboard(this.tabs[this.selectedIndex].ID);
+              this.navigateToDashboard(this.tabs[0].ID);
             }
           }
         });
@@ -121,7 +121,7 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
   navigateToDashboard(dashboardText: any) {
     const routes = {
       2: '/Finance-Dashboard',
-      1: '/Denial-Dashboard',
+      1: '/Main-Dashboard',
       3: '/Auth-Dashboard',
     };
 

@@ -33,7 +33,7 @@ const routes: Routes = [
     // canActivate: [AuthGuardService],
     children: [
       {
-        path: 'Denial-Dashboard',
+        path: 'Main-Dashboard',
         component: MainHomePageComponent,
       },
       {
