@@ -1,5 +1,5 @@
 import { CommonModule, PercentPipe } from '@angular/common';
-import { Component, NgModule, ViewChild } from '@angular/core';
+import { Component, NgModule, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import CustomStore from 'devextreme/data/custom_store';
@@ -47,7 +47,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
     ]),
   ],
 })
-export class FinanceDashboardComponent {
+export class FinanceDashboardComponent implements OnInit {
   @ViewChild(DxDataGridComponent, { static: true })
   dataGrid: DxDataGridComponent;
 
@@ -86,9 +86,12 @@ export class FinanceDashboardComponent {
     private router: Router,
     private route: ActivatedRoute
   ) {
-    this.get_initial_data();
+    console.log('Finance Dashboard Is Loaded');
   }
 
+  ngOnInit(): void {
+    this.get_initial_data();
+  }
   //===================Custom label for pie chart ===========
   customizeLabel(arg) {
     const valueInMillions = (arg.valueText / 1000000).toFixed(2);

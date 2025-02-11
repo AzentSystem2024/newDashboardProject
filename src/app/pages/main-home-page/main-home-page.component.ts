@@ -133,7 +133,9 @@ export class MainHomePageComponent implements OnInit {
     private dataservice: DataService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) {
+    console.log("Denial Dashboard Is Loaded")
+  }
 
   ngOnInit(): void {
     this.get_initial_data();

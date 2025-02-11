@@ -91,53 +91,26 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
   //=================== On Init Iunction =================
   ngOnInit() {
     this.on_Load_tab_data();
-
-    this.route.url.subscribe((segments) => {
-      this.currentUrl = segments.join('/');
-    });
-
-    this.menuOpened = this.screen.sizes['screen-large'];
-
-    this.screenSubscription = this.screen.changed.subscribe(() =>
-      this.updateDrawer()
-    );
-
-    this.updateDrawer();
   }
 
   //================== Tab data fetching ===================
   on_Load_tab_data() {
     this.route.queryParams.subscribe((params: Params) => {
-      let queryUserId = params['userId'];
-      // Check if userId exists in query params
-      if (queryUserId && queryUserId !== 'undefined' && queryUserId !== null) {
-        this.userId = queryUserId;
+      // Set userId from query params or sessionStorage
+      const queryUserId = params['userId'];
+      this.userId =
+        queryUserId && queryUserId !== 'undefined' && queryUserId !== null
+          ? queryUserId
+          : sessionStorage.getItem('paramsid');
+      if (this.userId) {
         sessionStorage.setItem('paramsid', this.userId);
-      }
-      // Get userId from session storage (fallback if query param is absent)
-      let userId = sessionStorage.getItem('paramsid');
-
-      if (userId) {
         this.service.fetch_tab_Data_mainLayout().subscribe((response: any) => {
-          if (response.flag == '1') {
+          if (response.flag === '1') {
             this.tabs = response.dashboards;
-            if (this.tabs.length > 0) {
-              const dashboardText = this.tabs[this.selectedIndex].text;
-              // this.router.navigate(['/Main-Dashboard']);
 
-              if (dashboardText.includes('Finance')) {
-                this.router.navigate(['/Finance-Dashboard']);
-              } else if (dashboardText.includes('Denial')) {
-                this.router.navigate(['/Main-Dashboard']);
-              } else if (dashboardText.includes('Authorization')) {
-                this.router.navigate(['/Auth-Dashboard']);
-              } else if (dashboardText.includes('Resubmission')) {
-                this.router.navigate(['/Resubmission-Dashboard']);
-              } else if (dashboardText.includes('Clinical Outlier')) {
-                this.router.navigate(['/Clinical-Outlier-Dashboard']);
-              } else {
-                console.warn('No matching dashboard path found.');
-              }
+            // Check if we should navigate based on tabs and login status
+            if (this.tabs.length > 0) {
+              this.navigateToDashboard(this.tabs[this.selectedIndex].text);
             }
           }
         });
@@ -145,24 +118,27 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
     });
   }
 
+  navigateToDashboard(dashboardText: string) {
+    const routes = {
+      Finance: '/Finance-Dashboard',
+      Denial: '/Denial-Dashboard',
+      Authorization: '/Auth-Dashboard',
+      Resubmission: '/Resubmission-Dashboard',
+      ClinicalOutlier: '/Clinical-Outlier-Dashboard',
+    };
+
+    for (const key in routes) {
+      if (dashboardText.includes(key)) {
+        this.router.navigate([routes[key]]);
+        return;
+      }
+    }
+  }
+
   //====================Tab Clicke Event====================
   onTabChanged(event: any) {
-    console.log('selected tag event :>>', event);
     const dashboardText: any = event.itemData.text;
-    if (dashboardText.includes('Finance')) {
-      this.router.navigate(['/Finance-Dashboard']);
-    } else if (dashboardText.includes('Denial')) {
-      this.router.navigate(['/Main-Dashboard']);
-    } else if (dashboardText.includes('Authorization')) {
-      this.router.navigate(['/Auth-Dashboard']);
-    } else if (dashboardText.includes('Resubmission')) {
-      this.router.navigate(['/Resubmission-Dashboard']);
-    } else if (dashboardText.includes('Clinical Outlier')) {
-      this.router.navigate(['/Clinical-Outlier-Dashboard']);
-    } else {
-      // Default case if no match
-      console.warn('No matching dashboard path found.');
-    }
+    this.navigateToDashboard(dashboardText);
   }
   //==========================================================
   getCurrentSegmentFromUrl(): string {

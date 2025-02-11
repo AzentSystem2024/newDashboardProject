@@ -248,4 +248,4 @@ export class AuthDashboardPageComponent implements OnInit {
   declarations: [AuthDashboardPageComponent],
   exports: [AuthDashboardPageComponent],
 })
-export class MainHomePageModule {}
+export class AuthDashboardPageModule {}
