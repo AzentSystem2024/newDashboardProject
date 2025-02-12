@@ -1,5 +1,11 @@
 import { CommonModule, PercentPipe } from '@angular/common';
-import { Component, NgModule, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  NgModule,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import CustomStore from 'devextreme/data/custom_store';
@@ -51,6 +57,7 @@ export class FinanceDashboardComponent implements OnInit {
   @ViewChild(DxDataGridComponent, { static: true })
   dataGrid: DxDataGridComponent;
 
+  @HostListener('window:resize', ['$event'])
   pipe = new PercentPipe('en-US');
 
   dateForm = {
@@ -80,6 +87,8 @@ export class FinanceDashboardComponent implements OnInit {
   //===========graph datasource===========
   BarChartDataSource: any;
   pieChartDatasource: any;
+
+  chartSize = { width: window.innerWidth * 0.9 };
 
   constructor(
     public service: DataService,

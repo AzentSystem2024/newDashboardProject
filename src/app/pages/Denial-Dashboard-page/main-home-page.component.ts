@@ -1,5 +1,11 @@
 import { CommonModule, PercentPipe } from '@angular/common';
-import { Component, NgModule, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  NgModule,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import {
   DxLoadIndicatorModule,
   DxFunnelModule,
@@ -58,6 +64,9 @@ export class MainHomePageComponent implements OnInit {
 
   @ViewChild(DxDataGridComponent, { static: true })
   dataGrid: DxDataGridComponent;
+
+  @HostListener('window:resize', ['$event'])
+  chartSize = { width: window.innerWidth * 0.9 };
 
   pipe = new PercentPipe('en-US');
 
@@ -134,7 +143,7 @@ export class MainHomePageComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute
   ) {
-    console.log("Denial Dashboard Is Loaded")
+    console.log('Denial Dashboard Is Loaded');
   }
 
   ngOnInit(): void {

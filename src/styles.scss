@@ -1025,12 +1025,20 @@ app-root {
   line-height: 20px;
 }
 .dx-scrollable-content {
-  background-color: var(--dropdown-bg);
+  // background-color: var(--dropdown-bg);
+  border: 2px solid var(--border-color);
+  border-radius: 5px;
 }
 .dx-popup-content {
-  background-color: var(--dropdown-bg);
-  padding: 16px 16px;
+  // background-color: var(--dropdown-bg);
+  border: 2px solid var(--border-color);
+  border-radius: 5px;
 }
 .dx-tabs-scrollable .dx-tabs-wrapper {
   background-color: var(--base-bg);
+}
+.dx-scrollable-simulated .dx-scrollable-content {
+  // overflow-anchor: none;
+  border: none;
+  margin: 0px;
 }

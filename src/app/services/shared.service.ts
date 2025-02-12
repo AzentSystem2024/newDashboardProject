@@ -46,7 +46,7 @@ export class SharedService {
     const routes = {
       2: '/Finance-Dashboard',
       1: '/Main-Dashboard',
-      3: '/Auth-Dashboard',
+      3: '/Auth-Dashboard-Production',
     };
 
     for (const key in routes) {

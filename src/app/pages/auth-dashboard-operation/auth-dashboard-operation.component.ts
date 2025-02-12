@@ -1,8 +1,8 @@
-import { trigger, transition, style, animate } from '@angular/animations';
 import { CommonModule, PercentPipe } from '@angular/common';
-import { Component, NgModule, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, NgModule, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import {
   DxLoadIndicatorModule,
   DxFunnelModule,
@@ -25,30 +25,20 @@ import {
   DxDataGridComponent,
 } from 'devextreme-angular';
 import { CardAnalyticsModule } from 'src/app/components/library/card-analytics/card-analytics.component';
-import CustomStore from 'devextreme/data/custom_store';
-import { Router } from '@angular/router';
 import { DataService } from 'src/app/services';
-import { SharedService } from 'src/app/services/shared.service';
+import CustomStore from 'devextreme/data/custom_store';
+
 @Component({
-  selector: 'app-auth-dashboard-page',
-  templateUrl: './auth-dashboard-page.component.html',
-  styleUrls: ['./auth-dashboard-page.component.scss'],
-  animations: [
-    trigger('toggleRows', [
-      transition(':enter', [
-        style({ height: '0', opacity: 0 }),
-        animate('300ms ease-out', style({ height: '*', opacity: 1 })),
-      ]),
-      transition(':leave', [
-        style({ height: '*', opacity: 1 }),
-        animate('300ms ease-in', style({ height: '0', opacity: 0 })),
-      ]),
-    ]),
-  ],
+  selector: 'app-auth-dashboard-operation',
+  templateUrl: './auth-dashboard-operation.component.html',
+  styleUrls: ['./auth-dashboard-operation.component.scss'],
 })
-export class AuthDashboardPageComponent implements OnInit {
+export class AuthDashboardOperationComponent {
   @ViewChild(DxDataGridComponent, { static: true })
   dataGrid: DxDataGridComponent;
+
+  @HostListener('window:resize', ['$event'])
+  chartSize = { width: window.innerWidth * 0.9 };
 
   pipe = new PercentPipe('en-US');
 
@@ -219,7 +209,6 @@ export class AuthDashboardPageComponent implements OnInit {
       });
   }
 }
-
 @NgModule({
   imports: [
     CommonModule,
@@ -245,7 +234,7 @@ export class AuthDashboardPageComponent implements OnInit {
     DxDataGridModule,
     FormsModule,
   ],
-  declarations: [AuthDashboardPageComponent],
-  exports: [AuthDashboardPageComponent],
+  declarations: [AuthDashboardOperationComponent],
+  exports: [AuthDashboardOperationComponent],
 })
-export class AuthDashboardPageModule {}
+export class AuthDashboardOperationModule {}

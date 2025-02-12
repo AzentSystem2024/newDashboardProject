@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { SideNavOuterToolbarModule, SingleCardModule } from './layouts';
+import { SingleCardModule } from './layouts';
 import {
   AppFooterModule,
   ResetPasswordFormModule,

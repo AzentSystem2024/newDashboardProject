@@ -3,11 +3,12 @@
   padding: 0px;
   height: 90vh;
   border-radius: 8px;
+  // background-color: var(--base-bg);
 }
 
 .mainDiv {
   background-color: var(--base-bg);
-  border-radius: 8px;
+  // border-radius: 8px;
   padding: 0px;
   margin: 0px;
 }
@@ -67,14 +68,45 @@
   justify-content: center;
   align-items: center;
   height: auto;
-  width: 100%;
   text-align: center;
   margin: 0px;
-  padding: 10px;
+  padding: 5px;
   border-radius: 8px;
   background-color: var(--base-bg);
   border: 1px solid var(--border-color);
 }
+
+.iconBackground {
+  background-color: rgba(245, 222, 179, 0.413);
+  opacity: 100;
+  border-radius: 50%;
+  color: white;
+}
+.card-title {
+  font-weight: 500;
+  margin-right: 5px;
+}
+.card-text {
+  font-weight: bold;
+  font-size: large;
+}
+.card-body {
+  color: azure;
+  padding: 5px;
+}
+.percentage {
+  padding: 2px;
+  width: 50px;
+  border-radius: 15px;
+  background-color: rgba(245, 245, 220, 0.333);
+}
+.iconBackground {
+  padding: 10px;
+}
+.claimedCard {
+  background-color: #4d68ddef;
+}
+
 .graphTitle {
   font-size: large;
   font-style: italic;

@@ -271,7 +271,11 @@
       <div class="graphContainer">
         <div class="d-flex gap-1">
           <div class="ChartContent">
-            <dx-chart id="chart" [dataSource]="mainSeriesChartDatasource">
+            <dx-chart
+              [size]="chartSize"
+              id="chart"
+              [dataSource]="mainSeriesChartDatasource"
+            >
               <dxo-title text="Prior Analysis" hint=""></dxo-title>
               <dxi-series
                 valueField="FullyApproved"

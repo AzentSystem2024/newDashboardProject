@@ -9,7 +9,7 @@ import {
 } from './layouts';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { MainHomePageComponent } from './pages/Denial-Dashboard-page/main-home-page.component';
-import { AuthDashboardPageComponent } from './pages/auth-dashboard-page/auth-dashboard-page.component';
+import { AuthDashboardPageComponent } from './pages/auth-dashboard-production/auth-dashboard-page.component';
 import { FinanceDashboardComponent } from './pages/finance-dashboard/finance-dashboard.component';
 import { EmptyDashboardMessageComponent } from './pages/empty-dashboard-message/empty-dashboard-message.component';
 const routes: Routes = [
@@ -38,7 +38,7 @@ const routes: Routes = [
         component: MainHomePageComponent,
       },
       {
-        path: 'Auth-Dashboard',
+        path: 'Auth-Dashboard-Production',
         component: AuthDashboardPageComponent,
       },
       {

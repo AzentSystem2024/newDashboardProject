@@ -32,7 +32,7 @@ import { Sales, SalesOrOpportunitiesByCategory } from 'src/app/types/analytics';
 import { CardAnalyticsModule } from 'src/app/components/library/card-analytics/card-analytics.component';
 import { DxTabPanelModule } from 'devextreme-angular';
 import { MainHomePageComponent } from 'src/app/pages/Denial-Dashboard-page/main-home-page.component';
-import { AuthDashboardPageComponent } from 'src/app/pages/auth-dashboard-page/auth-dashboard-page.component';
+import { AuthDashboardPageComponent } from 'src/app/pages/auth-dashboard-production/auth-dashboard-page.component';
 import { EmptyDashboardMessageModule } from '../../pages/empty-dashboard-message/empty-dashboard-message.component';
 
 @Component({
@@ -128,7 +128,7 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
     const routes = {
       2: '/Finance-Dashboard',
       1: '/Main-Dashboard',
-      3: '/Auth-Dashboard',
+      3: '/Auth-Dashboard-Production',
     };
 
     for (const key in routes) {

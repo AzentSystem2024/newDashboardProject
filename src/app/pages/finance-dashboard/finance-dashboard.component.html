@@ -239,7 +239,11 @@
       <div class="graphContainer">
         <div class="d-flex gap-1">
           <div class="ChartContent">
-            <dx-chart id="chart" [dataSource]="BarChartDataSource">
+            <dx-chart
+              [size]="chartSize"
+              id="chart"
+              [dataSource]="BarChartDataSource"
+            >
               <dxo-title
                 text="Claim Analysis"
                 hint=""
