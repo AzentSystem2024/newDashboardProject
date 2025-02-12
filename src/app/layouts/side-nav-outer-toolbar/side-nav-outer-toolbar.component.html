@@ -8,6 +8,7 @@
 <div class="layout-body">
   <dx-tabs
     #withText
+    noDataText=" "
     [width]="'auto'"
     [selectedIndex]="0"
     [rtlEnabled]="false"
@@ -23,6 +24,10 @@
   >
 
   <div class="mt-1">
-    <router-outlet> </router-outlet>
+    <router-outlet *ngIf="tabdataavailable"> </router-outlet>
+
+    <app-empty-dashboard-message
+      *ngIf="!tabdataavailable"
+    ></app-empty-dashboard-message>
   </div>
 </div>

@@ -65,11 +65,12 @@ export class LoginPageComponent {
                   .subscribe((response: any) => {
                     if (response.flag === '1') {
                       this.tabs = response.dashboards;
-                      const firstTabText = this.tabs[0].ID;
-                      if (firstTabText) {
-                        this.sharedServc.navigateToDashboard(firstTabText);
-                      } else {
-                        console.warn('No tabs found.');
+                      if (this.tabs.length > 0) {
+                        const firstTabText = this.tabs[0].ID;
+                          this.sharedServc.navigateToDashboard(firstTabText);
+                      } else if (this.tabs.length === 0) {
+                        console.log('No Dahboard data available');
+                        this.router.navigate(['/Empty-message-page']);
                       }
                     }
                   });
@@ -78,6 +79,7 @@ export class LoginPageComponent {
               }
             }, 100); // Reduced timeout to 100ms
           } else {
+            this.loadingVisible = false;
             notify(`${response.message}`, 'error', 3000);
           }
         });

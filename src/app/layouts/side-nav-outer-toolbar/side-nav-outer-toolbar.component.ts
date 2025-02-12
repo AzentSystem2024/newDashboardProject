@@ -33,6 +33,7 @@ import { CardAnalyticsModule } from 'src/app/components/library/card-analytics/c
 import { DxTabPanelModule } from 'devextreme-angular';
 import { MainHomePageComponent } from 'src/app/pages/Denial-Dashboard-page/main-home-page.component';
 import { AuthDashboardPageComponent } from 'src/app/pages/auth-dashboard-page/auth-dashboard-page.component';
+import { EmptyDashboardMessageModule } from '../../pages/empty-dashboard-message/empty-dashboard-message.component';
 
 @Component({
   templateUrl: './side-nav-outer-toolbar.component.html',
@@ -78,6 +79,7 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
   userId: any;
   showHeadersDiv: boolean;
   currentRoute: any;
+  tabdataavailable: boolean = false;
 
   constructor(
     public service: DataService,
@@ -96,6 +98,7 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
   //================== Tab data fetching ===================
   on_Load_tab_data() {
     this.route.queryParams.subscribe((params: Params) => {
+      this.tabdataavailable = true;
       // Set userId from query params or sessionStorage
       const queryUserId = params['userId'];
       this.userId =
@@ -110,7 +113,10 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
 
             // Check if we should navigate based on tabs and login status
             if (this.tabs.length > 0) {
+              this.tabdataavailable = true;
               this.navigateToDashboard(this.tabs[0].ID);
+            } else {
+              this.tabdataavailable = false;
             }
           }
         });
@@ -212,6 +218,7 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
     CommonModule,
     DxTabPanelModule,
     DxTabsModule,
+    EmptyDashboardMessageModule,
   ],
   exports: [SideNavOuterToolbarComponent],
   declarations: [SideNavOuterToolbarComponent],

@@ -188,7 +188,7 @@ export class FinanceDashboardComponent implements OnInit {
 
   //=====================fetch init dataSource =========================
   getValuesOfInitData() {
-    this.loadingVisible = true;
+    // this.loadingVisible = true;
     this.service
       .get_Finance_Dashboard_InitData(this.userId)
       .subscribe((response: any) => {
