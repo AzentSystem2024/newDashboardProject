@@ -1,6 +1,12 @@
 import { trigger, transition, style, animate } from '@angular/animations';
 import { CommonModule, PercentPipe } from '@angular/common';
-import { Component, HostListener, NgModule, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  NgModule,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import {
@@ -51,6 +57,9 @@ export class AuthDashboardPageComponent implements OnInit {
   dataGrid: DxDataGridComponent;
 
   @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.chartSize.width = (event.target as Window).innerWidth * 0.9;
+  }
   chartSize = { width: window.innerWidth * 0.9 };
 
   pipe = new PercentPipe('en-US');

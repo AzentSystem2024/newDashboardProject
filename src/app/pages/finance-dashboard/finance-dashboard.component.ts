@@ -56,8 +56,12 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 export class FinanceDashboardComponent implements OnInit {
   @ViewChild(DxDataGridComponent, { static: true })
   dataGrid: DxDataGridComponent;
-
   @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.chartSize.width = (event.target as Window).innerWidth * 0.9;
+  }
+  chartSize = { width: window.innerWidth * 0.9 };
+
   pipe = new PercentPipe('en-US');
 
   dateForm = {
@@ -87,8 +91,6 @@ export class FinanceDashboardComponent implements OnInit {
   //===========graph datasource===========
   BarChartDataSource: any;
   pieChartDatasource: any;
-
-  chartSize = { width: window.innerWidth * 0.9 };
 
   constructor(
     public service: DataService,

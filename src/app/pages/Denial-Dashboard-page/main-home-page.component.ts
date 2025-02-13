@@ -66,6 +66,9 @@ export class MainHomePageComponent implements OnInit {
   dataGrid: DxDataGridComponent;
 
   @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.chartSize.width = (event.target as Window).innerWidth * 0.9;
+  }
   chartSize = { width: window.innerWidth * 0.9 };
 
   pipe = new PercentPipe('en-US');

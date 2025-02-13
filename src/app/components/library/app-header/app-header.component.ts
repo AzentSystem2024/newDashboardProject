@@ -1,5 +1,10 @@
 import {
-  Component, NgModule, Input, Output, EventEmitter, OnInit,
+  Component,
+  NgModule,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -15,7 +20,6 @@ import { ThemeSwitcherModule } from 'src/app/components/library/theme-switcher/t
   templateUrl: 'app-header.component.html',
   styleUrls: ['./app-header.component.scss'],
 })
-
 export class AppHeaderComponent implements OnInit {
   @Output()
   menuToggle = new EventEmitter<boolean>();
@@ -29,18 +33,31 @@ export class AppHeaderComponent implements OnInit {
   user: IUser | null = { email: '' };
 
   userMenuItems = [
-  {
-    text: 'Logout',
-    icon: 'runner',
-    onClick: () => {
-      this.authService.logOut();
+    {
+      text: 'Logout',
+      icon: 'runner',
+      onClick: () => {
+        this.authService.logOut();
+        // window.location.reload();
+      },
     },
-  }];
+  ];
+  userName: any;
+  isloggedIn: any;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {}
 
   ngOnInit() {
-    this.authService.getUser().then((e) => this.user = e.data);
+    this.userName = sessionStorage.getItem('paramsid');
+    this.isloggedIn = sessionStorage.getItem('isLogging');
+
+    this.user = {
+      email: '',
+      name: this.userName,
+      avatarUrl: '../../../../assets/pngegg (2).png',
+    };
+
+    // this.authService.getUser().then((e) => (this.user = e.data));
   }
 
   toggleMenu = () => {
@@ -59,4 +76,4 @@ export class AppHeaderComponent implements OnInit {
   declarations: [AppHeaderComponent],
   exports: [AppHeaderComponent],
 })
-export class AppHeaderModule { }
+export class AppHeaderModule {}

@@ -127,6 +127,7 @@ export class AuthService {
   }
 
   async logOut() {
+    sessionStorage.clear();
     this.router.navigate(['/auth/login']);
   }
 }
