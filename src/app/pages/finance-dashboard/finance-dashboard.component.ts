@@ -59,13 +59,13 @@ export class FinanceDashboardComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   onResize() {
-    this.chartSize = { width: window.innerWidth * 0.9 };
+    this.chartSize = { width: window.innerWidth * 0.95 };
 
     if (this.chartInstance) {
       this.chartInstance.option('size', { width: this.chartSize.width });
     }
   }
-  chartSize = { width: window.innerWidth * 0.9 };
+  chartSize = { width: window.innerWidth * 0.95 };
 
   pipe = new PercentPipe('en-US');
 

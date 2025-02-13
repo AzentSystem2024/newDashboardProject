@@ -45,13 +45,13 @@ export class AuthDashboardOperationComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   onResize() {
-    this.chartSize = { width: window.innerWidth * 0.9 };
+    this.chartSize = { width: window.innerWidth * 0.95 };
 
     if (this.chartInstance) {
       this.chartInstance.option('size', { width: this.chartSize.width });
     }
   }
-  chartSize = { width: window.innerWidth * 0.9 };
+  chartSize = { width: window.innerWidth * 0.95 };
 
   pipe = new PercentPipe('en-US');
 
@@ -59,8 +59,8 @@ export class AuthDashboardOperationComponent implements OnInit {
     fromdate: '',
     todate: '',
   };
-  physicianvalue: any[];
-  PhysicianDatasource: any;
+  physicianDepartmentvalue: any[];
+  PhysicianDepartmentDatasource: any;
   denialcategoryvalue: any[];
   DenailCategoryDatasource: any;
   ServiceCategoryDatasource: any[];
@@ -81,40 +81,7 @@ export class AuthDashboardOperationComponent implements OnInit {
 
   userId: string;
   ReguestSendCardValue: any;
-  pieChartDatasource: any = [
-    {
-      country: 'USA',
-      medals: 110,
-    },
-    {
-      country: 'China',
-      medals: 100,
-    },
-    {
-      country: 'Russia',
-      medals: 72,
-    },
-    {
-      country: 'Britain',
-      medals: 47,
-    },
-    {
-      country: 'Australia',
-      medals: 46,
-    },
-    {
-      country: 'Germany',
-      medals: 41,
-    },
-    {
-      country: 'France',
-      medals: 40,
-    },
-    {
-      country: 'South Korea',
-      medals: 31,
-    },
-  ];
+  pieChartDatasource: any;
   chartInstance: any;
 
   //========================= Constructor =======================
@@ -210,25 +177,18 @@ export class AuthDashboardOperationComponent implements OnInit {
             (item) => item.Default === '1'
           ).map((item) => item.ID);
 
-          this.SubmissionIndexDatasource = response.Submission;
-          this.SubmissionIndexvalue =
-            this.SubmissionIndexDatasource.find(
-              (obj: any) => obj.Default === '1'
-            )?.ID || ' ';
-
-          console.log('submission value :>>', this.SubmissionIndexvalue);
-
-          this.PhysicianDatasource = response.Department;
-          this.physicianvalue = this.PhysicianDatasource.filter(
-            (item) => item.Default === '1'
-          ).map((item) => item.ID);
+          this.PhysicianDepartmentDatasource = response.Department;
+          this.physicianDepartmentvalue =
+            this.PhysicianDepartmentDatasource.filter(
+              (item) => item.Default === '1'
+            ).map((item) => item.ID);
 
           this.DenailCategoryDatasource = response.DenialCategory;
           this.denialcategoryvalue = this.DenailCategoryDatasource.filter(
             (item) => item.Default === '1'
           ).map((item) => item.ID);
 
-          this.ServiceCategoryDatasource = response.ServiceCategory;
+          this.ServiceCategoryDatasource = response.ServiceCategoryOperation;
           this.servicecategoryvalue = this.ServiceCategoryDatasource.filter(
             (item) => item.Default === '1'
           ).map((item) => item.ID);
@@ -240,16 +200,25 @@ export class AuthDashboardOperationComponent implements OnInit {
   //==================== Fetch Cgarts Datasource =====================
   get_chart_datasource() {
     this.loadingVisible = true;
-    this.service.get_Prior_Dashboard_Datasource().subscribe((response: any) => {
-      if (response.flag == '1') {
-        this.ReguestSendCardValue = response.card.RequestCount;
-        this.DenialCategoryChartData = response.CategoryWise;
-        this.mainSeriesChartDatasource = response.EncounterWise;
-        this.TaTstatusDataSource = response.TATWise;
-        this.CountPerDaysData = response.DayWise;
-        this.loadingVisible = false;
-      }
-    });
+    this.service
+      .get_Prior_Dashboard_Opreations_Datasource(
+        this.dateForm.fromdate,
+        this.dateForm.todate,
+        this.denialcategoryvalue,
+        this.facilityvalue,
+        this.physicianDepartmentvalue,
+        this.servicecategoryvalue
+      )
+      .subscribe((response: any) => {
+        if (response.flag == '1') {
+          this.ReguestSendCardValue = response.card.RequestCount;
+          this.mainSeriesChartDatasource = response.EncounterWise;
+          this.pieChartDatasource = response.ServiceWise;
+          this.TaTstatusDataSource = response.TATWise;
+
+          this.loadingVisible = false;
+        }
+      });
   }
 
   //==================export function=======================

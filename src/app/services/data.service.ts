@@ -31,6 +31,7 @@ import {
   CRS_DENIAL_DASHBOARD_INIT_DATA,
   CRS_FINANCE_DASHBOARD_INIT_DATA,
   CRS_FINANCE_DASHBOARD_CLAIMSUMMARY_HOME,
+  CRS_DASHBOARD_PRIOR_DASHBOARD_OPERATIONS,
 } from 'src/constants/constantURl';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
@@ -156,26 +157,50 @@ export class DataService {
   }
 
   //================ClaimSummary Data Fetching=================
-  get_Prior_Dashboard_Datasource() {
+  get_Prior_Dashboard_Production_Datasource(
+    datefrom: any,
+    dateTo: any,
+    DenialCategory: any,
+    facility: any,
+    department: any,
+    category: any
+  ) {
     const url = CRS_DASHBOARD_PRIOR_DASHBOARD;
     const reqBodyData = {
-      SearchOn: 'EncounterStartDate',
-      DateFrom: '2018-01-01',
-      DateTo: '2018-03-31',
-      RejectionIndex: '2',
-      DenialCategory: 'All',
-      EncounterType: 'All',
-      Block: 'All',
-      Region: 'All',
-      ProviderType: 'All',
-      Facility: 'MF90001, MF90002, PF10001, PF10002, PF10003',
-      Insurance: 'All',
-      Department: 'All',
+      DateFrom: datefrom,
+      DateTo: dateTo,
+      SubmissionIndex: '',
+      DenialCategory: DenialCategory,
+      Facility: facility,
+      Department: department,
+      ServiceCategory: category,
     };
 
     return this.http.post(url, reqBodyData);
   }
 
+
+   //================ClaimSummary Data Fetching=================
+   get_Prior_Dashboard_Opreations_Datasource(
+    datefrom: any,
+    dateTo: any,
+    DenialCategory: any,
+    facility: any,
+    department: any,
+    category: any
+  ) {
+    const url = CRS_DASHBOARD_PRIOR_DASHBOARD_OPERATIONS;
+    const reqBodyData = {
+      DateFrom: datefrom,
+      DateTo: dateTo,
+      DenialCategory: DenialCategory,
+      Facility: facility,
+      Department: department,
+      ServiceCategory: category,
+    };
+
+    return this.http.post(url, reqBodyData);
+  }
   //================ Loading Tabs Data for mainDashboardLayout =====================
   fetch_tab_Data_mainLayout() {
     const UserID = sessionStorage.getItem('paramsid');
@@ -184,7 +209,6 @@ export class DataService {
     return this.http.post(url, reqBody);
   }
 
-  // ================================================================================
   // ================================================================================
   // ================================================================================
 

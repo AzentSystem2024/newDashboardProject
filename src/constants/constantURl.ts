@@ -22,7 +22,10 @@ export const CRS_FINANCE_DASHBOARD_CLAIMSUMMARY_HOME =
   API_BASE_URL + 'financedashboard/home';
 
 export const CRS_DASHBOARD_PRIOR_DASHBOARD =
-  API_BASE_URL + 'priordasbhoard/home';
+  API_BASE_URL + 'priordasbhoard/production';
+
+  export const CRS_DASHBOARD_PRIOR_DASHBOARD_OPERATIONS =
+  API_BASE_URL + 'priordasbhoard/operation';
 
 export const CRS_DASHBOARD_TABS_DATA = API_BASE_URL + 'users/dashboards';
 

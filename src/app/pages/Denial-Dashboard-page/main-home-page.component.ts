@@ -67,13 +67,13 @@ export class MainHomePageComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   onResize() {
-    this.chartSize = { width: window.innerWidth * 0.9 };
+    this.chartSize = { width: window.innerWidth * 0.95  };
 
     if (this.chartInstance) {
       this.chartInstance.option('size', { width: this.chartSize.width });
     }
   }
-  chartSize = { width: window.innerWidth * 0.9 };
+  chartSize = { width: window.innerWidth * 0.95  };
 
   pipe = new PercentPipe('en-US');
 
@@ -109,15 +109,15 @@ export class MainHomePageComponent implements OnInit {
   claimData: any;
   //====================Variables for card data=================
   ClaimAmount: any = 0;
-  claimPrcnt: number = 100;
+  claimPrcnt: any = 100;
   remittedAmt: any = 0;
-  remittedPercnt: number = 0;
+  remittedPercnt: any = 0;
   paidAmt: any = 0;
-  paidPrcnt: number = 0;
+  paidPrcnt: any = 0;
   deniedAmt: any = 0;
-  deniedPrcnt: number = 0;
+  deniedPrcnt: any = 0;
   balanceAmt: any = 0;
-  balancePrcnt: number = 0;
+  balancePrcnt: any = 0;
 
   remittancePrcnt: any = 0;
   rejectionPrcnt: any = 0;
@@ -418,24 +418,24 @@ export class MainHomePageComponent implements OnInit {
             (cardData.RemittedAmount / 1000000)
               .toFixed(1)
               .replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + ' M';
-          this.remittedPercnt = parseInt(cardData.RemittedPercent);
+          this.remittedPercnt = cardData.RemittedPercent;
           this.paidAmt =
             (cardData.PaidAmount / 1000000)
               .toFixed(1)
               .replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + ' M';
-          this.paidPrcnt = parseInt(cardData.PaidPercent);
+          this.paidPrcnt = cardData.PaidPercent;
           this.deniedAmt =
             (cardData.RejectedAmount / 1000000)
               .toFixed(1)
               .replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + ' M';
-          this.deniedPrcnt = parseInt(cardData.RejectedPercent);
+          this.deniedPrcnt = cardData.RejectedPercent;
           this.balanceAmt =
             (cardData.BalanceAmount / 1000000)
               .toFixed(1)
               .replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + ' M';
-          this.balancePrcnt = parseInt(cardData.BalancePercent);
-          this.remittancePrcnt = parseInt(cardData.RemittedPercent);
-          this.rejectionPrcnt = parseInt(cardData.RejectedPercent);
+          this.balancePrcnt = cardData.BalancePercent;
+          this.remittancePrcnt = cardData.RemittedPercent;
+          this.rejectionPrcnt = cardData.RejectedPercent;
 
           this.RemittanceRejectionPercentDatasource = response.MonthWise;
           this.CaseTypeRejectionDataSource = response.CaseWise;

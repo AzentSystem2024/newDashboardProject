@@ -58,13 +58,13 @@ export class AuthDashboardPageComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   onResize() {
-    this.chartSize = { width: window.innerWidth * 0.9 };
+    this.chartSize = { width: window.innerWidth * 0.95  };
 
     if (this.chartInstance) {
       this.chartInstance.option('size', { width: this.chartSize.width });
     }
   }
-  chartSize = { width: window.innerWidth * 0.9 };
+  chartSize = { width: window.innerWidth * 0.95  };
 
   pipe = new PercentPipe('en-US');
 
@@ -95,7 +95,7 @@ export class AuthDashboardPageComponent implements OnInit {
   userId: string;
   ReguestSendCardValue: any;
 
-  chartInstance:any
+  chartInstance: any;
   //========================= Constructor =======================
   constructor(private router: Router, private service: DataService) {
     this.userId = sessionStorage.getItem('paramsid');
@@ -179,14 +179,6 @@ export class AuthDashboardPageComponent implements OnInit {
             (item) => item.Default === '1'
           ).map((item) => item.ID);
 
-          this.SubmissionIndexDatasource = response.Submission;
-          this.SubmissionIndexvalue =
-            this.SubmissionIndexDatasource.find(
-              (obj: any) => obj.Default === '1'
-            )?.ID || ' ';
-
-          console.log('submission value :>>', this.SubmissionIndexvalue);
-
           this.PhysicianDatasource = response.Department;
           this.physicianvalue = this.PhysicianDatasource.filter(
             (item) => item.Default === '1'
@@ -197,7 +189,7 @@ export class AuthDashboardPageComponent implements OnInit {
             (item) => item.Default === '1'
           ).map((item) => item.ID);
 
-          this.ServiceCategoryDatasource = response.ServiceCategory;
+          this.ServiceCategoryDatasource = response.ServiceCategoryProduction;
           this.servicecategoryvalue = this.ServiceCategoryDatasource.filter(
             (item) => item.Default === '1'
           ).map((item) => item.ID);
@@ -209,16 +201,25 @@ export class AuthDashboardPageComponent implements OnInit {
   //==================== Fetch Cgarts Datasource =====================
   get_chart_datasource() {
     this.loadingVisible = true;
-    this.service.get_Prior_Dashboard_Datasource().subscribe((response: any) => {
-      if (response.flag == '1') {
-        this.ReguestSendCardValue = response.card.RequestCount;
-        this.DenialCategoryChartData = response.CategoryWise;
-        this.mainSeriesChartDatasource = response.EncounterWise;
-        this.TaTstatusDataSource = response.TATWise;
-        this.CountPerDaysData = response.DayWise;
-        this.loadingVisible = false;
-      }
-    });
+    this.service
+      .get_Prior_Dashboard_Production_Datasource(
+        this.dateForm.fromdate,
+        this.dateForm.todate,
+        this.denialcategoryvalue,
+        this.facilityvalue,
+        this.physicianvalue,
+        this.servicecategoryvalue
+      )
+      .subscribe((response: any) => {
+        if (response.flag == '1') {
+          this.ReguestSendCardValue = response.card.RequestCount;
+          this.DenialCategoryChartData = response.CategoryWise;
+          this.mainSeriesChartDatasource = response.EncounterWise;
+          this.TaTstatusDataSource = response.TATWise;
+          this.CountPerDaysData = response.DayWise;
+          this.loadingVisible = false;
+        }
+      });
   }
 
   //==================export function=======================

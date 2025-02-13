@@ -5,7 +5,7 @@
     <div class="mainDiv mb-1 p-0 m-0">
       <!-- First Group -->
       <div class="row mt-1 mb-1 m-0 p-1">
-        <div class="col-10">
+        <div class="col-12">
           <dx-drop-down-box
             class="dropdowncontent"
             labelMode="floating"
@@ -63,7 +63,7 @@
             </div>
           </dx-drop-down-box>
         </div>
-        <div class="col-2">
+        <!-- <div class="col-2">
           <dx-select-box
             [dataSource]="SubmissionIndexDatasource"
             displayExpr="Name"
@@ -75,7 +75,7 @@
             [dropDownOptions]="{ height: 250 }"
             [searchEnabled]="true"
           ></dx-select-box>
-        </div>
+        </div> -->
       </div>
 
       <!-- Wrapper for Second and Third Rows -->
@@ -120,10 +120,10 @@
             <dx-tag-box
               [searchEnabled]="true"
               [dropDownOptions]="{ height: 250 }"
-              [items]="PhysicianDatasource"
+              [items]="PhysicianDepartmentDatasource"
               displayExpr="Name"
               valueExpr="ID"
-              [(value)]="physicianvalue"
+              [(value)]="physicianDepartmentvalue"
               [showSelectionControls]="true"
               [multiline]="false"
               applyValueMode="instantly"
@@ -131,8 +131,8 @@
               labelMode="floating"
               (onValueChanged)="
                 reorderDataSource(
-                  'denialcategoryvalue',
-                  'DenailCategoryDatasource'
+                  'physicianDepartmentvalue',
+                  'PhysicianDepartmentDatasource'
                 )
               "
             >
@@ -309,7 +309,7 @@
                 verticalAlignment="bottom"
                 [columnCount]="4"
               ></dxo-legend>
-              <dxi-series argumentField="country" valueField="medals">
+              <dxi-series argumentField="Service" valueField="DocumentCount">
                 <dxo-label
                   [visible]="true"
                   position="columns"
