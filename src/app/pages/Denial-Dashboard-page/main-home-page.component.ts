@@ -66,8 +66,12 @@ export class MainHomePageComponent implements OnInit {
   dataGrid: DxDataGridComponent;
 
   @HostListener('window:resize', ['$event'])
-  onResize(event: Event) {
-    this.chartSize.width = (event.target as Window).innerWidth * 0.9;
+  onResize() {
+    this.chartSize = { width: window.innerWidth * 0.9 };
+
+    if (this.chartInstance) {
+      this.chartInstance.option('size', { width: this.chartSize.width });
+    }
   }
   chartSize = { width: window.innerWidth * 0.9 };
 
@@ -139,7 +143,7 @@ export class MainHomePageComponent implements OnInit {
 
   isloggedIn: any;
   ParamsUserId: any;
-
+  chartInstance: any;
   constructor(
     public service: DataService,
     private dataservice: DataService,
@@ -148,7 +152,9 @@ export class MainHomePageComponent implements OnInit {
   ) {
     console.log('Denial Dashboard Is Loaded');
   }
-
+  onChartInitialized(e) {
+    this.chartInstance = e.component; // Store reference to the chart
+  }
   ngOnInit(): void {
     this.get_initial_data();
   }
@@ -218,12 +224,17 @@ export class MainHomePageComponent implements OnInit {
     const secondLine = parts.slice(middleIndex).join(' ');
     return `${firstLine}\n${secondLine}`;
   };
-
+  //===================Custom label for pie chart ===========
   customizeLabel(arg) {
-    const valueInMillions = (arg.valueText / 1000000).toFixed(2);
-    return `${valueInMillions}M (${arg.percentText})`;
+    const value = arg.valueText;
+    if (value >= 100000) {
+      return `${(value / 1000000).toFixed(2)}M (${arg.percentText})`;
+    } else {
+      return `${(value / 1000).toFixed(2)}K (${arg.percentText})`;
+    }
   }
 
+  //=======Custom label for Million Values of chart ========
   MillioncustomizeLabel = (args: any): string => {
     const value = args.value;
     if (value >= 100000) {

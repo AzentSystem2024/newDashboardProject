@@ -12,6 +12,7 @@ import { MainHomePageComponent } from './pages/Denial-Dashboard-page/main-home-p
 import { AuthDashboardPageComponent } from './pages/auth-dashboard-production/auth-dashboard-page.component';
 import { FinanceDashboardComponent } from './pages/finance-dashboard/finance-dashboard.component';
 import { EmptyDashboardMessageComponent } from './pages/empty-dashboard-message/empty-dashboard-message.component';
+import { AuthDashboardOperationComponent } from './pages/auth-dashboard-operation/auth-dashboard-operation.component';
 const routes: Routes = [
   {
     path: 'auth',
@@ -40,6 +41,10 @@ const routes: Routes = [
       {
         path: 'Auth-Dashboard-Production',
         component: AuthDashboardPageComponent,
+      },
+      {
+        path: 'Auth-Dashboard-Operation',
+        component: AuthDashboardOperationComponent,
       },
       {
         path: 'Finance-Dashboard',

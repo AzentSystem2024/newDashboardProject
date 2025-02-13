@@ -243,6 +243,7 @@
               [size]="chartSize"
               id="chart"
               [dataSource]="BarChartDataSource"
+              (onInitialized)="onChartInitialized($event)"
             >
               <dxo-title
                 text="Claim Analysis"
@@ -361,7 +362,7 @@
   [(visible)]="loadingVisible"
   [showIndicator]="true"
   [showPane]="true"
-  [shading]="false"
+  [shading]="true"
   [hideOnOutsideClick]="false"
 >
 </dx-load-panel>

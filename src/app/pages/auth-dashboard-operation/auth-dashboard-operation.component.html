@@ -219,7 +219,7 @@
       <!-- ====================================Graph Loading==================== -->
       <div class="graphContainer">
         <div
-          class="row ms-1 me-1 d-flex flex-nowrap gap-2 justify-content-start overflow-auto"
+          class="cardDataDiv row ms-1 me-1 d-flex flex-nowrap gap-2 justify-content-start overflow-auto"
         >
           <div
             class="card col-12 col-md-2 col-lg-2 col-sm-6 claimedCard p-0 m-0"
@@ -235,36 +235,6 @@
               <!-- Value centered -->
             </div>
           </div>
-
-          <div class="ChartContent">
-            <dx-chart
-              id="chart"
-              [dataSource]="DenialCategoryChartData"
-              [rotated]="true"
-              [size]="{ height: 200, width: 900 }"
-            >
-              <dxo-title text="Category wise denials" hint=""></dxo-title>
-              <dxi-series
-                color="#79cac4"
-                type="bar"
-                argumentField="Code"
-                valueField="Rejected"
-                [barWidth]="20"
-              >
-                <dxo-label
-                  [visible]="true"
-                  [backgroundColor]="'transparent'"
-                  [border]="{ visible: false, color: '#294730', width: 1 }"
-                  [font]="{ color: 'var(--text-color)', weight: 600, size: 14 }"
-                ></dxo-label>
-              </dxi-series>
-              <dxo-legend
-                [visible]="true"
-                verticalAlignment="top"
-                horizontalAlignment="right"
-              ></dxo-legend>
-            </dx-chart>
-          </div>
         </div>
       </div>
 
@@ -273,6 +243,7 @@
           <div class="ChartContent">
             <dx-chart
               [size]="chartSize"
+              (onInitialized)="onChartInitialized($event)"
               id="chart"
               [dataSource]="mainSeriesChartDatasource"
             >
@@ -325,6 +296,32 @@
       <div class="graphContainer">
         <div class="d-flex gap-1 p-0 m-0">
           <div class="ChartContent text-center">
+            <dx-pie-chart
+              id="pie"
+              palette="bright"
+              [dataSource]="pieChartDatasource"
+            >
+              <dxo-title text="Surgical And Non-Surgical" hint=""></dxo-title>
+              <dxo-legend
+                orientation="horizontal"
+                itemTextPosition="right"
+                horizontalAlignment="center"
+                verticalAlignment="bottom"
+                [columnCount]="4"
+              ></dxo-legend>
+              <dxi-series argumentField="country" valueField="medals">
+                <dxo-label
+                  [visible]="true"
+                  position="columns"
+                  [customizeText]="customizeLabel"
+                >
+                  <dxo-font [size]="16"></dxo-font>
+                  <dxo-connector [visible]="true" [width]="0.5"></dxo-connector>
+                </dxo-label>
+              </dxi-series>
+            </dx-pie-chart>
+          </div>
+          <div class="ChartContent text-center">
             <dx-chart id="chart" [dataSource]="TaTstatusDataSource">
               <dxo-title text="TAT Status" hint=""></dxo-title>
               <dxi-series
@@ -348,57 +345,6 @@
                 verticalAlignment="bottom"
                 horizontalAlignment="center"
               ></dxo-legend>
-            </dx-chart>
-          </div>
-
-          <div class="ChartContent text-center">
-            <dx-chart [dataSource]="CountPerDaysData" [valueAxis]="">
-              <dxo-title text="Count Per Day" hint=""></dxo-title>
-              <dxo-size [height]="420"></dxo-size>
-              <dxi-series
-                argumentField="Day"
-                valueField="DocumentCount"
-                name="Day"
-                type="spline"
-                [dashStyle]="'dot'"
-              >
-                <dxo-label
-                  [visible]="true"
-                  [position]="'outside'"
-                  [overlappingBehavior]="'stagger'"
-                  [backgroundColor]="'transparent'"
-                  [border]="{ visible: false, color: '#294730', width: 1 }"
-                  [font]="{ color: 'var(--text-color)', weight: 600, size: 14 }"
-                ></dxo-label>
-              </dxi-series>
-              <dxo-legend [visible]="false"></dxo-legend>
-              <dxo-common-pane-settings>
-                <dxo-border
-                  [visible]="true"
-                  [width]="1"
-                  [top]="false"
-                  [right]="false"
-                ></dxo-border>
-              </dxo-common-pane-settings>
-
-              <dxo-export [enabled]="false"></dxo-export>
-              <dxo-tooltip [enabled]="true"></dxo-tooltip>
-              <dxo-legend
-                [visible]="true"
-                verticalAlignment="bottom"
-                horizontalAlignment="center"
-              ></dxo-legend>
-              <dxo-argument-axis
-                type="discrete"
-                [position]="'bottom'"
-                [label]="{
-                rotationAngle: -70,
-                overlappingBehavior: 'rotate',
-              }"
-              >
-                <dxo-grid [visible]="true" [opacity]="0.5"></dxo-grid>
-              </dxo-argument-axis>
-              <dxo-loading-indicator [enabled]="true"></dxo-loading-indicator>
             </dx-chart>
           </div>
         </div>

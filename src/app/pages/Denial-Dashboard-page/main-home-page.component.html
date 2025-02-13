@@ -378,6 +378,7 @@
           <div class="ChartContent">
             <dx-chart
               [size]="chartSize"
+              (onInitialized)="onChartInitialized($event)"
               class="m-2 ps-5 pe-5"
               palette="violet"
               [dataSource]="RemittanceRejectionPercentDatasource"
@@ -496,7 +497,7 @@
                 <dxo-label
                   [visible]="true"
                   position="columns"
-                  format="millions"
+                  [customizeText]="customizeLabel"
                 >
                   <dxo-connector [visible]="true"></dxo-connector>
                 </dxo-label>
@@ -509,12 +510,12 @@
                 horizontalAlignment="center"
                 [columnCount]="4"
               ></dxo-legend>
-              <dxo-tooltip
+              <!-- <dxo-tooltip
                 [enabled]="true"
                 [customizeTooltip]="customizeTooltip"
                 format="millions"
               >
-              </dxo-tooltip>
+              </dxo-tooltip> -->
             </dx-pie-chart>
           </div>
         </div>
@@ -914,7 +915,7 @@
   [(visible)]="loadingVisible"
   [showIndicator]="true"
   [showPane]="true"
-  [shading]="false"
+  [shading]="true"
   [hideOnOutsideClick]="false"
 >
 </dx-load-panel>

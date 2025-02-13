@@ -1,5 +1,11 @@
 import { CommonModule, PercentPipe } from '@angular/common';
-import { Component, HostListener, NgModule, ViewChild } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  NgModule,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -33,11 +39,18 @@ import CustomStore from 'devextreme/data/custom_store';
   templateUrl: './auth-dashboard-operation.component.html',
   styleUrls: ['./auth-dashboard-operation.component.scss'],
 })
-export class AuthDashboardOperationComponent {
+export class AuthDashboardOperationComponent implements OnInit {
   @ViewChild(DxDataGridComponent, { static: true })
   dataGrid: DxDataGridComponent;
 
   @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.chartSize = { width: window.innerWidth * 0.9 };
+
+    if (this.chartInstance) {
+      this.chartInstance.option('size', { width: this.chartSize.width });
+    }
+  }
   chartSize = { width: window.innerWidth * 0.9 };
 
   pipe = new PercentPipe('en-US');
@@ -68,6 +81,42 @@ export class AuthDashboardOperationComponent {
 
   userId: string;
   ReguestSendCardValue: any;
+  pieChartDatasource: any = [
+    {
+      country: 'USA',
+      medals: 110,
+    },
+    {
+      country: 'China',
+      medals: 100,
+    },
+    {
+      country: 'Russia',
+      medals: 72,
+    },
+    {
+      country: 'Britain',
+      medals: 47,
+    },
+    {
+      country: 'Australia',
+      medals: 46,
+    },
+    {
+      country: 'Germany',
+      medals: 41,
+    },
+    {
+      country: 'France',
+      medals: 40,
+    },
+    {
+      country: 'South Korea',
+      medals: 31,
+    },
+  ];
+  chartInstance: any;
+
   //========================= Constructor =======================
   constructor(private router: Router, private service: DataService) {
     this.userId = sessionStorage.getItem('paramsid');
@@ -77,9 +126,23 @@ export class AuthDashboardOperationComponent {
     }
   }
 
+  onChartInitialized(e) {
+    this.chartInstance = e.component; // Store reference to the chart
+  }
+
   //======================Page on init ========================
   ngOnInit(): void {
     this.get_Init_Data();
+  }
+
+  //===================Custom label for pie chart ===========
+  customizeLabel(arg) {
+    const value = arg.valueText;
+    if (value >= 100000) {
+      return `${(value / 1000000).toFixed(2)}M (${arg.percentText})`;
+    } else {
+      return `${(value / 1000).toFixed(2)}K (${arg.percentText})`;
+    }
   }
 
   //=========MAking cutom datasource for facility datagrid and dropdown loADING=======

@@ -56,9 +56,14 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 export class FinanceDashboardComponent implements OnInit {
   @ViewChild(DxDataGridComponent, { static: true })
   dataGrid: DxDataGridComponent;
+
   @HostListener('window:resize', ['$event'])
-  onResize(event: Event) {
-    this.chartSize.width = (event.target as Window).innerWidth * 0.9;
+  onResize() {
+    this.chartSize = { width: window.innerWidth * 0.9 };
+
+    if (this.chartInstance) {
+      this.chartInstance.option('size', { width: this.chartSize.width });
+    }
   }
   chartSize = { width: window.innerWidth * 0.9 };
 
@@ -88,6 +93,7 @@ export class FinanceDashboardComponent implements OnInit {
   loadingVisible: boolean = false;
   showGroups: boolean = true;
 
+  chartInstance: any;
   //===========graph datasource===========
   BarChartDataSource: any;
   pieChartDatasource: any;
@@ -100,13 +106,21 @@ export class FinanceDashboardComponent implements OnInit {
     console.log('Finance Dashboard Is Loaded');
   }
 
+  onChartInitialized(e) {
+    this.chartInstance = e.component; // Store reference to the chart
+  }
+
   ngOnInit(): void {
     this.get_initial_data();
   }
   //===================Custom label for pie chart ===========
   customizeLabel(arg) {
-    const valueInMillions = (arg.valueText / 1000000).toFixed(2);
-    return `${valueInMillions}M (${arg.percentText})`;
+    const value = arg.valueText;
+    if (value >= 100000) {
+      return `${(value / 1000000).toFixed(2)}M (${arg.percentText})`;
+    } else {
+      return `${(value / 1000).toFixed(2)}K (${arg.percentText})`;
+    }
   }
   //=============== Custom Label for Bard chart =============
   MillioncustomizeLabel = (args: any): string => {

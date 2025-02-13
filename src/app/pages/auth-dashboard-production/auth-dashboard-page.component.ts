@@ -57,8 +57,12 @@ export class AuthDashboardPageComponent implements OnInit {
   dataGrid: DxDataGridComponent;
 
   @HostListener('window:resize', ['$event'])
-  onResize(event: Event) {
-    this.chartSize.width = (event.target as Window).innerWidth * 0.9;
+  onResize() {
+    this.chartSize = { width: window.innerWidth * 0.9 };
+
+    if (this.chartInstance) {
+      this.chartInstance.option('size', { width: this.chartSize.width });
+    }
   }
   chartSize = { width: window.innerWidth * 0.9 };
 
@@ -90,6 +94,8 @@ export class AuthDashboardPageComponent implements OnInit {
 
   userId: string;
   ReguestSendCardValue: any;
+
+  chartInstance:any
   //========================= Constructor =======================
   constructor(private router: Router, private service: DataService) {
     this.userId = sessionStorage.getItem('paramsid');
@@ -97,6 +103,10 @@ export class AuthDashboardPageComponent implements OnInit {
     } else {
       this.router.navigate(['/auth/login']);
     }
+  }
+
+  onChartInitialized(e) {
+    this.chartInstance = e.component; // Store reference to the chart
   }
 
   //======================Page on init ========================

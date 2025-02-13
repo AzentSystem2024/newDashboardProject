@@ -273,6 +273,7 @@
           <div class="ChartContent">
             <dx-chart
               [size]="chartSize"
+              (onInitialized)="onChartInitialized($event)"
               id="chart"
               [dataSource]="mainSeriesChartDatasource"
             >
