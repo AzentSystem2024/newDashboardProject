@@ -67,13 +67,13 @@ export class MainHomePageComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   onResize() {
-    this.chartSize = { width: window.innerWidth * 0.95  };
+    this.chartSize = { width: window.innerWidth * 0.95 };
 
     if (this.chartInstance) {
       this.chartInstance.option('size', { width: this.chartSize.width });
     }
   }
-  chartSize = { width: window.innerWidth * 0.95  };
+  chartSize = { width: window.innerWidth * 0.95 };
 
   pipe = new PercentPipe('en-US');
 
@@ -157,6 +157,11 @@ export class MainHomePageComponent implements OnInit {
   }
   ngOnInit(): void {
     this.get_initial_data();
+  }
+
+  //===========show filter div by clicking showing div========
+  Show_toggle_Groups_By_Div_click(): void {
+    this.showGroups = true;
   }
 
   get_initial_data() {

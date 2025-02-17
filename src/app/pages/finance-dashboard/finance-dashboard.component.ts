@@ -113,6 +113,15 @@ export class FinanceDashboardComponent implements OnInit {
   ngOnInit(): void {
     this.get_initial_data();
   }
+
+  //===========show filter div by clicking showing div========
+  Show_toggle_Groups_By_Div_click(): void {
+    this.showGroups = true;
+  }
+  //================= hide and show filter div ===============
+  toggleGroups(): void {
+    this.showGroups = !this.showGroups;
+  }
   //===================Custom label for pie chart ===========
   customizeLabel(arg) {
     const value = arg.valueText;
@@ -162,11 +171,6 @@ export class FinanceDashboardComponent implements OnInit {
         }
       });
     }
-  }
-
-  //================= hide and show filter div ===============
-  toggleGroups(): void {
-    this.showGroups = !this.showGroups;
   }
 
   //=========MAking cutom datasource for facility datagrid and dropdown loADING=======
@@ -262,8 +266,8 @@ export class FinanceDashboardComponent implements OnInit {
 
   //==================Fetch data of graph datasource====================
   get_graph_DataSource() {
-    this.showGroups = false;
     this.loadingVisible = true;
+    this.showGroups = false;
 
     let DateFrom = this.dateForm.fromdate;
     let DateTo = this.dateForm.todate;

@@ -4,7 +4,7 @@
   <div class="ExportDiv1">
     <div class="mainDiv mb-1 p-0">
       <!-- First Group -->
-      <div class="row ms-1 me-1">
+      <div class="row ms-1 me-1" (click)="Show_toggle_Groups_By_Div_click()">
         <div class="col-2 m-0">
           <dx-select-box
             label="Search On"
@@ -116,7 +116,7 @@
       <div *ngIf="showGroups" @toggleRows>
         <!-- Second Group -->
         <div class="row mt-1 ms-1 me-1">
-          <div class="col-12">
+          <div class="col-11">
             <dx-drop-down-box
               class="dropdowncontent"
               labelMode="floating"
@@ -142,15 +142,21 @@
                 <dx-data-grid
                   [dataSource]="modifiedFacilityDatasource"
                   [columns]="[
-                    { dataField: 'ID', caption: 'Facility ID' },
+                    { dataField: 'ID', caption: 'Facility ID', width: 'auto' },
+                    {
+                      dataField: 'ShortName',
+                      caption: 'Short Name',
+                      width: 'auto'
+                    },
                     {
                       dataField: 'Name',
-                      caption: 'FacilityName'
+                      caption: 'FacilityName',
                     },
-                    { dataField: 'Region', caption: 'Region' },
+                    { dataField: 'Region', caption: 'Region', width: 'auto' },
                     {
                       dataField: 'ProviderType',
-                      caption: 'Provider Type'
+                      caption: 'Provider Type',
+                      width: 'auto'
                     }
                   ]"
                   [selection]="{ mode: 'multiple' }"
@@ -173,6 +179,17 @@
                 </dx-data-grid>
               </div>
             </dx-drop-down-box>
+          </div>
+
+          <div class="col-1 me-auto d-flex justify-content-center">
+            <dx-button
+              class="add-card mt-2"
+              icon="refresh"
+              text="Apply"
+              type="success"
+              stylingMode="contained"
+              (click)="applyButtonClicked()"
+            ></dx-button>
           </div>
         </div>
 
@@ -198,7 +215,26 @@
             ></dx-tag-box>
           </div>
 
-          <div class="col-3">
+          <div class="col-4">
+            <dx-tag-box
+              [searchEnabled]="true"
+              [dropDownOptions]="{ height: 250 }"
+              [items]="departmentDataSource"
+              displayExpr="Name"
+              valueExpr="ID"
+              [(value)]="departmentValue"
+              label="Department"
+              labelMode="floating"
+              [showSelectionControls]="true"
+              [multiline]="false"
+              applyValueMode="instantly"
+              (onValueChanged)="
+                reorderDataSource('departmentValue', 'departmentDataSource')
+              "
+            ></dx-tag-box>
+          </div>
+
+          <div class="col-4">
             <dx-tag-box
               [searchEnabled]="true"
               [items]="insuranceDataSource"
@@ -218,37 +254,7 @@
             ></dx-tag-box>
           </div>
 
-          <div class="col-3">
-            <dx-tag-box
-              [searchEnabled]="true"
-              [dropDownOptions]="{ height: 250 }"
-              [items]="departmentDataSource"
-              displayExpr="Name"
-              valueExpr="ID"
-              [(value)]="departmentValue"
-              label="Department"
-              labelMode="floating"
-              [showSelectionControls]="true"
-              [multiline]="false"
-              applyValueMode="instantly"
-              (onValueChanged)="
-                reorderDataSource('departmentValue', 'departmentDataSource')
-              "
-            ></dx-tag-box>
-          </div>
-
-          <div class="col-1 ms-auto">
-            <dx-button
-              class="add-card mt-2"
-              icon="refresh"
-              text="Apply"
-              type="success"
-              stylingMode="contained"
-              (click)="applyButtonClicked()"
-            ></dx-button>
-          </div>
-
-          <div class="col-1 ms-2 me-2">
+          <div class="col-1 me-auto d-flex justify-content-center">
             <dx-button
               class="mt-2"
               icon="exportpdf"

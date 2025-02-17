@@ -102,6 +102,11 @@ export class AuthDashboardOperationComponent implements OnInit {
     this.get_Init_Data();
   }
 
+  //===========show filter div by clicking showing div========
+  Show_toggle_Groups_By_Div_click(): void {
+    this.showGroups = true;
+  }
+
   //===================Custom label for pie chart ===========
   customizeLabel(arg) {
     const value = arg.valueText;

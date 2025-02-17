@@ -60,6 +60,10 @@ export class AppHeaderComponent implements OnInit {
     // this.authService.getUser().then((e) => (this.user = e.data));
   }
 
+  logout_Click() {
+    this.authService.logOut();
+  }
+
   toggleMenu = () => {
     this.menuToggle.emit();
   };

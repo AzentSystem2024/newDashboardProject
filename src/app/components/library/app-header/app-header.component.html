@@ -34,13 +34,16 @@
     </dxi-item> -->
 
     <dxi-item location="after" locateInMenu="auto" menuItemTemplate="menuItem">
-      <div *dxTemplate="let data of 'item'">
-        <user-panel
+      <div *dxTemplate>
+        <dx-button
           *ngIf="isloggedIn"
-          [user]="user"
-          [menuItems]="userMenuItems"
-          menuMode="context"
-        ></user-panel>
+          icon="runner"
+          text="Log Out"
+          type="danger"
+          stylingMode="text"
+          (click)="logout_Click()"
+        >
+        </dx-button>
       </div>
     </dxi-item>
 
