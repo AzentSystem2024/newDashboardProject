@@ -59,8 +59,8 @@ export class AuthDashboardOperationComponent implements OnInit {
     fromdate: '',
     todate: '',
   };
-  physicianDepartmentvalue: any[];
-  PhysicianDepartmentDatasource: any;
+  Departmentvalue: any[];
+  DepartmentDatasource: any;
   denialcategoryvalue: any[];
   DenailCategoryDatasource: any;
   ServiceCategoryDatasource: any[];
@@ -109,12 +109,7 @@ export class AuthDashboardOperationComponent implements OnInit {
 
   //===================Custom label for pie chart ===========
   customizeLabel(arg) {
-    const value = arg.valueText;
-    if (value >= 100000) {
-      return `${(value / 1000000).toFixed(2)}M (${arg.percentText})`;
-    } else {
-      return `${(value / 1000).toFixed(2)}K (${arg.percentText})`;
-    }
+    return `${arg.valueText} (${arg.percentText})`;
   }
 
   //=========MAking cutom datasource for facility datagrid and dropdown loADING=======
@@ -167,10 +162,11 @@ export class AuthDashboardOperationComponent implements OnInit {
   //================= fetch Init For DropDown Values =================
   get_Init_Data() {
     this.loadingVisible = true;
+
     this.service
       .get_Denial_Dashboard_InitData(this.userId)
       .subscribe((response: any) => {
-        if (response.flag == '1') {
+        if (response.flag === '1') {
           this.dateForm.fromdate = response.DateFrom;
           this.dateForm.todate = response.DateTo;
 
@@ -182,37 +178,36 @@ export class AuthDashboardOperationComponent implements OnInit {
             (item) => item.Default === '1'
           ).map((item) => item.ID);
 
-          this.PhysicianDepartmentDatasource = response.Department;
-          this.physicianDepartmentvalue =
-            this.PhysicianDepartmentDatasource.filter(
-              (item) => item.Default === '1'
-            ).map((item) => item.ID);
-
-          this.DenailCategoryDatasource = response.DenialCategory;
-          this.denialcategoryvalue = this.DenailCategoryDatasource.filter(
+          this.DepartmentDatasource = response.Department;
+          this.Departmentvalue = this.DepartmentDatasource.filter(
             (item) => item.Default === '1'
           ).map((item) => item.ID);
 
-          this.ServiceCategoryDatasource = response.ServiceCategoryOperation;
+          this.ServiceCategoryDatasource = response.CaseType;
           this.servicecategoryvalue = this.ServiceCategoryDatasource.filter(
             (item) => item.Default === '1'
           ).map((item) => item.ID);
         }
+        this.get_chart_datasource();
       });
-
-    this.get_chart_datasource();
   }
   //==================== Fetch Cgarts Datasource =====================
   get_chart_datasource() {
     this.loadingVisible = true;
+
+    var fromdate = this.dateForm.fromdate;
+    var todate = this.dateForm.todate;
+    var facility = this.facilityvalue.join(',');
+    var department = this.Departmentvalue.join(',');
+    var serviceCategory = this.servicecategoryvalue.join(',');
+
     this.service
       .get_Prior_Dashboard_Opreations_Datasource(
-        this.dateForm.fromdate,
-        this.dateForm.todate,
-        this.denialcategoryvalue,
-        this.facilityvalue,
-        this.physicianDepartmentvalue,
-        this.servicecategoryvalue
+        fromdate,
+        todate,
+        facility,
+        department,
+        serviceCategory
       )
       .subscribe((response: any) => {
         if (response.flag == '1') {

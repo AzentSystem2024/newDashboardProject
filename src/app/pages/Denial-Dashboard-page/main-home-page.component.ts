@@ -405,12 +405,12 @@ export class MainHomePageComponent implements OnInit {
         this.DateFrom,
         this.DateTo,
         this.rejectionIndexvalue,
-        this.denialcategoryvalue.join(', '),
-        this.encountertypevalue.join(', '),
-        this.blockValue.join(', '),
-        this.facilityvalue.join(', '),
-        this.insuranceValue.join(', '),
-        this.departmentValue.join(', ')
+        this.denialcategoryvalue.join(','),
+        this.encountertypevalue.join(','),
+        this.blockValue.join(','),
+        this.facilityvalue.join(','),
+        this.insuranceValue.join(','),
+        this.departmentValue.join(',')
       )
       .subscribe((response: any) => {
         if (response.flag === '1') {

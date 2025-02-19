@@ -35,7 +35,6 @@
                     {
                       dataField: 'ShortName',
                       caption: 'Short Name',
-                      width: 'auto'
                     },
                     {
                       dataField: 'Name',
@@ -240,8 +239,8 @@
               <dxi-series
                 color="#79cac4"
                 type="bar"
-                argumentField="Code"
-                valueField="Rejected"
+                argumentField="Category"
+                valueField="Count"
                 [barWidth]="20"
               >
                 <dxo-label
@@ -287,6 +286,7 @@
                 valueField="InProgress"
                 name="InProgress"
               ></dxi-series>
+              <dxi-series valueField="Cancelled" name="Cancelled"></dxi-series>
               <dxo-common-series-settings
                 argumentField="EncounterType"
                 type="bar"
@@ -295,10 +295,6 @@
               >
                 <dxo-label
                   [visible]="true"
-                  [format]="{
-                    type: 'fixedPoint',
-                    precision: 0
-                  }"
                   [backgroundColor]="'transparent'"
                   [border]="{ visible: false, color: '#294730', width: 1 }"
                   [font]="{ color: 'var(--text-color)', weight: 600, size: 14 }"
@@ -322,8 +318,8 @@
             <dx-chart id="chart" [dataSource]="TaTstatusDataSource">
               <dxo-title text="TAT Status" hint=""></dxo-title>
               <dxi-series
-                argumentField="TatDelay"
-                valueField="DocumentCount"
+                argumentField="TAT"
+                valueField="Count"
                 name="TAT Delay"
                 type="bar"
                 color="#8a1253"
@@ -351,7 +347,7 @@
               <dxo-size [height]="420"></dxo-size>
               <dxi-series
                 argumentField="Day"
-                valueField="DocumentCount"
+                valueField="Count"
                 name="Day"
                 type="spline"
                 [dashStyle]="'dot'"

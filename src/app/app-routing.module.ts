@@ -29,6 +29,16 @@ const routes: Routes = [
     redirectTo: 'auth/login',
     pathMatch: 'full',
   },
+  // {
+  //   path: '',
+  //   redirectTo: 'Empty-message-page',
+  //   pathMatch: 'full',
+  // },
+  {
+    path: '',
+    redirectTo: 'Empty-message-page',
+    pathMatch: 'full',
+  },
   {
     path: '',
     component: SideNavOuterToolbarComponent,
@@ -54,11 +64,11 @@ const routes: Routes = [
         path: 'Empty-message-page',
         component: EmptyDashboardMessageComponent,
       },
-      // {
-      //   path: '**',
-      //   redirectTo: 'Denial-Dashboard',
-      //   pathMatch: 'full',
-      // },
+      {
+        path: '**',
+        redirectTo: 'Empty-message-page',
+        pathMatch: 'full',
+      },
     ],
   },
 ];

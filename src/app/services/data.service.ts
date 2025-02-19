@@ -184,7 +184,6 @@ export class DataService {
    get_Prior_Dashboard_Opreations_Datasource(
     datefrom: any,
     dateTo: any,
-    DenialCategory: any,
     facility: any,
     department: any,
     category: any
@@ -193,7 +192,6 @@ export class DataService {
     const reqBodyData = {
       DateFrom: datefrom,
       DateTo: dateTo,
-      DenialCategory: DenialCategory,
       Facility: facility,
       Department: department,
       ServiceCategory: category,

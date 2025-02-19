@@ -58,13 +58,13 @@ export class AuthDashboardPageComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   onResize() {
-    this.chartSize = { width: window.innerWidth * 0.95  };
+    this.chartSize = { width: window.innerWidth * 0.95 };
 
     if (this.chartInstance) {
       this.chartInstance.option('size', { width: this.chartSize.width });
     }
   }
-  chartSize = { width: window.innerWidth * 0.95  };
+  chartSize = { width: window.innerWidth * 0.95 };
 
   pipe = new PercentPipe('en-US');
 
@@ -194,14 +194,15 @@ export class AuthDashboardPageComponent implements OnInit {
             (item) => item.Default === '1'
           ).map((item) => item.ID);
 
-          this.ServiceCategoryDatasource = response.ServiceCategoryProduction;
+          this.ServiceCategoryDatasource = response.CPTBlock;
           this.servicecategoryvalue = this.ServiceCategoryDatasource.filter(
             (item) => item.Default === '1'
           ).map((item) => item.ID);
         }
-      });
+        this.loadingVisible = false;
 
-    this.get_chart_datasource();
+        this.get_chart_datasource();
+      });
   }
   //==================== Fetch Cgarts Datasource =====================
   get_chart_datasource() {
@@ -210,21 +211,26 @@ export class AuthDashboardPageComponent implements OnInit {
       .get_Prior_Dashboard_Production_Datasource(
         this.dateForm.fromdate,
         this.dateForm.todate,
-        this.denialcategoryvalue,
-        this.facilityvalue,
-        this.physicianvalue,
-        this.servicecategoryvalue
+        this.denialcategoryvalue.join(','),
+        this.facilityvalue.join(','),
+        this.physicianvalue.join(','),
+        this.servicecategoryvalue.join(',')
       )
-      .subscribe((response: any) => {
-        if (response.flag == '1') {
-          this.ReguestSendCardValue = response.card.RequestCount;
-          this.DenialCategoryChartData = response.CategoryWise;
-          this.mainSeriesChartDatasource = response.EncounterWise;
-          this.TaTstatusDataSource = response.TATWise;
-          this.CountPerDaysData = response.DayWise;
+      .subscribe(
+        (response: any) => {
+          if (response.flag === '1') {
+            this.ReguestSendCardValue = response.card?.RequestCount || [];
+            this.DenialCategoryChartData = response.CategoryWise || [];
+            this.mainSeriesChartDatasource = response.EncounterWise || [];
+            this.TaTstatusDataSource = response.TATWise || [];
+            this.CountPerDaysData = response.DayWise || [];
+          }
+          this.loadingVisible = false;
+        },
+        (error) => {
           this.loadingVisible = false;
         }
-      });
+      );
   }
 
   //==================export function=======================
