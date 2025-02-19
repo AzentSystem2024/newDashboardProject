@@ -114,8 +114,8 @@ export class AuthDashboardPageComponent implements OnInit {
     this.get_Init_Data();
   }
 
-   //===========show filter div by clicking showing div========
-   Show_toggle_Groups_By_Div_click(): void {
+  //===========show filter div by clicking showing div========
+  Show_toggle_Groups_By_Div_click(): void {
     this.showGroups = true;
   }
 

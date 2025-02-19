@@ -68,7 +68,8 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
 
   tabs: any;
 
-  selectedIndex = 0;
+  selectedIndex: any = 0;
+
   orientation: any = 'horizonal';
 
   routerSubscription: Subscription;
