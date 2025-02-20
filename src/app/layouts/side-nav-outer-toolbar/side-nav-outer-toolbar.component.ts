@@ -34,6 +34,7 @@ import { DxTabPanelModule } from 'devextreme-angular';
 import { MainHomePageComponent } from 'src/app/pages/Denial-Dashboard-page/main-home-page.component';
 import { AuthDashboardPageComponent } from 'src/app/pages/auth-dashboard-production/auth-dashboard-page.component';
 import { EmptyDashboardMessageModule } from '../../pages/empty-dashboard-message/empty-dashboard-message.component';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   templateUrl: './side-nav-outer-toolbar.component.html',
@@ -112,14 +113,14 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
           if (response.flag === '1') {
             this.tabs = response.dashboards;
 
-            // Check if we should navigate based on tabs and login status
-            if (this.tabs.length > 0) {
-              this.tabdataavailable = true;
-              this.selectedIndex = 0;
-              this.navigateToDashboard(this.tabs[0].ID);
-            } else {
-              this.tabdataavailable = false;
-            }
+        // Check if we should navigate based on tabs and login status
+        if (this.tabs.length > 0) {
+          this.tabdataavailable = true;
+          this.selectedIndex = 0;
+          this.navigateToDashboard(this.tabs[0].ID);
+        } else {
+          this.tabdataavailable = false;
+        }
           }
         });
       }
@@ -132,6 +133,9 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
       1: '/Main-Dashboard',
       3: '/Auth-Dashboard-Production',
       4: '/Auth-Dashboard-Operation',
+      6: '/Revenue-Dashboard',
+
+
     };
 
     for (const key in routes) {

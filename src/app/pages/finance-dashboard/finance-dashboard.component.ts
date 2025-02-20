@@ -102,9 +102,7 @@ export class FinanceDashboardComponent implements OnInit {
     public service: DataService,
     private router: Router,
     private route: ActivatedRoute
-  ) {
-    console.log('Finance Dashboard Is Loaded');
-  }
+  ) {}
 
   onChartInitialized(e) {
     this.chartInstance = e.component; // Store reference to the chart
@@ -146,7 +144,6 @@ export class FinanceDashboardComponent implements OnInit {
   get_initial_data() {
     // Read from sessionStorage first
     let storedUserId = sessionStorage.getItem('paramsid');
-
     if (storedUserId && storedUserId !== 'undefined' && storedUserId !== null) {
       this.userId = storedUserId;
       console.log('Session storage userId found:', this.userId);
@@ -155,7 +152,6 @@ export class FinanceDashboardComponent implements OnInit {
       // If sessionStorage is empty, check queryParams
       this.route.queryParams.subscribe((params: Params) => {
         let queryUserId = params['userId'];
-
         if (
           queryUserId &&
           queryUserId !== 'undefined' &&

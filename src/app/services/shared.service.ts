@@ -48,6 +48,7 @@ export class SharedService {
       1: '/Main-Dashboard',
       3: '/Auth-Dashboard-Production',
       4: '/Auth-Dashboard-Operation',
+      6: '/Revenue-Dashboard',
     };
 
     for (const key in routes) {

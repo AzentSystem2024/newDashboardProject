@@ -13,6 +13,7 @@ import { AuthDashboardPageComponent } from './pages/auth-dashboard-production/au
 import { FinanceDashboardComponent } from './pages/finance-dashboard/finance-dashboard.component';
 import { EmptyDashboardMessageComponent } from './pages/empty-dashboard-message/empty-dashboard-message.component';
 import { AuthDashboardOperationComponent } from './pages/auth-dashboard-operation/auth-dashboard-operation.component';
+import { RevenueDashboardPageComponent } from './pages/revenue-dashboard-page/revenue-dashboard-page.component';
 const routes: Routes = [
   {
     path: 'auth',
@@ -27,16 +28,6 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: 'auth/login',
-    pathMatch: 'full',
-  },
-  // {
-  //   path: '',
-  //   redirectTo: 'Empty-message-page',
-  //   pathMatch: 'full',
-  // },
-  {
-    path: '',
-    redirectTo: 'Empty-message-page',
     pathMatch: 'full',
   },
   {
@@ -59,6 +50,10 @@ const routes: Routes = [
       {
         path: 'Finance-Dashboard',
         component: FinanceDashboardComponent,
+      },
+      {
+        path: 'Revenue-Dashboard',
+        component: RevenueDashboardPageComponent,
       },
       {
         path: 'Empty-message-page',
