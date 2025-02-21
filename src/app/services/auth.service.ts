@@ -7,6 +7,7 @@ import {
   ActivatedRoute,
 } from '@angular/router';
 import { BehaviorSubject, map, Observable } from 'rxjs';
+import { CustomReuseStrategy } from '../State-Management/custom-reuse-strategy';
 export interface IUser {
   email: string;
   name?: string;
@@ -44,7 +45,10 @@ export class AuthService {
     this._lastAuthenticatedPath = value;
   }
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private customReuse: CustomReuseStrategy
+  ) {}
 
   async logIn(email: string, password: string) {
     try {
@@ -128,6 +132,7 @@ export class AuthService {
 
   async logOut() {
     sessionStorage.clear();
+    this.customReuse.clearStoredData();
     this.router.navigate(['/auth/login']);
     // window.location.reload();
   }

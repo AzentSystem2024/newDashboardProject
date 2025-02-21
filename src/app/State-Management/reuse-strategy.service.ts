@@ -13,6 +13,7 @@ export class ReuseStrategyService {
       return; // Do not store handler for excluded routes
     }
     this.handlers[routePath] = handle;
+    console.log('stored components :>', this.handlers);
   }
 
   getHandler(routePath: string): DetachedRouteHandle | null {
@@ -34,5 +35,6 @@ export class ReuseStrategyService {
 
   clearHandlers(): void {
     this.handlers = {};
+    console.log('stored components :>', this.handlers);
   }
 }

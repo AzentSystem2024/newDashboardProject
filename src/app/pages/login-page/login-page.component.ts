@@ -35,8 +35,15 @@ export class LoginPageComponent {
     private formb: FormBuilder,
     private router: Router,
     private service: DataService,
-    private sharedServc: SharedService
-  ) {}
+    private sharedServc: SharedService,
+    private customReuse: CustomReuseStrategy
+  ) {
+    this.customReuse.clearStoredData();
+    this.loginpage = {
+      UserName: null,
+      Password: null,
+    };
+  }
 
   Login() {
     this.loadingVisible = true;
@@ -67,7 +74,7 @@ export class LoginPageComponent {
                       this.tabs = response.dashboards;
                       if (this.tabs.length > 0) {
                         const firstTabText = this.tabs[0].ID;
-                          this.sharedServc.navigateToDashboard(firstTabText);
+                        this.sharedServc.navigateToDashboard(firstTabText);
                       } else if (this.tabs.length === 0) {
                         console.log('No Dahboard data available');
                         this.router.navigate(['/Empty-message-page']);
