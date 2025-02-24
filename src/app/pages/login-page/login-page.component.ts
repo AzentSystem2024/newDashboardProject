@@ -49,7 +49,6 @@ export class LoginPageComponent {
     this.loadingVisible = true;
     const userName = this.loginpage.UserName;
     const password = this.loginpage.Password;
-
     if (userName && password) {
       this.service
         .dashboard_Login(userName, password)
@@ -61,7 +60,6 @@ export class LoginPageComponent {
             sessionStorage.setItem('paramsid', userId);
             sessionStorage.setItem('isLogging', 'true');
             this.loadingVisible = false;
-
             // Ensure session storage is completely set before navigating
             setTimeout(() => {
               const userID = sessionStorage.getItem('paramsid');

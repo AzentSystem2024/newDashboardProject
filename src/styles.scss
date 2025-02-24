@@ -1042,3 +1042,9 @@ app-root {
   border: none;
   margin: 0px;
 }
+.dx-tab.dx-tab-selected {
+  color: rgb(255, 255, 255);
+  // background-color: var(--dropdown-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
