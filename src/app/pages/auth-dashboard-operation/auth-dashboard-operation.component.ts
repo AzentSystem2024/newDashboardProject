@@ -109,8 +109,18 @@ export class AuthDashboardOperationComponent implements OnInit {
 
   //===================Custom label for pie chart ===========
   customizeLabel(arg) {
+  
     return `${arg.valueText} (${arg.percentText})`;
   }
+
+  customizeLabelText = (pointInfo: any) => {
+    // Find the corresponding data object in TaTstatusDataSource
+    const item = this.TaTstatusDataSource.find((data) => data.Count === pointInfo.value);
+    
+    const percentage = item ? item.Percent.toFixed(2) : "0.00";
+    
+    return `${pointInfo.value} (${percentage}%)`;
+  };
 
   //=========MAking cutom datasource for facility datagrid and dropdown loADING=======
   makeAsyncDataSourceFromJson(jsonData: any) {

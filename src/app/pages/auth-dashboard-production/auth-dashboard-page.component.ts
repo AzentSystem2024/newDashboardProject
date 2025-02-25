@@ -109,6 +109,16 @@ export class AuthDashboardPageComponent implements OnInit {
     this.chartInstance = e.component; // Store reference to the chart
   }
 
+  customizeLabelText = (pointInfo: any) => {
+    // Find the corresponding data object in TaTstatusDataSource
+    const item = this.TaTstatusDataSource.find((data) => data.Count === pointInfo.value);
+    
+    const percentage = item ? item.Percent.toFixed(2) : "0.00";
+    
+    return `${pointInfo.value} (${percentage}%)`;
+  };
+
+
   //======================Page on init ========================
   ngOnInit(): void {
     this.get_Init_Data();
