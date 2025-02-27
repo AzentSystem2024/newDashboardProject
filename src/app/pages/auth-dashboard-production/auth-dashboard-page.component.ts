@@ -85,6 +85,11 @@ export class AuthDashboardPageComponent implements OnInit {
   SubmissionIndexDatasource: any;
   showGroups: boolean = true;
   loadingVisible: boolean = false;
+  payerDatasource:any;
+  payervalue:any;
+  PhysicianCategoryDatasource:any;
+  physiciancategoryvalue:any;
+  
 
   mainSeriesChartDatasource: any;
   TaTstatusDataSource: any;
@@ -122,6 +127,10 @@ export class AuthDashboardPageComponent implements OnInit {
   //======================Page on init ========================
   ngOnInit(): void {
     this.get_Init_Data();
+  }
+
+  toggleGroups(): void {
+    this.showGroups = !this.showGroups;
   }
 
   //===========show filter div by clicking showing div========
@@ -178,6 +187,7 @@ export class AuthDashboardPageComponent implements OnInit {
 
   //================= fetch Init For DropDown Values =================
   get_Init_Data() {
+    this.showGroups = false;
     this.loadingVisible = true;
     this.service
       .get_Denial_Dashboard_InitData(this.userId)
@@ -208,6 +218,16 @@ export class AuthDashboardPageComponent implements OnInit {
           this.servicecategoryvalue = this.ServiceCategoryDatasource.filter(
             (item) => item.Default === '1'
           ).map((item) => item.ID);
+
+          this.payerDatasource = response.Payer;
+          this.payervalue = this.ServiceCategoryDatasource.filter(
+            (item) => item.Default === '1'
+          ).map((item) => item.ID);
+
+          this.PhysicianCategoryDatasource = response.PhysicianCategory;
+          this.physiciancategoryvalue = this.ServiceCategoryDatasource.filter(
+            (item) => item.Default === '1'
+          ).map((item) => item.ID);
         }
         this.loadingVisible = false;
 
@@ -224,7 +244,9 @@ export class AuthDashboardPageComponent implements OnInit {
         this.denialcategoryvalue.join(','),
         this.facilityvalue.join(','),
         this.physicianvalue.join(','),
-        this.servicecategoryvalue.join(',')
+        this.servicecategoryvalue.join(','),
+        this.payervalue.join(','),
+        this.physiciancategoryvalue.join(','),
       )
       .subscribe(
         (response: any) => {

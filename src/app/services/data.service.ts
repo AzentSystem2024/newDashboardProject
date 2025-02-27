@@ -163,17 +163,21 @@ export class DataService {
     DenialCategory: any,
     facility: any,
     department: any,
-    category: any
+    category: any,
+    payer:any ,
+    physiciancategory:any
   ) {
     const url = CRS_DASHBOARD_PRIOR_DASHBOARD;
     const reqBodyData = {
       DateFrom: datefrom,
       DateTo: dateTo,
-      SubmissionIndex: '',
+      // SubmissionIndex: '',
       DenialCategory: DenialCategory,
       Facility: facility,
       Department: department,
       ServiceCategory: category,
+      PayerID : payer,
+      PhysicianCategory : physiciancategory
     };
 
     return this.http.post(url, reqBodyData);

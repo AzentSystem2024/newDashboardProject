@@ -4,205 +4,271 @@
   <div class="ExportDiv1">
     <div class="mainDiv mb-1 p-0 m-0">
       <!-- First Group -->
-      <div class="row mt-1 mb-1 m-0 p-1">
-        <div class="col-11">
-          <dx-drop-down-box
-            class="dropdowncontent"
-            labelMode="floating"
-            labelLocation="left"
-            label="Facility value"
-            [(value)]="facilityvalue"
-            valueExpr="ID"
+      <div class="row ms-1 me-1" (click)="Show_toggle_Groups_By_Div_click()">
+        <div class="col-2">
+          <dx-form [formData]="dateForm" [labelMode]="'floating'">
+            <dxi-item
+              dataField="fromdate"
+              editorType="dxDateBox"
+              [editorOptions]="{
+                applyValueMode: 'instantly',
+                displayFormat: 'dd/MM/yyyy',
+                valueFormat: 'yyyy/MM/dd',
+
+              }"
+            >
+              <dxo-label text="From Date"></dxo-label>
+            </dxi-item>
+          </dx-form>
+        </div>
+
+        <div class="col-2">
+          <dx-form [formData]="dateForm" [labelMode]="'floating'">
+            <dxi-item
+              editorType="dxDateBox"
+              dataField="todate"
+              [editorOptions]="{
+                applyValueMode: 'instantly',
+                displayFormat: 'dd/MM/yyyy',
+                valueFormat: 'yyyy/MM/dd',
+
+              }"
+            >
+              <dxo-label text="To Date"></dxo-label>
+            </dxi-item>
+          </dx-form>
+        </div>
+
+        <div class="col-4">
+          <dx-tag-box
+            [searchEnabled]="true"
+            [dropDownOptions]="{ height: 250 }"
+            [items]="PhysicianDatasource"
             displayExpr="Name"
-            [showClearButton]="true"
-            [dataSource]="modifiedFacilityDatasource"
-            [dropDownOptions]="{
-              width: '70%',
-              height: '45vh',
-              position: {
-                my: 'left top',
-                at: 'left bottom',
-                of: '.dropdowncontent',
-                collision: 'fit flip'
-              }
-            }"
+            valueExpr="ID"
+            [(value)]="physicianvalue"
+            [showSelectionControls]="true"
+            [multiline]="false"
+            applyValueMode="instantly"
+            label="Department"
+            labelMode="floating"
+            (onValueChanged)="
+              reorderDataSource(
+                'denialcategoryvalue',
+                'DenailCategoryDatasource'
+              )
+            "
           >
-            <div c *dxTemplate="let data of 'content'">
-              <dx-data-grid
-                [dataSource]="modifiedFacilityDatasource"
-                [columns]="[
-                  { dataField: 'ID', caption: 'Facility ID', width: 'auto' },
-                    {
-                      dataField: 'ShortName',
-                      caption: 'Short Name',
-                    },
-                    {
-                      dataField: 'Name',
-                      caption: 'FacilityName',
-                    },
-                    { dataField: 'Region', caption: 'Region', width: 'auto' },
-                    {
-                      dataField: 'ProviderType',
-                      caption: 'Provider Type',
-                      width: 'auto'
-                    }
-                ]"
-                [selection]="{ mode: 'multiple' }"
-                [hoverStateEnabled]="true"
-                [paging]="{ enabled: true, pageSize: 10 }"
-                [filterRow]="{ visible: true }"
-                [headerFilter]="{ visible: true }"
-                [scrolling]="{ mode: 'virtual' }"
-                [(selectedRowKeys)]="facilityvalue"
-                (onSelectionChanged)="
-                  onSelectionChanged(
-                    $event,
-                    this.FacilityDataSource,
-                    'modifiedFacilityDatasource'
-                  )
-                "
-                width="'50%'"
-                [height]="'100%'"
-              >
-              </dx-data-grid>
-            </div>
-          </dx-drop-down-box>
+          </dx-tag-box>
         </div>
-        <div class="col-1 me-auto d-flex justify-content-center">
-          <dx-button
-            class="add-card mt-2"
-            icon="refresh"
-            text="Apply"
-            type="success"
-            stylingMode="contained"
-            (click)="applyButtonClicked()"
-          ></dx-button>
+
+        <div class="col-2">
+          <dx-tag-box
+            [searchEnabled]="true"
+            [dropDownOptions]="{ height: 250 }"
+            [items]="DenailCategoryDatasource"
+            displayExpr="Name"
+            valueExpr="ID"
+            [(value)]="denialcategoryvalue"
+            [showSelectionControls]="true"
+            [multiline]="false"
+            applyValueMode="instantly"
+            label="Denial Category"
+            labelMode="floating"
+            (onValueChanged)="
+              reorderDataSource(
+                'denialcategoryvalue',
+                'DenailCategoryDatasource'
+              )
+            "
+          >
+          </dx-tag-box>
         </div>
+
+        <div class="col-2">
+          <dx-tag-box
+            [searchEnabled]="true"
+            [dropDownOptions]="{ height: 250 }"
+            [items]="ServiceCategoryDatasource"
+            [(value)]="servicecategoryvalue"
+            displayExpr="Name"
+            valueExpr="ID"
+            [showSelectionControls]="true"
+            [multiline]="false"
+            applyValueMode="instantly"
+            label="Service Category"
+            labelMode="floating"
+            [searchEnabled]="true"
+            (onValueChanged)="
+              reorderDataSource(
+                'encountertypevalue',
+                'EncountrTypeDatasource'
+              )
+            "
+          >
+          </dx-tag-box>
+        </div>
+
       </div>
 
       <!-- Wrapper for Second and Third Rows -->
-      <div class="p-0 m-0" *ngIf="showGroups" @toggleRows>
+      <div *ngIf="showGroups" @toggleRows>
         <!-- Second Group -->
-        <div class="row ms-1 m-0 p-1">
-          <div class="col-2">
-            <dx-form [formData]="dateForm" [labelMode]="'floating'">
-              <dxi-item
-                dataField="fromdate"
-                editorType="dxDateBox"
-                [editorOptions]="{
-                  applyValueMode: 'instantly',
-                  displayFormat: 'dd/MM/yyyy',
-                  valueFormat: 'yyyy/MM/dd',
-
-                }"
-              >
-                <dxo-label text="From Date"></dxo-label>
-              </dxi-item>
-            </dx-form>
-          </div>
-
-          <div class="col-2">
-            <dx-form [formData]="dateForm" [labelMode]="'floating'">
-              <dxi-item
-                editorType="dxDateBox"
-                dataField="todate"
-                [editorOptions]="{
-                  applyValueMode: 'instantly',
-                  displayFormat: 'dd/MM/yyyy',
-                  valueFormat: 'yyyy/MM/dd',
-
-                }"
-              >
-                <dxo-label text="To Date"></dxo-label>
-              </dxi-item>
-            </dx-form>
-          </div>
-
-          <div class="col-3">
-            <dx-tag-box
-              [searchEnabled]="true"
-              [dropDownOptions]="{ height: 250 }"
-              [items]="PhysicianDatasource"
-              displayExpr="Name"
-              valueExpr="ID"
-              [(value)]="physicianvalue"
-              [showSelectionControls]="true"
-              [multiline]="false"
-              applyValueMode="instantly"
-              label="Department"
+        <div class="row mt-1 ms-1 me-1">
+          <div class="col-11">
+            <dx-drop-down-box
+              class="dropdowncontent"
               labelMode="floating"
-              (onValueChanged)="
-                reorderDataSource(
-                  'denialcategoryvalue',
-                  'DenailCategoryDatasource'
-                )
-              "
-            >
-            </dx-tag-box>
-          </div>
-
-          <div class="col-2">
-            <dx-tag-box
-              [searchEnabled]="true"
-              [dropDownOptions]="{ height: 250 }"
-              [items]="DenailCategoryDatasource"
-              displayExpr="Name"
+              labelLocation="left"
+              label="Facility value"
+              [(value)]="facilityvalue"
               valueExpr="ID"
-              [(value)]="denialcategoryvalue"
-              [showSelectionControls]="true"
-              [multiline]="false"
-              applyValueMode="instantly"
-              label="Denial Category"
-              labelMode="floating"
-              (onValueChanged)="
-                reorderDataSource(
-                  'denialcategoryvalue',
-                  'DenailCategoryDatasource'
-                )
-              "
-            >
-            </dx-tag-box>
-          </div>
-
-          <div class="col-2">
-            <dx-tag-box
-              [searchEnabled]="true"
-              [dropDownOptions]="{ height: 250 }"
-              [items]="ServiceCategoryDatasource"
-              [(value)]="servicecategoryvalue"
               displayExpr="Name"
-              valueExpr="ID"
-              [showSelectionControls]="true"
-              [multiline]="false"
-              applyValueMode="instantly"
-              label="Service Category"
-              labelMode="floating"
-              [searchEnabled]="true"
-              (onValueChanged)="
-                reorderDataSource(
-                  'encountertypevalue',
-                  'EncountrTypeDatasource'
-                )
-              "
+              [showClearButton]="true"
+              [dataSource]="modifiedFacilityDatasource"
+              [dropDownOptions]="{
+                width: '70%',
+                height: '45vh',
+                position: {
+                  my: 'left top',
+                  at: 'left bottom',
+                  of: '.dropdowncontent',
+                  collision: 'fit flip'
+                }
+              }"
             >
-            </dx-tag-box>
+              <div c *dxTemplate="let data of 'content'">
+                <dx-data-grid
+                  [dataSource]="modifiedFacilityDatasource"
+                  [columns]="[
+                    { dataField: 'ID', caption: 'Facility ID', width: 'auto' },
+                      {
+                        dataField: 'ShortName',
+                        caption: 'Short Name',
+                      },
+                      {
+                        dataField: 'Name',
+                        caption: 'FacilityName',
+                      },
+                      { dataField: 'Region', caption: 'Region', width: 'auto' },
+                      {
+                        dataField: 'ProviderType',
+                        caption: 'Provider Type',
+                        width: 'auto'
+                      }
+                  ]"
+                  [selection]="{ mode: 'multiple' }"
+                  [hoverStateEnabled]="true"
+                  [paging]="{ enabled: true, pageSize: 10 }"
+                  [filterRow]="{ visible: true }"
+                  [headerFilter]="{ visible: true }"
+                  [scrolling]="{ mode: 'virtual' }"
+                  [(selectedRowKeys)]="facilityvalue"
+                  (onSelectionChanged)="
+                    onSelectionChanged(
+                      $event,
+                      this.FacilityDataSource,
+                      'modifiedFacilityDatasource'
+                    )
+                  "
+                  width="'50%'"
+                  [height]="'100%'"
+                >
+                </dx-data-grid>
+              </div>
+            </dx-drop-down-box>
           </div>
 
           <div class="col-1 me-auto d-flex justify-content-center">
             <dx-button
-              class="mt-2"
-              icon="exportpdf"
-              text="export"
-              hint="export"
-              type="default"
-              [width]="'auto'"
-              (onClick)="export()"
-            >
-            </dx-button>
+              class="add-card mt-2"
+              icon="refresh"
+              text="Apply"
+              type="success"
+              stylingMode="contained"
+              (click)="applyButtonClicked()"
+            ></dx-button>
           </div>
+          
         </div>
+      
+
+      <div class="row m-0 ms-0 p-1">
+        <div class="col-6">
+          <dx-tag-box
+            [searchEnabled]="true"
+            [dropDownOptions]="{ height: 250 }"
+            [items]="payerDatasource"
+            displayExpr="Name"
+            valueExpr="ID"
+            [(value)]="payervalue"
+            [showSelectionControls]="true"
+            [multiline]="false"
+            applyValueMode="instantly"
+            label="Payer"
+            labelMode="floating"
+            (onValueChanged)="
+              reorderDataSource(
+                'payervalue',
+                'payerDatasource'
+              )
+            "
+          >
+          </dx-tag-box>
+        </div>
+        <div class="col-5">
+          <dx-tag-box
+            [searchEnabled]="true"
+            [dropDownOptions]="{ height: 250 }"
+            [items]="PhysicianCategoryDatasource"
+            displayExpr="Name"
+            valueExpr="ID"
+            [(value)]="physiciancategoryvalue"
+            [showSelectionControls]="true"
+            [multiline]="false"
+            applyValueMode="instantly"
+            label="Physician Category"
+            labelMode="floating"
+            (onValueChanged)="
+              reorderDataSource(
+                'physiciancategoryvalue',
+                'PhysicianCategoryDatasource'
+              )
+            "
+          >
+          </dx-tag-box>
+        </div>
+
+        <div class="col-1 me-auto d-flex justify-content-center">
+          <dx-button
+            class="mt-2"
+            icon="exportpdf"
+            text="export"
+            hint="export"
+            type="default"
+            [width]="'auto'"
+            (onClick)="export()"
+          >
+          </dx-button>
+        </div>
+        
       </div>
     </div>
+       <!-- Toggle Button -->
+       <div class="row justify-content-center p-0 m-0">
+        <div class="col-12 text-center">
+          <dx-button
+            class="toggle-button"
+            [icon]="showGroups ? 'chevronup' : 'chevrondown'"
+            stylingMode="outlined"
+            type="default"
+            (click)="toggleGroups()"
+          ></dx-button>
+        </div>
+      </div>
+      <!-- Toggle Button end -->
+    </div>
+    
   </div>
 
   <!-- =============================Card data Div============================= -->
