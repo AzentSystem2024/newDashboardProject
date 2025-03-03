@@ -24,12 +24,13 @@
                 dataField="UserName"
                 editorType="dxTextBox"
                 label="User Name"
+                [editorOptions]="{onEnterKey:onEnterUserName}"
               ></dxi-item>
 
               <dxi-item
                 dataField="Password"
                 editorType="dxTextBox"
-                [editorOptions]="{ mode: 'password' }"
+                [editorOptions]="{ mode: 'password',onEnterKey:onEnterPassword}"
                 label="Password"
               ></dxi-item>
 

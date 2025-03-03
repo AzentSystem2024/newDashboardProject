@@ -44,6 +44,16 @@ export class LoginPageComponent {
       Password: null,
     };
   }
+  onEnterUserName=()=>{
+  const passwordBox = document.querySelector('[name="Password"]') as HTMLElement;
+   if (passwordBox) {
+   passwordBox.focus();
+ }
+}
+
+  onEnterPassword=()=>{
+      this.Login();
+  }
 
   Login() {
     this.loadingVisible = true;
@@ -89,6 +99,7 @@ export class LoginPageComponent {
           }
         });
     } else {
+      this.loadingVisible = false;
       alert('Please fill all the fields');
     }
   }

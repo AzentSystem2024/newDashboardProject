@@ -417,26 +417,26 @@ export class MainHomePageComponent implements OnInit {
           const cardData = response.summary;
           this.ClaimAmount =
             (cardData.ClaimedAmount / 1000000)
-              .toFixed(1)
+              .toFixed(2)
               .replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + ' M';
           this.remittedAmt =
             (cardData.RemittedAmount / 1000000)
-              .toFixed(1)
+              .toFixed(2)
               .replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + ' M';
           this.remittedPercnt = cardData.RemittedPercent;
           this.paidAmt =
             (cardData.PaidAmount / 1000000)
-              .toFixed(1)
+              .toFixed(2)
               .replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + ' M';
           this.paidPrcnt = cardData.PaidPercent;
           this.deniedAmt =
             (cardData.RejectedAmount / 1000000)
-              .toFixed(1)
+              .toFixed(2)
               .replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + ' M';
           this.deniedPrcnt = cardData.RejectedPercent;
           this.balanceAmt =
             (cardData.BalanceAmount / 1000000)
-              .toFixed(1)
+              .toFixed(2)
               .replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + ' M';
           this.balancePrcnt = cardData.BalancePercent;
           this.remittancePrcnt = cardData.RemittedPercent;
