@@ -33,17 +33,14 @@
       </div>
     </dxi-item> -->
 
-    <dxi-item location="after" locateInMenu="auto" menuItemTemplate="menuItem">
-      <div *dxTemplate>
-        <dx-button
+    <dxi-item class="userPanelDiv" location="after" locateInMenu="auto" menuItemTemplate="menuItem" >
+      <div *dxTemplate="let data of 'item'">
+        <user-panel
           *ngIf="isloggedIn"
-          icon="runner"
-          text="Log Out"
-          type="danger"
-          stylingMode="text"
-          (click)="logout_Click()"
-        >
-        </dx-button>
+          [user]="user"
+          [menuItems]="userMenuItems"
+          menuMode="context"
+        ></user-panel>
       </div>
     </dxi-item>
 

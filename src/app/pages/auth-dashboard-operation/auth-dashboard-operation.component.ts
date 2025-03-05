@@ -109,17 +109,23 @@ export class AuthDashboardOperationComponent implements OnInit {
 
   //===================Custom label for pie chart ===========
   customizeLabel(arg) {
-  
-    return `${arg.valueText} (${arg.percentText})`;
+    const formattedValue = arg.value.toLocaleString();
+    return `${formattedValue} (${arg.percentText})`;
   }
 
   customizeLabelText = (pointInfo: any) => {
     // Find the corresponding data object in TaTstatusDataSource
     const item = this.TaTstatusDataSource.find((data) => data.Count === pointInfo.value);
-    
+
+    const formattedValue = pointInfo.value.toLocaleString();
+
     const percentage = item ? item.Percent.toFixed(2) : "0.00";
     
-    return `${pointInfo.value} (${percentage}%)`;
+    return `${formattedValue} (${percentage}%)`;
+  };
+
+  customizeChartLabelText = (pointInfo: any) => {
+    return pointInfo.value.toLocaleString(); // Formats with thousand separator
   };
 
   //=========MAking cutom datasource for facility datagrid and dropdown loADING=======
@@ -221,7 +227,7 @@ export class AuthDashboardOperationComponent implements OnInit {
       )
       .subscribe((response: any) => {
         if (response.flag == '1') {
-          this.ReguestSendCardValue = response.card.RequestCount;
+          this.ReguestSendCardValue = response.card.RequestCount.toLocaleString();
           this.mainSeriesChartDatasource = response.EncounterWise;
           this.pieChartDatasource = response.ServiceWise;
           this.TaTstatusDataSource = response.TATWise;

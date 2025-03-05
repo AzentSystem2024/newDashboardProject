@@ -117,10 +117,21 @@ export class AuthDashboardPageComponent implements OnInit {
   customizeLabelText = (pointInfo: any) => {
     // Find the corresponding data object in TaTstatusDataSource
     const item = this.TaTstatusDataSource.find((data) => data.Count === pointInfo.value);
+
+    // Format value with thousand separator
+    const formattedValue = pointInfo.value.toLocaleString();
     
     const percentage = item ? item.Percent.toFixed(2) : "0.00";
     
-    return `${pointInfo.value} (${percentage}%)`;
+    return `${formattedValue} (${percentage}%)`;
+  };
+
+  customizeChartLabelText = (pointInfo: any) => {
+    return pointInfo.value.toLocaleString(); // Formats with thousand separator
+  };
+
+  customizeCountPerDayLabelText = (pointInfo: any) => {
+    return pointInfo.value.toLocaleString(); // Formats with thousand separator
   };
 
 
@@ -251,7 +262,7 @@ export class AuthDashboardPageComponent implements OnInit {
       .subscribe(
         (response: any) => {
           if (response.flag === '1') {
-            this.ReguestSendCardValue = response.card?.RequestCount || [];
+            this.ReguestSendCardValue = response.card?.RequestCount.toLocaleString() || [];
             this.DenialCategoryChartData = response.CategoryWise || [];
             this.mainSeriesChartDatasource = response.EncounterWise || [];
             this.TaTstatusDataSource = response.TATWise || [];

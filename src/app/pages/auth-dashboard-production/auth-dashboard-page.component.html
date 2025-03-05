@@ -314,6 +314,7 @@
                   [backgroundColor]="'transparent'"
                   [border]="{ visible: false, color: '#294730', width: 1 }"
                   [font]="{ color: 'var(--text-color)', weight: 600, size: 14 }"
+                  [customizeText]="customizeChartLabelText"
                 ></dxo-label>
               </dxi-series>
               <dxo-legend
@@ -364,6 +365,7 @@
                   [backgroundColor]="'transparent'"
                   [border]="{ visible: false, color: '#294730', width: 1 }"
                   [font]="{ color: 'var(--text-color)', weight: 600, size: 14 }"
+                  [customizeText]="customizeChartLabelText"
                 >
                 </dxo-label>
               </dxo-common-series-settings>
@@ -411,7 +413,7 @@
           <div class="ChartContent text-center">
             <dx-chart [dataSource]="CountPerDaysData" [valueAxis]="">
               <dxo-title text="Count Per Day" hint=""></dxo-title>
-              <dxo-size [height]="420"></dxo-size>
+              <dxo-size [height]="402"></dxo-size>
               <dxi-series
                 argumentField="Day"
                 valueField="Count"
@@ -426,6 +428,7 @@
                   [backgroundColor]="'transparent'"
                   [border]="{ visible: false, color: '#294730', width: 1 }"
                   [font]="{ color: 'var(--text-color)', weight: 600, size: 14 }"
+                  [customizeText]="customizeCountPerDayLabelText"
                 ></dxo-label>
               </dxi-series>
               <dxo-legend [visible]="false"></dxo-legend>

@@ -37,7 +37,7 @@ export class AppHeaderComponent implements OnInit {
       text: 'Logout',
       icon: 'runner',
       onClick: () => {
-        this.authService.logOut();
+        this.authService.logOut()
         // window.location.reload();
       },
     },

@@ -244,6 +244,7 @@
                   [backgroundColor]="'transparent'"
                   [border]="{ visible: false, color: '#294730', width: 1 }"
                   [font]="{ color: 'var(--text-color)', weight: 600, size: 14 }"
+                  [customizeText]="customizeChartLabelText"
                 >
                 </dxo-label>
               </dxo-common-series-settings>
@@ -264,6 +265,7 @@
             <dx-pie-chart
               id="pie"
               palette="bright"
+              class="pb-3"
               [dataSource]="pieChartDatasource"
             >
               <dxo-title text="Service Wise Authorized" hint=""></dxo-title>
@@ -287,7 +289,7 @@
             </dx-pie-chart>
           </div>
           <div class="ChartContent text-center">
-            <dx-chart id="chart" [dataSource]="TaTstatusDataSource">
+            <dx-chart id="chart" [dataSource]="TaTstatusDataSource" class="pb-3">
               <dxo-title text="TAT Status" hint=""></dxo-title>
               <dxi-series
                 argumentField="TAT"

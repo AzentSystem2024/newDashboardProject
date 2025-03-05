@@ -134,7 +134,7 @@ export class AuthService {
     sessionStorage.clear();
     this.customReuse.clearStoredData();
     this.router.navigate(['/auth/login']);
-    // window.location.reload();
+    window.location.reload();
   }
 }
 
