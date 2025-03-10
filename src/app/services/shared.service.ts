@@ -43,12 +43,13 @@ export class SharedService {
   }
 
   navigateToDashboard(dashboardText: any) {
+    console.log(dashboardText,"dashboardText")
     const routes = {
-      2: '/Finance-Dashboard',
       1: '/Main-Dashboard',
-      3: '/Auth-Dashboard-Production',
-      4: '/Auth-Dashboard-Operation',
-      6: '/Revenue-Dashboard',
+      2: '/Finance-Dashboard',
+      // 3: '/Auth-Dashboard-Production',
+      // 4: '/Auth-Dashboard-Operation',
+      // 6: '/Revenue-Dashboard',
     };
 
     for (const key in routes) {

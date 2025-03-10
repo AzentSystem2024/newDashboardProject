@@ -35,6 +35,7 @@ import {
 import { DataService } from 'src/app/services';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { DxTagBoxTypes } from 'devextreme-angular/ui/tag-box';
 
 @Component({
   selector: 'app-finance-dashboard',
@@ -79,10 +80,13 @@ export class FinanceDashboardComponent implements OnInit {
   searchOnvalue: any;
   EncountrTypeDatasource: any;
   encountertypevalue: any;
+  encountertypeNewvalue: any[] = [];
   insuranceDataSource: any;
   insuranceValue: any;
+  insuranceNewValue: any[] = [];
   DepartmentDatasource: any;
   DepartmentValue: any;
+  DepartmentNewValue: any[] = [];
   facilityvalue: any;
   modifiedFacilityDatasource: any;
   FacilityDataSource: any;
@@ -111,6 +115,47 @@ export class FinanceDashboardComponent implements OnInit {
   ngOnInit(): void {
     this.get_initial_data();
   }
+
+  //tag-box
+
+  onMultiTagEncounterTypePreparing(args: DxTagBoxTypes.MultiTagPreparingEvent) {
+      const selectedItemsLength = args.selectedItems.length;
+      const totalCount = this.EncountrTypeDatasource.length;
+  
+      if (selectedItemsLength < totalCount) {
+        this.encountertypeNewvalue = this.encountertypevalue;
+        args.cancel = true;
+      } else {
+        args.text = `All`;
+        this.encountertypeNewvalue = [];
+      }
+    }
+
+    onMultiTagDepartmentPreparing(args: DxTagBoxTypes.MultiTagPreparingEvent) {
+      const selectedItemsLength = args.selectedItems.length;
+      const totalCount = this.DepartmentDatasource.length;
+  
+      if (selectedItemsLength < totalCount) {
+        this.DepartmentNewValue = this.DepartmentValue;
+        args.cancel = true;
+      } else {
+        args.text = `All`;
+        this.DepartmentNewValue = [];
+      }
+    }
+
+    onMultiTagInsurancePreparing(args: DxTagBoxTypes.MultiTagPreparingEvent) {
+      const selectedItemsLength = args.selectedItems.length;
+      const totalCount = this.insuranceDataSource.length;
+  
+      if (selectedItemsLength < totalCount) {
+        this.insuranceNewValue = this.insuranceValue;
+        args.cancel = true;
+      } else {
+        args.text = `All`;
+        this.insuranceNewValue = [];
+      }
+    }
 
   //===========show filter div by clicking showing div========
   Show_toggle_Groups_By_Div_click(): void {
@@ -235,21 +280,21 @@ export class FinanceDashboardComponent implements OnInit {
             this.SearchOnDatasource.find((obj: any) => obj.Default === '1')
               ?.ID || ' ';
 
-          this.encountertypevalue = this.EncountrTypeDatasource.filter(
-            (item) => item.Default === '1'
-          ).map((item) => item.ID);
+          // this.encountertypevalue = this.EncountrTypeDatasource.filter(
+          //   (item) => item.Default === '1'
+          // ).map((item) => item.ID);
 
           this.facilityvalue = this.FacilityDataSource.filter(
             (item) => item.Default === '1'
           ).map((item) => item.ID);
 
-          this.insuranceValue = this.insuranceDataSource
-            .filter((item) => item.Default === '1')
-            .map((item) => item.ID);
+          // this.insuranceValue = this.insuranceDataSource
+          //   .filter((item) => item.Default === '1')
+          //   .map((item) => item.ID);
 
-          this.DepartmentValue = this.DepartmentDatasource.filter(
-            (item) => item.Default === '1'
-          ).map((item) => item.ID);
+          // this.DepartmentValue = this.DepartmentDatasource.filter(
+          //   (item) => item.Default === '1'
+          // ).map((item) => item.ID);
         }
         this.get_graph_DataSource();
       });
@@ -275,10 +320,10 @@ export class FinanceDashboardComponent implements OnInit {
         DateFrom,
         DateTo,
         AsOnDate,
-        this.encountertypevalue.join(','),
+        this.encountertypeNewvalue.join(','),
         this.facilityvalue.join(','),
-        this.insuranceValue.join(','),
-        this.DepartmentValue.join(',')
+        this.insuranceNewValue.join(','),
+        this.DepartmentNewValue.join(',')
       )
       .subscribe((response: any) => {
         if (response.flag === '1') {

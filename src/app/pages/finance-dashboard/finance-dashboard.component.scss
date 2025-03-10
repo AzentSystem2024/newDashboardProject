@@ -82,3 +82,15 @@
 .datagridContent {
   width: 50%;
 }
+
+
+.row.mt-1.ms-1.me-1 {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+.row.ms-1.me-1{
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+}

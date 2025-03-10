@@ -35,6 +35,7 @@ import CustomStore from 'devextreme/data/custom_store';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services';
 import { SharedService } from 'src/app/services/shared.service';
+import { DxTagBoxTypes } from 'devextreme-angular/ui/tag-box';
 @Component({
   selector: 'app-auth-dashboard-page',
   templateUrl: './auth-dashboard-page.component.html',
@@ -73,11 +74,14 @@ export class AuthDashboardPageComponent implements OnInit {
     todate: '',
   };
   physicianvalue: any[];
+  physicianNewvalue: any[];
   PhysicianDatasource: any;
   denialcategoryvalue: any[];
+  denialcategoryNewvalue: any[];
   DenailCategoryDatasource: any;
   ServiceCategoryDatasource: any[];
   servicecategoryvalue: any[];
+  servicecategoryNewvalue: any[];
   modifiedFacilityDatasource: any;
   facilityvalue: any[];
   FacilityDataSource: any;
@@ -87,8 +91,10 @@ export class AuthDashboardPageComponent implements OnInit {
   loadingVisible: boolean = false;
   payerDatasource:any;
   payervalue:any;
+  payerNewvalue:any;
   PhysicianCategoryDatasource:any;
   physiciancategoryvalue:any;
+  physiciancategoryNewvalue:any;
   
 
   mainSeriesChartDatasource: any;
@@ -133,6 +139,73 @@ export class AuthDashboardPageComponent implements OnInit {
   customizeCountPerDayLabelText = (pointInfo: any) => {
     return pointInfo.value.toLocaleString(); // Formats with thousand separator
   };
+
+  //tag-box
+
+  onMultiTagDepartmentPreparing(args: DxTagBoxTypes.MultiTagPreparingEvent) {
+        const selectedItemsLength = args.selectedItems.length;
+        const totalCount = this.PhysicianDatasource.length;
+    
+        if (selectedItemsLength < totalCount) {
+          this.physicianNewvalue = this.physicianvalue;
+          args.cancel = true;
+        } else {
+          args.text = `All`;
+          this.physicianNewvalue = [] ;
+        }
+      }
+
+      onMultiTagDenialCategoryPreparing(args: DxTagBoxTypes.MultiTagPreparingEvent) {
+        const selectedItemsLength = args.selectedItems.length;
+        const totalCount = this.DenailCategoryDatasource.length;
+    
+        if (selectedItemsLength < totalCount) {
+          this.denialcategoryNewvalue = this.denialcategoryvalue
+          args.cancel = true;
+        } else {
+          args.text = `All`;
+          this.denialcategoryNewvalue = [];
+        }
+      }
+
+      onMultiTagPhysicianCategoryPreparing(args: DxTagBoxTypes.MultiTagPreparingEvent) {
+        const selectedItemsLength = args.selectedItems.length;
+        const totalCount = this.PhysicianCategoryDatasource.length;
+    
+        if (selectedItemsLength < totalCount) {
+          this.physiciancategoryNewvalue = this.physiciancategoryvalue ; 
+          args.cancel = true;
+        } else {
+          args.text = `All`;
+          this.physicianNewvalue =[];
+        }
+      }
+
+      onMultiTagServiceCategoryPreparing(args: DxTagBoxTypes.MultiTagPreparingEvent) {
+        const selectedItemsLength = args.selectedItems.length;
+        const totalCount = this.ServiceCategoryDatasource.length;
+    
+        if (selectedItemsLength < totalCount) {
+          this.servicecategoryNewvalue = this.servicecategoryvalue ; 
+          args.cancel = true;
+        } else {
+          args.text = `All`;
+          this.servicecategoryNewvalue = [];
+        }
+      }
+
+      onMultiTagPayerPreparing(args: DxTagBoxTypes.MultiTagPreparingEvent) {
+        const selectedItemsLength = args.selectedItems.length;
+        const totalCount = this.payerDatasource.length;
+    
+        if (selectedItemsLength < totalCount) {
+          this.payerNewvalue = this.payervalue;
+          args.cancel = true;
+        } else {
+          args.text = `All`;
+          this.payerNewvalue =[];
+        }
+      }
 
 
   //======================Page on init ========================
@@ -216,29 +289,30 @@ export class AuthDashboardPageComponent implements OnInit {
           ).map((item) => item.ID);
 
           this.PhysicianDatasource = response.Department;
-          this.physicianvalue = this.PhysicianDatasource.filter(
-            (item) => item.Default === '1'
-          ).map((item) => item.ID);
+          // this.physicianvalue = this.PhysicianDatasource.filter(
+          //   (item) => item.Default === '1'
+          // ).map((item) => item.ID);
+          
 
           this.DenailCategoryDatasource = response.DenialCategory;
-          this.denialcategoryvalue = this.DenailCategoryDatasource.filter(
-            (item) => item.Default === '1'
-          ).map((item) => item.ID);
+          // this.denialcategoryvalue = this.DenailCategoryDatasource.filter(
+          //   (item) => item.Default === '1'
+          // ).map((item) => item.ID);
 
           this.ServiceCategoryDatasource = response.CPTBlock;
-          this.servicecategoryvalue = this.ServiceCategoryDatasource.filter(
-            (item) => item.Default === '1'
-          ).map((item) => item.ID);
+          // this.servicecategoryvalue = this.ServiceCategoryDatasource.filter(
+          //   (item) => item.Default === '1'
+          // ).map((item) => item.ID);
 
           this.payerDatasource = response.Payer;
-          this.payervalue = this.ServiceCategoryDatasource.filter(
-            (item) => item.Default === '1'
-          ).map((item) => item.ID);
+          // this.payervalue = this.ServiceCategoryDatasource.filter(
+          //   (item) => item.Default === '1'
+          // ).map((item) => item.ID);
 
           this.PhysicianCategoryDatasource = response.PhysicianCategory;
-          this.physiciancategoryvalue = this.ServiceCategoryDatasource.filter(
-            (item) => item.Default === '1'
-          ).map((item) => item.ID);
+          // this.physiciancategoryvalue = this.ServiceCategoryDatasource.filter(
+          //   (item) => item.Default === '1'
+          // ).map((item) => item.ID);
         }
         this.loadingVisible = false;
 
@@ -252,12 +326,12 @@ export class AuthDashboardPageComponent implements OnInit {
       .get_Prior_Dashboard_Production_Datasource(
         this.dateForm.fromdate,
         this.dateForm.todate,
-        this.denialcategoryvalue.join(','),
+        this.denialcategoryNewvalue.join(','),
         this.facilityvalue.join(','),
-        this.physicianvalue.join(','),
-        this.servicecategoryvalue.join(','),
-        this.payervalue.join(','),
-        this.physiciancategoryvalue.join(','),
+        this.physicianNewvalue.join(','),
+        this.servicecategoryNewvalue.join(','),
+        this.payerNewvalue.join(','),
+        this.physiciancategoryNewvalue.join(','),
       )
       .subscribe(
         (response: any) => {

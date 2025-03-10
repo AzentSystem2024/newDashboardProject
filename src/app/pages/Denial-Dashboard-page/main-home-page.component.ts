@@ -39,6 +39,7 @@ import { jsPDF } from 'jspdf';
 import CustomStore from 'devextreme/data/custom_store';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { DxTagBoxTypes } from 'devextreme-angular/ui/tag-box';
 
 @Component({
   selector: 'app-main-home-page',
@@ -87,21 +88,26 @@ export class MainHomePageComponent implements OnInit {
   EncountrTypeDatasource: any;
   DenailCategoryDatasource: any;
   denialcategoryvalue: any[] = [];
+  denialcategoryNewvalue: any[] = [];
   encountertypevalue: any[] = [];
+  encountertypeNewvalue: any[] = [];
   DateFrom: any = new Date();
   DateTo: any = new Date();
   RejectionIndexDatasource: any;
   rejectionIndexvalue: any;
   blockDataSource: any;
   blockValue: any[] = [];
+  blockNewValue: any[] = [];
   regionDataSource: any;
   RegionValue: any[] = [];
   ProviderTypeDatasource: any;
   ProviderTypevalue: any[] = [];
   insuranceDataSource: any;
   insuranceValue: any[] = [];
+  insuranceNewValue: any[] = [];
   departmentDataSource: any;
   departmentValue: any[] = [];
+  departmentNewValue: any[] = [];
   showGroups: boolean = true;
 
   //=================card data variables=====================
@@ -157,6 +163,51 @@ export class MainHomePageComponent implements OnInit {
   }
   ngOnInit(): void {
     this.get_initial_data();
+  }
+
+  exportOptions = [
+    { id: 'pdf', text: 'As PDF', icon: 'exportpdf' , onClick: () => this.export()},
+    { id: 'excel', text: 'As Excel', icon: 'exportxlsx', onClick: () => this.exportExcel() }
+  ];
+
+  onExportClick(e: any) {
+    console.log(e,"e")
+    if (e.itemData?.onClick) {
+      e.itemData.onClick();
+    }
+  }
+
+  exportExcel(){
+    console.log('excel export')
+    this.showGroups = false;
+    this.loadingVisible = true;
+
+    this.DateFrom = this.dateForm.fromdate;
+    this.DateTo = this.dateForm.todate;
+
+    this.dataservice
+      .get_Denial_Dashboard_Export_Data(
+        this.searchOnvalue,
+        this.DateFrom,
+        this.DateTo,
+        this.rejectionIndexvalue,
+        this.denialcategoryNewvalue.join(','),
+        this.encountertypeNewvalue.join(','),
+        this.blockNewValue.join(','),
+        this.facilityvalue.join(','),
+        this.insuranceNewValue.join(','),
+        this.departmentNewValue.join(',')
+      )
+      .subscribe((response: any) => {
+        
+        if (response) {
+          this.loadingVisible = false;
+          console.table("Response",response);
+          
+        } else {
+          notify(`${response.message}`, 'error', 3000);
+        }
+      });
   }
 
   //===========show filter div by clicking showing div========
@@ -363,29 +414,29 @@ export class MainHomePageComponent implements OnInit {
           this.RejectionIndexDatasource.find((obj: any) => obj.Default === '1')
             ?.ID || ' ';
 
-        this.denialcategoryvalue = this.DenailCategoryDatasource.filter(
-          (item) => item.Default === '1'
-        ).map((item) => item.ID);
+        // this.denialcategoryvalue = this.DenailCategoryDatasource.filter(
+        //   (item) => item.Default === '1'
+        // ).map((item) => item.ID);
 
-        this.encountertypevalue = this.EncountrTypeDatasource.filter(
-          (item) => item.Default === '1'
-        ).map((item) => item.ID);
+        // this.encountertypevalue = this.EncountrTypeDatasource.filter(
+        //   (item) => item.Default === '1'
+        // ).map((item) => item.ID);
 
-        this.blockValue = this.blockDataSource
-          .filter((item) => item.Default === '1')
-          .map((item) => item.ID);
+        // this.blockValue = this.blockDataSource
+        //   .filter((item) => item.Default === '1')
+        //   .map((item) => item.ID);
 
         this.facilityvalue = this.FacilityDataSource.filter(
           (item) => item.Default === '1'
         ).map((item) => item.ID);
 
-        this.insuranceValue = this.insuranceDataSource
-          .filter((item) => item.Default === '1')
-          .map((item) => item.ID);
+        // this.insuranceValue = this.insuranceDataSource
+        //   .filter((item) => item.Default === '1')
+        //   .map((item) => item.ID);
 
-        this.departmentValue = this.departmentDataSource
-          .filter((item) => item.Default === '1')
-          .map((item) => item.ID);
+        // this.departmentValue = this.departmentDataSource
+        //   .filter((item) => item.Default === '1')
+        //   .map((item) => item.ID);
       }
       this.get_graph_DataSource();
     });
@@ -405,12 +456,12 @@ export class MainHomePageComponent implements OnInit {
         this.DateFrom,
         this.DateTo,
         this.rejectionIndexvalue,
-        this.denialcategoryvalue.join(','),
-        this.encountertypevalue.join(','),
-        this.blockValue.join(','),
+        this.denialcategoryNewvalue.join(','),
+        this.encountertypeNewvalue.join(','),
+        this.blockNewValue.join(','),
         this.facilityvalue.join(','),
-        this.insuranceValue.join(','),
-        this.departmentValue.join(',')
+        this.insuranceNewValue.join(','),
+        this.departmentNewValue.join(',')
       )
       .subscribe((response: any) => {
         if (response.flag === '1') {
@@ -481,6 +532,75 @@ export class MainHomePageComponent implements OnInit {
     this.get_graph_DataSource();
   }
 
+  //tagbox
+  onMultiTagPreparing(args: DxTagBoxTypes.MultiTagPreparingEvent) {
+    const selectedItemsLength = args.selectedItems.length;
+    const totalCount = this.EncountrTypeDatasource.length;
+    console.log(selectedItemsLength,"selecteditemslength")
+    console.log(totalCount,"total count")
+    if (selectedItemsLength < totalCount) {
+      this.encountertypeNewvalue = this.encountertypevalue
+      args.cancel = true;
+    } else {
+      args.text = `All`;
+      this.encountertypeNewvalue = [];
+    }
+  }
+
+  onMultiTagBlockPreparing(args: DxTagBoxTypes.MultiTagPreparingEvent) {
+    const selectedItemsLength = args.selectedItems.length;
+    const totalCount = this.blockDataSource.length;
+
+    if (selectedItemsLength < totalCount) {
+      this.blockNewValue = this.blockValue;
+      args.cancel = true;
+    } else {
+      args.text = `All`;
+      this.blockNewValue = [];
+    }
+  }
+
+  onMultiTagDepartmentPreparing(args: DxTagBoxTypes.MultiTagPreparingEvent) {
+    const selectedItemsLength = args.selectedItems.length;
+    const totalCount = this.departmentDataSource.length;
+
+    if (selectedItemsLength < totalCount) {
+      this.departmentNewValue = this.departmentValue;
+      args.cancel = true;
+    } else {
+      args.text = `All`;
+      this.departmentNewValue = [];
+    }
+  }
+
+  onMultiTagInsurancePreparing(args: DxTagBoxTypes.MultiTagPreparingEvent) {
+    const selectedItemsLength = args.selectedItems.length;
+    const totalCount = this.insuranceDataSource.length;
+
+    if (selectedItemsLength < totalCount) {
+      this.insuranceNewValue = this.insuranceValue;
+      args.cancel = true;
+    } else {
+      args.text = `All`;
+      this.insuranceNewValue = [];
+    }
+  }
+  
+  onMultiTagDenialCategoryPreparing(args: DxTagBoxTypes.MultiTagPreparingEvent) {
+    const selectedItemsLength = args.selectedItems.length;
+    console.log(selectedItemsLength,"selectedItemsLength")
+    const totalCount = this.DenailCategoryDatasource.length;
+    console.log(totalCount,"total count");
+
+    if (selectedItemsLength < totalCount) {
+      this.denialcategoryNewvalue = this.denialcategoryvalue
+      args.cancel = true;
+    } else {
+      args.text = `All`;
+      this.denialcategoryNewvalue = [];
+    }
+  }
+
   //===============Format the date fetch from date picker of ui ==================
   private formatDate(date: Date): string {
     const day = date.getDate().toString().padStart(2, '0');
@@ -531,6 +651,7 @@ export class MainHomePageComponent implements OnInit {
     DxLoadPanelModule,
     DxDataGridModule,
     FormsModule,
+    DxDropDownButtonModule
   ],
   declarations: [MainHomePageComponent],
   exports: [MainHomePageComponent],

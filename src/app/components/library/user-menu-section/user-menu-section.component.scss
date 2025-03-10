@@ -6,6 +6,7 @@
   cursor: default;
   padding: var(--list-padding-vertical) var(--list-padding-left);
   border-bottom: 1px solid var(--border-color);
+  
 
   .user-name {
     font-size: 14px;
@@ -32,7 +33,6 @@
 
 ::ng-deep .dx-list.user-info-list.dx-scrollable.dx-widget {
   height: auto;
- 
 }
 
 ::ng-deep .dx-list-item .dx-icon {

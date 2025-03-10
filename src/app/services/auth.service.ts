@@ -133,7 +133,6 @@ export class AuthService {
   async logOut() {
     sessionStorage.clear();
     this.customReuse.clearStoredData();
-    this.router.navigate(['/auth/login']);
     window.location.reload();
   }
 }

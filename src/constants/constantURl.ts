@@ -62,3 +62,6 @@ export const CRS_DASHBOARD_CLAIMSMRY_RECEIVEDATA =
 
 export const CRS_DASHBOARD_CLAIMSMRY_DOCTORDATA =
   API_BASE_URL + '/ClaimSummary/doctordata';
+
+  export const CRS_DASHBOARD_DENIAL_EXPORT =
+  API_BASE_URL + '/denialdasbhoard/data';

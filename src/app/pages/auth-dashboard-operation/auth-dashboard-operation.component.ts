@@ -33,6 +33,7 @@ import {
 import { CardAnalyticsModule } from 'src/app/components/library/card-analytics/card-analytics.component';
 import { DataService } from 'src/app/services';
 import CustomStore from 'devextreme/data/custom_store';
+import { DxTagBoxTypes } from 'devextreme-angular/ui/tag-box';
 
 @Component({
   selector: 'app-auth-dashboard-operation',
@@ -60,11 +61,14 @@ export class AuthDashboardOperationComponent implements OnInit {
     todate: '',
   };
   Departmentvalue: any[];
+  DepartmentNewvalue: any[];
   DepartmentDatasource: any;
   denialcategoryvalue: any[];
+  denialcategoryNewvalue: any[];
   DenailCategoryDatasource: any;
   ServiceCategoryDatasource: any[];
   servicecategoryvalue: any[];
+  servicecategoryNewvalue: any[];
   modifiedFacilityDatasource: any;
   facilityvalue: any[];
   FacilityDataSource: any;
@@ -101,6 +105,34 @@ export class AuthDashboardOperationComponent implements OnInit {
   ngOnInit(): void {
     this.get_Init_Data();
   }
+
+  //tag-box
+
+  onMultiTagDepartmentPreparing(args: DxTagBoxTypes.MultiTagPreparingEvent) {
+          const selectedItemsLength = args.selectedItems.length;
+          const totalCount = this.DepartmentDatasource.length;
+      
+          if (selectedItemsLength < totalCount) {
+            this.DepartmentNewvalue = this.Departmentvalue;
+            args.cancel = true;
+          } else {
+            args.text = `All`;
+            this.DepartmentNewvalue = [];
+          }
+        }
+
+        onMultiTagServiceCategoryPreparing(args: DxTagBoxTypes.MultiTagPreparingEvent) {
+          const selectedItemsLength = args.selectedItems.length;
+          const totalCount = this.ServiceCategoryDatasource.length;
+      
+          if (selectedItemsLength < totalCount) {
+            this.servicecategoryNewvalue = this.servicecategoryvalue ; 
+            args.cancel = true;
+          } else {
+            args.text = `All`;
+            this.servicecategoryNewvalue = [];
+          }
+        }
 
   //===========show filter div by clicking showing div========
   Show_toggle_Groups_By_Div_click(): void {
@@ -195,14 +227,14 @@ export class AuthDashboardOperationComponent implements OnInit {
           ).map((item) => item.ID);
 
           this.DepartmentDatasource = response.Department;
-          this.Departmentvalue = this.DepartmentDatasource.filter(
-            (item) => item.Default === '1'
-          ).map((item) => item.ID);
+          // this.Departmentvalue = this.DepartmentDatasource.filter(
+          //   (item) => item.Default === '1'
+          // ).map((item) => item.ID);
 
           this.ServiceCategoryDatasource = response.CaseType;
-          this.servicecategoryvalue = this.ServiceCategoryDatasource.filter(
-            (item) => item.Default === '1'
-          ).map((item) => item.ID);
+          // this.servicecategoryvalue = this.ServiceCategoryDatasource.filter(
+          //   (item) => item.Default === '1'
+          // ).map((item) => item.ID);
         }
         this.get_chart_datasource();
       });
@@ -214,8 +246,8 @@ export class AuthDashboardOperationComponent implements OnInit {
     var fromdate = this.dateForm.fromdate;
     var todate = this.dateForm.todate;
     var facility = this.facilityvalue.join(',');
-    var department = this.Departmentvalue.join(',');
-    var serviceCategory = this.servicecategoryvalue.join(',');
+    var department = this.DepartmentNewvalue.join(',');
+    var serviceCategory = this.servicecategoryNewvalue.join(',');
 
     this.service
       .get_Prior_Dashboard_Opreations_Datasource(

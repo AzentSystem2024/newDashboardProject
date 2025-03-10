@@ -1,4 +1,4 @@
-import { Component, NgModule, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, NgModule, Input, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { DxListModule, DxListTypes } from 'devextreme-angular/ui/list';
@@ -22,10 +22,15 @@ export class UserMenuSectionComponent {
 
   @ViewChild('userInfoList', { read: ElementRef }) userInfoList: ElementRef<HTMLElement>;
 
+  isVisible:boolean = true;
+
+  @Output() isVisibleChange = new EventEmitter<boolean>();
+
   constructor() {}
 
   handleListItemClick(e: DxListTypes.ItemClickEvent) {
     e.itemData?.onClick();
+    // this.isVisible=false;
   }
 }
 

@@ -48,14 +48,18 @@
             valueExpr="ID"
             [(value)]="physicianvalue"
             [showSelectionControls]="true"
+            [showClearButton]="true"
+            (onMultiTagPreparing)="onMultiTagDepartmentPreparing($event)"
+            selectAllMode="allPages"
+            [maxDisplayedTags]="2"  
             [multiline]="false"
             applyValueMode="instantly"
             label="Department"
             labelMode="floating"
             (onValueChanged)="
               reorderDataSource(
-                'denialcategoryvalue',
-                'DenailCategoryDatasource'
+                'physicianvalue',
+                'PhysicianDatasource'
               )
             "
           >
@@ -71,6 +75,10 @@
             valueExpr="ID"
             [(value)]="denialcategoryvalue"
             [showSelectionControls]="true"
+            [showClearButton]="true"
+            (onMultiTagPreparing)="onMultiTagDenialCategoryPreparing($event)"
+            selectAllMode="allPages"
+            [maxDisplayedTags]="2"  
             [multiline]="false"
             applyValueMode="instantly"
             label="Denial Category"
@@ -94,6 +102,10 @@
             displayExpr="Name"
             valueExpr="ID"
             [showSelectionControls]="true"
+            [showClearButton]="true"
+            (onMultiTagPreparing)="onMultiTagServiceCategoryPreparing($event)"
+            selectAllMode="allPages"
+            [maxDisplayedTags]="2"  
             [multiline]="false"
             applyValueMode="instantly"
             label="Service Category"
@@ -101,8 +113,8 @@
             [searchEnabled]="true"
             (onValueChanged)="
               reorderDataSource(
-                'encountertypevalue',
-                'EncountrTypeDatasource'
+                'servicecategoryvalue',
+                'ServiceCategoryDatasource'
               )
             "
           >
@@ -203,6 +215,10 @@
             valueExpr="ID"
             [(value)]="payervalue"
             [showSelectionControls]="true"
+            [showClearButton]="true"
+            (onMultiTagPreparing)="onMultiTagPayerPreparing($event)"
+            selectAllMode="allPages"
+            [maxDisplayedTags]="2"  
             [multiline]="false"
             applyValueMode="instantly"
             label="Payer"
@@ -225,6 +241,10 @@
             valueExpr="ID"
             [(value)]="physiciancategoryvalue"
             [showSelectionControls]="true"
+            [showClearButton]="true"
+            (onMultiTagPreparing)="onMultiTagPhysicianCategoryPreparing($event)"
+            selectAllMode="allPages"
+            [maxDisplayedTags]="2"  
             [multiline]="false"
             applyValueMode="instantly"
             label="Physician Category"

@@ -75,6 +75,10 @@
             displayExpr="Name"
             valueExpr="ID"
             [showSelectionControls]="true"
+            [showClearButton]="true"
+            (onMultiTagPreparing)="onMultiTagEncounterTypePreparing($event)"
+            selectAllMode="allPages"
+            [maxDisplayedTags]="0"
             [multiline]="false"
             applyValueMode="instantly"
             label="Encounter Type"
@@ -180,7 +184,11 @@
               label="Department"
               labelMode="floating"
               [showSelectionControls]="true"
+              (onMultiTagPreparing)="onMultiTagDepartmentPreparing($event)"
+              selectAllMode="allPages"
+              [maxDisplayedTags]="2"
               [multiline]="false"
+              [showClearButton]="true"
               applyValueMode="instantly"
               (onValueChanged)="
                 reorderDataSource('DepartmentValue', 'DepartmentDatasource')
@@ -198,6 +206,10 @@
               label="Insurance"
               labelMode="floating"
               [showSelectionControls]="true"
+              [showClearButton]="true"
+              (onMultiTagPreparing)="onMultiTagInsurancePreparing($event)"
+              selectAllMode="allPages"
+              [maxDisplayedTags]="2"
               [multiline]="false"
               applyValueMode="instantly"
               [dropDownOptions]="{ height: 250 }"
@@ -318,7 +330,7 @@
         <div class="d-flex gap-1 p-0 m-0">
           <div class="ChartContent text-center">
             <dx-pie-chart
-              class="p-0 pb-3 m-0"
+              style="padding-bottom: 80px;"
               palette="bright"
               [dataSource]="pieChartDatasource"
             >

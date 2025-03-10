@@ -111,7 +111,9 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
         sessionStorage.setItem('paramsid', this.userId);
         this.service.fetch_tab_Data_mainLayout().subscribe((response: any) => {
           if (response.flag === '1') {
-            this.tabs = response.dashboards;
+            this.tabs = response.dashboards
+                      .filter(dashboard => dashboard.ID === 1 || dashboard.ID === 2)
+                      .sort((a, b) => a.ID - b.ID);
 
             // Check if we should navigate based on tabs and login status
             if (this.tabs.length > 0) {

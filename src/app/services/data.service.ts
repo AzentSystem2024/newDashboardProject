@@ -13,6 +13,7 @@ import {
   CRS_DASHBOARD_CLAIMSMRY_RECEIVEDATA,
   CRS_DASHBOARD_CLAIMSUMMARY_BRKUP,
   CRS_DASHBOARD_CLAIMSUMMARY_HOME,
+  CRS_DASHBOARD_DENIAL_EXPORT,
   CRS_DASHBOARD_PRIOR_DASHBOARD,
   CRS_DASHBOARD_CLINICIANRECEIVER_CPT,
   CRS_DASHBOARD_CLINICIANRECIVER_BRKUP,
@@ -666,5 +667,38 @@ export class DataService {
         reject('No elements to export');
       }
     });
+  }
+
+  //DENIAL EXPORT 
+
+  get_Denial_Dashboard_Export_Data(
+    searchOn: any,
+    fromdate: any,
+    todate: any,
+    rejectionIndex: any,
+    denialCategory: any,
+    encounterType: any,
+    block: any,
+    facility: any,
+    insurance: any,
+    department: any
+  ) {
+    const url = CRS_DASHBOARD_DENIAL_EXPORT;
+    const reqBodyData = {
+      SearchOn: searchOn,
+      DateFrom: fromdate,
+      DateTo: todate,
+      RejectionIndex: rejectionIndex,
+      DenialCategory: denialCategory,
+      EncounterType: encounterType,
+      Block: block,
+      Region: '',
+      ProviderType: '',
+      Facility: facility,
+      Insurance: insurance,
+      Department: department,
+    };
+
+    return this.http.post(url, reqBodyData);
   }
 }

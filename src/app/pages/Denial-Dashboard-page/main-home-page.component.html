@@ -76,6 +76,10 @@
             valueExpr="ID"
             [(value)]="denialcategoryvalue"
             [showSelectionControls]="true"
+            [showClearButton]="true"
+            (onMultiTagPreparing)="onMultiTagDenialCategoryPreparing($event)"
+            selectAllMode="allPages"
+            [maxDisplayedTags]="0"
             [multiline]="false"
             applyValueMode="instantly"
             label="Denial Category"
@@ -99,6 +103,10 @@
             displayExpr="Name"
             valueExpr="ID"
             [showSelectionControls]="true"
+            [showClearButton]="true"
+            (onMultiTagPreparing)="onMultiTagPreparing($event)"
+            selectAllMode="allPages"
+            [maxDisplayedTags]="0"
             [multiline]="false"
             applyValueMode="instantly"
             label="Encounter Type"
@@ -207,6 +215,10 @@
               label="Block"
               labelMode="floating"
               [showSelectionControls]="true"
+              [showClearButton]="true"
+              (onMultiTagPreparing)="onMultiTagBlockPreparing($event)"
+              selectAllMode="allPages"
+              [maxDisplayedTags]="0"
               [multiline]="false"
               applyValueMode="instantly"
               (onValueChanged)="
@@ -226,6 +238,10 @@
               label="Department"
               labelMode="floating"
               [showSelectionControls]="true"
+              [showClearButton]="true"
+              (onMultiTagPreparing)="onMultiTagDepartmentPreparing($event)"
+              selectAllMode="allPages"
+              [maxDisplayedTags]="0"
               [multiline]="false"
               applyValueMode="instantly"
               (onValueChanged)="
@@ -245,6 +261,10 @@
               label="Insurance"
               labelMode="floating"
               [showSelectionControls]="true"
+              [showClearButton]="true"
+              (onMultiTagPreparing)="onMultiTagInsurancePreparing($event)"
+              selectAllMode="allPages"
+              [maxDisplayedTags]="0"
               [multiline]="false"
               applyValueMode="instantly"
               [dropDownOptions]="{ height: 250 }"
@@ -254,7 +274,7 @@
             ></dx-tag-box>
           </div>
 
-          <div class="col-1 me-auto d-flex justify-content-center">
+          <div class="col-1 justify-content-center">
             <dx-button
               class="mt-2"
               icon="exportpdf"
@@ -267,6 +287,23 @@
             >
             </dx-button>
           </div>
+          <!-- <div class="col-1 me-2 justify-content-center">
+            <dx-drop-down-button
+              class="mt-2"
+              text="Export"
+              icon="export"
+              [width]="'auto'"
+              [visible]="vibleExportBtn"
+              [items]="exportOptions"
+              keyExpr="id"
+              displayExpr="text"
+              (onItemClick)="onExportClick($event)"
+              [elementAttr]="{
+                class: 'export-button'
+              }"
+            >
+            </dx-drop-down-button>
+          </div> -->
         </div>
       </div>
 
@@ -812,7 +849,7 @@
 
       <div class="graphContainer">
         <div class="d-flex gap-1">
-          <div class="ChartContent">
+          <div class="ChartContent" style="padding-bottom: 80px;">
             <dx-chart
               id="chart"
               [dataSource]="TopTenDepartmentWiseRejectedDataSource"
@@ -860,7 +897,7 @@
             </dx-chart>
           </div>
 
-          <div class="ChartContent">
+          <div class="ChartContent" style="padding-bottom: 80px;">
             <dx-chart
               id="chart"
               [dataSource]="TopTenDoctorWiseRejectedDataSource"

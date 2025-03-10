@@ -128,3 +128,23 @@
 .datagridContent {
   width: 50%;
 }
+
+.row.mt-1.ms-1.me-1 {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.export-button{
+  background-color: #03a9f4;
+  border-radius: 6;
+}
+.export-button:hover{
+  background-color: #03a9f4;
+  border-radius: 6;
+}
+
+
+
+
+

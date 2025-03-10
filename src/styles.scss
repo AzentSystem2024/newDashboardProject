@@ -1058,3 +1058,12 @@ app-root {
   background-color: antiquewhite;
   color: rgb(36, 36, 36);
 }
+
+.dx-dropdownbutton{
+  background-color: #03a9f4;
+  border-radius: 6;
+}
+.dx-dropdownbutton :hover{
+  background-color: #3eb4eb;
+  border-radius: 6;
+}

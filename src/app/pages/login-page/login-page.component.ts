@@ -64,7 +64,7 @@ export class LoginPageComponent {
         .dashboard_Login(userName, password)
         .subscribe((response: any) => {
           if (response.flag === '1') {
-            notify(`${response.message}`, 'success', 3000);
+            // notify(`${response.message}`, 'success', 3000);
 
             const userId = response.userid;
             sessionStorage.setItem('paramsid', userId);
@@ -79,7 +79,10 @@ export class LoginPageComponent {
                   .fetch_tab_Data_mainLayout()
                   .subscribe((response: any) => {
                     if (response.flag === '1') {
-                      this.tabs = response.dashboards;
+                      this.tabs = response.dashboards
+                      .filter(dashboard => dashboard.ID === 1 || dashboard.ID === 2)
+                      .sort((a, b) => a.ID - b.ID);
+                      console.log(this.tabs,"tabs");
                       if (this.tabs.length > 0) {
                         const firstTabText = this.tabs[0].ID;
                         this.sharedServc.navigateToDashboard(firstTabText);
